@@ -3,130 +3,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your A2P Compliance Guide</title>
+  <title>Your A2P Compliance Kit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f9f9f9;
-      padding: 20px;
+      background: #f7f7f7;
+      color: #222;
+      padding: 2rem;
       max-width: 850px;
       margin: auto;
-      color: #222;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
+      line-height: 1.6;
     }
     h1 {
       color: #5025d1;
+      font-size: 1.8rem;
     }
     h2 {
-      font-size: 22px;
-      margin-top: 30px;
+      margin-top: 2rem;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 4px;
     }
-    .section {
-      margin-bottom: 40px;
+    code, pre {
+      background: #eee;
+      padding: 10px;
+      display: block;
+      overflow-x: auto;
+      white-space: pre-wrap;
     }
-    img, iframe {
-      width: 100%;
+    .copy-btn {
+      background: #5025d1;
+      color: white;
+      padding: 6px 10px;
+      margin-top: 5px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .screenshot {
       max-width: 100%;
+      margin-top: 1rem;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin: 1rem 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .loading {
-      font-style: italic;
-      color: #aaa;
-      text-align: center;
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #5025d1;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
     }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>✅ Your A2P Compliance Kit is Ready, <span id="agentName">Agent</span>!</h1>
-    <p>Thanks again for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
-  </div>
+  <h1>🧙‍♂️ Just like magic... Your A2P Compliance Kit is Ready, <span id="agent">Agent</span>!</h1>
+  <p>Thanks again for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
 
-  <div class="section">
-    <p>Here's the information you need to submit to get approved. The most important piece of this message is the compliance screenshots, so be sure to include those.</p>
-    <p>After inputting the necessary business Information, just make sure you are following best practices:</p>
-    <ul>
-      <li>Select <strong>"confirming appointments"</strong> as the use case</li>
-      <li>Select <strong>1000</strong> as the minimum expected texts per month</li>
-    </ul>
-  </div>
+  <p>Here's the information you need to submit to get approved. The most important piece of this message is the compliance screenshots, so be sure to include those.</p>
 
-  <div class="section">
-    <h2>📋 Copy & Paste Templates</h2>
-    <p>This is what regulators look for and is the key to getting approved. We base these off of what's been recently approved.</p>
-    <p><strong><span id="businessName">Business Name</span></strong> Pt 1 Opt In: <a href="https://drive.google.com/file/d/1S1lhEWhd1Tj6OFH161sOyGZvFwt2NXYF/view?usp=sharing" target="_blank">Link</a></p>
-    <p><strong><span id="businessName2">Business Name</span></strong> Pt 2 Opt In: <a href="https://drive.google.com/file/d/1j7R8AFQAZ1YjTE0wvQ3nzMFyUgOJOQpU/view?usp=sharing" target="_blank">Link</a></p>
-  </div>
+  <ul>
+    <li>Select <strong>"confirming appointments"</strong> as the use case</li>
+    <li>Select <strong>1000</strong> as the minimum expected texts per month</li>
+  </ul>
 
-  <div class="section">
-    <h2>📄 Use Case Description</h2>
-    <img src="https://i.ibb.co/pB2C9MVc/IMAGE-ONE.png" alt="Use Case Screenshot" onerror="this.onerror=null; this.src=''; alert('Image 1 failed to load. Contact support.');"/>
-    <pre>This campaign sends appointment information - confirmation & reminder messages to customers once they have booked an appointment with <span id="businessInline">Business Name</span> on website and opted-in to receive promotional and notification SMS from <span id="businessInline2">Business Name</span>.</pre>
-    <p>Photo proof of initial consent: <a href="https://drive.google.com/file/d/1S1lhEWhd1Tj6OFH161sOyGZvFwt2NXYF/view">Link</a></p>
-    <p>Photo proof of expressed consent, terms, and privacy policy: <a href="https://drive.google.com/file/d/1j7R8AFQAZ1YjTE0wvQ3nzMFyUgOJOQpU/view">Link</a></p>
-  </div>
+  <h2>📄 Copy & Paste Templates</h2>
+  <p>This is what regulators look for and is the key to getting approved. We base these off of what's been recently approved.</p>
+  <p><strong id="company">Test Agency</strong> Pt 1 Opt In: <a id="img1link" href="#">Link</a></p>
+  <p><strong id="company2">Test Agency</strong> Pt 2 Opt In: <a id="img2link" href="#">Link</a></p>
 
-  <div class="section">
-    <h2>💬 Sample Messages</h2>
-    <p><strong>Message One:</strong></p>
-    <pre>Hi John! This is Jane from <span id="businessInline3">Business Name</span>. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.</pre>
-    <p><strong>Message Two:</strong></p>
-    <pre>Hello, this is Jason with <span id="businessInline4">Business Name</span>. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.</pre>
-  </div>
+  <h2>📄 Use Case Description</h2>
+  <img src="https://i.ibb.co/pB2C9MVc/IMAGE-ONE.png" alt="Use Case Screenshot" class="screenshot"/>
+  <pre id="usecase"></pre>
+  <button class="copy-btn" onclick="copyText('usecase')">Copy</button>
 
-  <div class="section">
-    <h2>🧾 User Consent</h2>
-    <img src="https://i.ibb.co/zHWqq3h8/IMAGE-2.png" alt="User Consent Screenshot" onerror="this.onerror=null; this.src=''; alert('Image 2 failed to load. Contact support.');"/>
-    <pre>End users opt-in by visiting - <span id="website">Website</span> and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.
+  <h2>💬 Sample Messages</h2>
+  <p><strong>Message One:</strong></p>
+  <pre id="msg1"></pre>
+  <button class="copy-btn" onclick="copyText('msg1')">Copy</button>
 
-Photo proof of initial consent: https://drive.google.com/file/d/1S1lhEWhd1Tj6OFH161sOyGZvFwt2NXYF/view
-Photo proof of expressed consent, terms, and privacy policy: https://drive.google.com/file/d/1j7R8AFQAZ1YjTE0wvQ3nzMFyUgOJOQpU/view</pre>
-  </div>
+  <p><strong>Message Two:</strong></p>
+  <pre id="msg2"></pre>
+  <button class="copy-btn" onclick="copyText('msg2')">Copy</button>
 
-  <div class="section">
-    <h2>📲 Opt-in Message</h2>
-    <img src="https://i.ibb.co/Xrgm89q2/IMAGE-3.png" alt="Opt-in Screenshot" onerror="this.onerror=null; this.src=''; alert('Image 3 failed to load. Contact support.');"/>
-    <pre>You have successfully opted-in to receive notification and promotional SMS from <span id="businessInline5">Business Name</span>. Please reply STOP if you need to Opt-out in the future.</pre>
-  </div>
+  <h2>📃 User Consent</h2>
+  <img src="https://i.ibb.co/zHWqq3h8/IMAGE-2.png" alt="Consent Screenshot" class="screenshot"/>
+  <pre id="consent"></pre>
+  <button class="copy-btn" onclick="copyText('consent')">Copy</button>
 
-  <div class="section">
-    <h2>✅ Final Step</h2>
-    <p>After that, submit your campaign! Please confirm that you've received approval once you do. It's important that we track metrics so we can evolve the templates over time to serve you better. You should see approval in 24 to 48 hours — sometimes even within an hour.</p>
-  </div>
+  <h2>📌 Opt-in Message</h2>
+  <img src="https://i.ibb.co/Xrgm89q2/IMAGE-3.png" alt="Opt-in Screenshot" class="screenshot"/>
+  <pre id="optin"></pre>
+  <button class="copy-btn" onclick="copyText('optin')">Copy</button>
 
-  <div class="section">
-    <h2>💡 Helpful Tips</h2>
-    <ol>
-      <li>Submit weekdays between <strong>8am–11am</strong> for fastest approval</li>
-      <li>If rejected, try deleting the number or submitting a new campaign</li>
-      <li>Contact support — we respond same business day</li>
-      <li>Ensure business profile info is accurate or it will fail!</li>
-    </ol>
-    <img src="https://i.ibb.co/Xfbh3S3T/IMAGE-4.png" alt="Business Info Screenshot" onerror="this.onerror=null; this.src=''; alert('Image 4 failed to load. Contact support.');"/>
-  </div>
+  <h2>✅ Final Tips</h2>
+  <p>After that, submit your campaign! Please confirm that you've received approval once you do. You should see approval in 24 to 48 hours, sometimes within an hour.</p>
+  <p><strong>Helpful Tips:</strong></p>
+  <ul>
+    <li>Submit applications between 8–11am on weekdays for best approval chances.</li>
+    <li>If resubmitting, delete the number or campaign and start fresh.</li>
+    <li>Reach out to support — we respond same day.</li>
+  </ul>
+
+  <img src="https://i.ibb.co/Xfbh3S3T/IMAGE-4.png" alt="Final Details Screenshot" class="screenshot"/>
+  <br /><br />
+  <button onclick="window.print()">Export to PDF</button>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const business = params.get("business_name") || "Your Business";
-    const site = params.get("a2pwebsite") || "yourwebsite.com";
-    const agent = params.get("agent") || "Your Rep";
+    function copyText(id) {
+      const el = document.getElementById(id);
+      navigator.clipboard.writeText(el.textContent);
+    }
 
-    document.getElementById("businessName").textContent = business;
-    document.getElementById("businessName2").textContent = business;
-    document.getElementById("businessInline").textContent = business;
-    document.getElementById("businessInline2").textContent = business;
-    document.getElementById("businessInline3").textContent = business;
-    document.getElementById("businessInline4").textContent = business;
-    document.getElementById("businessInline5").textContent = business;
-    document.getElementById("website").textContent = site;
-    document.getElementById("agentName").textContent = agent;
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const img1 = params.get("img1") || "";
+    const img2 = params.get("img2") || "";
+    const business = params.get("business_name") || "your business name";
+    const site = params.get("a2pwebsite") || "your site";
+    const agent = params.get("agent") || "your agent";
+
+    document.getElementById("agent").textContent = agent;
+    document.getElementById("company").textContent = business;
+    document.getElementById("company2").textContent = business;
+    document.getElementById("img1link").href = img1;
+    document.getElementById("img1link").textContent = "Link";
+    document.getElementById("img2link").href = img2;
+    document.getElementById("img2link").textContent = "Link";
+
+    document.getElementById("usecase").textContent =
+      `This campaign sends appointment information - confirmation & reminder messages to customers once they have booked an appointment with ${business} on website and opted-in to receive promotional and notification SMS from ${business}.
+
+Photo proof of initial consent: ${img1}
+Photo proof of expressed consent, terms, and privacy policy: ${img2}`;
+
+    document.getElementById("msg1").textContent =
+      `Hi John! This is Jane from ${business}. Our appointment for July 20 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`;
+    document.getElementById("msg2").textContent =
+      `Hello, this is Jason with ${business}. We are confirming your appointment tomorrow at 9 am. Reply STOP to cancel.`;
+
+    document.getElementById("consent").textContent =
+      `End users opt-in by visiting - https://${site} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.
+
+Photo proof of initial consent: ${img1}
+Photo proof of expressed consent, terms, and privacy policy: ${img2}`;
+
+    document.getElementById("optin").textContent =
+      `You have successfully opted-in to receive notification and promotional SMS from ${business}. Please reply STOP if you need to Opt-out in the future.`;
   </script>
 </body>
 </html>
