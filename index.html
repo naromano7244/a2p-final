@@ -77,7 +77,7 @@
   </div>
 
   <div class="section">
-    <h2>📝 Use Case Description</h2>
+    <h2>🗘️ Use Case Description</h2>
     <pre id="useCase" class="loading">Loading...</pre>
   </div>
 
@@ -95,6 +95,16 @@
   </div>
 
   <script>
+    function extractDriveId(url) {
+      const match = url.match(/\/file\/d\/([^/]+)/);
+      return match ? match[1] : null;
+    }
+
+    function getDirectImageUrl(url) {
+      const id = extractDriveId(url);
+      return id ? `https://drive.google.com/uc?export=view&id=${id}` : "";
+    }
+
     async function fetchData() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id");
@@ -104,8 +114,8 @@
         const res = await fetch("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id=" + id);
         const data = await res.json();
 
-        document.getElementById("img1").src = data.img1 || "";
-        document.getElementById("img2").src = data.img2 || "";
+        document.getElementById("img1").src = getDirectImageUrl(data.img1);
+        document.getElementById("img2").src = getDirectImageUrl(data.img2);
         document.getElementById("img1url").textContent = data.img1 || "";
         document.getElementById("img2url").textContent = data.img2 || "";
 
