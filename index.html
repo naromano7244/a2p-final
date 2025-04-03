@@ -3,148 +3,115 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your A2P Compliance Kit</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <title>A2P Compliance Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary-color: #5025d1;
-      --secondary-color: #6a4acd;
-      --background-color: #f9f9f9;
-      --text-color: #222;
-      --card-bg: #fff;
-      --border-radius: 8px;
-      --shadow: 0 2px 8px rgba(0,0,0,0.1);
-      --transition: all 0.3s ease;
-    }
+    * { box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background-color: var(--background-color);
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      color: var(--text-color);
+      background: #f7f7fa;
+      color: #333;
     }
     .container {
       max-width: 850px;
-      width: 100%;
-      background: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      margin: 20px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
       overflow: hidden;
     }
     .header {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: #fff;
+      background: #5c27d4;
+      color: white;
       text-align: center;
-      padding: 30px;
+      padding: 30px 20px;
     }
     .header h1 {
-      margin: 0 0 10px;
-      font-size: 28px;
+      margin: 0;
+      font-size: 26px;
     }
     .header p {
-      margin: 0;
+      margin: 10px 0 0;
       font-size: 16px;
     }
     .section {
-      padding: 20px 30px;
+      padding: 30px 25px;
       border-bottom: 1px solid #eee;
     }
-    .section:last-child {
-      border-bottom: none;
-    }
+    .section:last-child { border: none; }
     h2 {
-      font-size: 22px;
+      font-size: 20px;
       margin-bottom: 15px;
-      color: var(--primary-color);
+      color: #5025d1;
     }
-    h3 {
-      margin-top: 20px;
-      font-size: 18px;
-      color: var(--primary-color);
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      margin-bottom: 15px;
-    }
-    pre, code {
-      background: #f1f1f1;
-      padding: 12px;
+    pre {
+      background: #f3f3f3;
+      padding: 15px;
+      border-radius: 6px;
       white-space: pre-wrap;
-      word-wrap: break-word;
-      border-radius: var(--border-radius);
+      word-break: break-word;
       font-family: monospace;
       font-size: 14px;
     }
+    .screenshot {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 15px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
     .copy-btn {
-      margin-top: 10px;
-      background: var(--primary-color);
-      color: #fff;
-      padding: 8px 16px;
-      border: none;
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .copy-btn:hover {
-      background: var(--secondary-color);
-    }
-    .pdf-export {
-      background: var(--secondary-color);
+      background: #5025d1;
       color: white;
-      padding: 12px 20px;
-      text-align: center;
-      font-weight: bold;
       border: none;
-      border-radius: var(--border-radius);
-      display: block;
-      margin: 20px auto;
-      transition: var(--transition);
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 6px;
       cursor: pointer;
+      margin: 10px 0;
     }
-    .pdf-export:hover {
-      background: var(--primary-color);
+    .copy-btn:hover { opacity: 0.9; }
+    .pdf-section {
+      background: #f3efff;
+      text-align: center;
+      padding: 30px;
     }
-    .loading {
-      font-style: italic;
-      color: #aaa;
+    .pdf-section h3 {
+      margin-top: 0;
+      font-weight: 600;
     }
-    a {
-      color: var(--primary-color);
+    .pdf-section a {
+      display: inline-block;
+      margin-top: 12px;
+      background: #5025d1;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
       text-decoration: none;
-      transition: var(--transition);
     }
-    a:hover {
-      text-decoration: underline;
-    }
-    p, strong {
-      font-size: 16px;
-      line-height: 1.5;
+    .error {
+      font-style: italic;
+      color: #b10000;
+      margin-top: 5px;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <!-- Added a <br> after "Just like magic!" -->
-      <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready, <span id="agent"></span>!</h1>
+      <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready, <span id="agent">Nick Romano</span>!</h1>
       <p>Thanks again for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
 
     <div class="section">
       <h2>📸 Screenshot Proofs</h2>
-      <img id="img1" alt="Initial Consent Screenshot">
+      <img id="img1" class="screenshot" alt="Initial Consent Screenshot">
       <code id="img1url"></code>
       <button class="copy-btn" onclick="copyText('img1url')">Copy</button>
-
-      <img id="img2" alt="Terms Screenshot">
+      <br>
+      <img id="img2" class="screenshot" alt="Terms Screenshot">
       <code id="img2url"></code>
       <button class="copy-btn" onclick="copyText('img2url')">Copy</button>
     </div>
@@ -152,51 +119,52 @@
     <div class="section">
       <h2>📄 Copy & Paste Templates</h2>
       <p>This is what regulators look for and is the key to getting approved. We base these off of what's been recently approved.</p>
-      <strong><span id="company"></span> Pt 1 Opt In:</strong> <a id="img1link" target="_blank">Link</a><br>
-      <strong><span id="company"></span> Pt 2 Opt In:</strong> <a id="img2link" target="_blank">Link</a>
+      <p><strong id="biz1">Test Agency</strong> Pt 1 Opt In: <span id="img1link">Link</span></p>
+      <p>Pt 2 Opt In: <span id="img2link">Link</span></p>
     </div>
 
     <div class="section">
-      <h2>📋 Use Case Description</h2>
-      <img src="https://i.ibb.co/pB2C9MVc/IMAGE-ONE.png" alt="Image One">
-      <pre id="useCase" class="loading">Loading...</pre>
+      <h2>📃 Use Case Description</h2>
+      <img src="https://i.ibb.co/pB2C9MVc/IMAGE-ONE.png" class="screenshot" alt="Use Case Screenshot">
+      <pre id="useCase">Loading use case description...</pre>
       <button class="copy-btn" onclick="copyText('useCase')">Copy</button>
     </div>
 
     <div class="section">
       <h2>💬 Sample Messages</h2>
-      <h3>Message One:</h3>
-      <pre id="msg1" class="loading">Loading...</pre>
-      <button class="copy-btn" onclick="copyText('msg1')">Copy</button>
-
-      <h3>Message Two:</h3>
-      <pre id="msg2" class="loading">Loading...</pre>
-      <button class="copy-btn" onclick="copyText('msg2')">Copy</button>
+      <p><strong>Message One:</strong></p>
+      <pre id="msg1">Loading...</pre>
+      <p><strong>Message Two:</strong></p>
+      <pre id="msg2">Loading...</pre>
     </div>
 
     <div class="section">
-      <h2>📋 User Consent Copy</h2>
-      <img src="https://i.ibb.co/zHWqq3h8/IMAGE-2.png" alt="Image Two">
-      <pre id="consentCopy" class="loading">Loading...</pre>
+      <h2>📄 User Consent Copy</h2>
+      <img src="https://i.ibb.co/zHWqq3h8/IMAGE-2.png" class="screenshot" alt="User Consent Screenshot">
+      <pre id="consentCopy">Loading...</pre>
       <button class="copy-btn" onclick="copyText('consentCopy')">Copy</button>
-
-      <h3>Opt-in Message</h3>
-      <img src="https://i.ibb.co/Xrgm89q2/IMAGE-3.png" alt="Image Three">
-      <pre>You have successfully opted-in to receive notification and promotional SMS from <span id="company2"></span>. Please reply STOP if you need to Opt-out in the future.</pre>
     </div>
 
     <div class="section">
-      <h2>✅ Final Submission Notes</h2>
-      <p>After that, submit your campaign! You should see brand approval within 24 hours, and A2P approval within 3 days, sometimes faster. <strong>Be sure to follow all of the best practices here, or it will elongate approval process.</strong></p>
+      <h2>📜 Opt-In Message</h2>
+      <img src="https://i.ibb.co/Xrgm89q2/IMAGE-3.png" class="screenshot" alt="Opt-In Screenshot">
+      <pre>You have successfully opted-in to receive notification and promotional SMS from <span id="biz2">Test Agency</span>. Please reply STOP if you need to Opt-out in the future.</pre>
     </div>
 
     <div class="section">
-      <img src="https://i.ibb.co/Xfbh3S3T/IMAGE-4.png" alt="Image Four">
+      <h2>💡 Tips for Approval</h2>
+      <ul>
+        <li>Try submitting between 8am-11am on weekdays</li>
+        <li>Use a fresh number/campaign if resubmitting</li>
+        <li>Brand approval usually takes 24 hours</li>
+        <li><strong>Be sure</strong> to follow all best practices to avoid delays</li>
+      </ul>
+      <img src="https://i.ibb.co/Xfbh3S3T/IMAGE-4.png" class="screenshot" alt="Tips Screenshot">
     </div>
 
-    <div class="section" style="text-align:center;">
-      <p style="font-weight:600;">Need to send this to a client? Here's a white labeled guide!</p>
-      <button class="pdf-export" onclick="window.print()">Download PDF</button>
+    <div class="pdf-section">
+      <h3>Need to send this to a client? Here's a white labeled guide!</h3>
+      <a href="#" onclick="window.print()">Download PDF</a>
     </div>
   </div>
 
@@ -204,42 +172,39 @@
     async function fetchData() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id");
-      const img1 = params.get("img1");
-      const img2 = params.get("img2");
-      const company = params.get("business_name") || "Test Agency";
-      const site = params.get("a2pwebsite") || "https://testsite.com";
-      const agent = params.get("agent") || "Agent";
-
-      document.getElementById("img1").src = img1;
-      document.getElementById("img1url").textContent = img1;
-      document.getElementById("img1link").href = img1;
-
-      document.getElementById("img2").src = img2;
-      document.getElementById("img2url").textContent = img2;
-      document.getElementById("img2link").href = img2;
-
-      document.getElementById("company").textContent = company;
-      document.getElementById("company2").textContent = company;
-      document.getElementById("agent").textContent = agent;
+      if (!id) return;
 
       try {
         const res = await fetch("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id=" + id);
         const data = await res.json();
 
+        document.getElementById("img1").src = data.img1;
+        document.getElementById("img2").src = data.img2;
+        document.getElementById("img1url").textContent = data.img1;
+        document.getElementById("img2url").textContent = data.img2;
+        document.getElementById("img1link").textContent = data.img1;
+        document.getElementById("img2link").textContent = data.img2;
+        document.getElementById("agent").textContent = data.agent_name;
+        document.getElementById("biz1").textContent = data.business_name;
+        document.getElementById("biz2").textContent = data.business_name;
+
         document.getElementById("useCase").textContent =
-          `This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${company} on ${site} and opted-in to receive promotional and notification SMS from ${company} \n\nPhoto proof of initial consent: ${img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${img2}`;
+          `This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${data.business_name} on ${data.a2pwebsite} and opted-in to receive promotional and notification SMS from ${data.business_name}\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`;
 
         document.getElementById("msg1").textContent =
-          `Hi John! This is Jane from ${company}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`;
+          `Hi John! This is Jane from ${data.business_name}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`;
 
         document.getElementById("msg2").textContent =
-          `Hello, this is Jason with ${company}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`;
+          `Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`;
 
         document.getElementById("consentCopy").textContent =
-          `End users opt-in by visiting – ${site} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent: ${img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${img2}`;
+          `End users opt-in by visiting - ${data.a2pwebsite} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`;
 
       } catch (err) {
-        console.error("Error loading data:", err);
+        document.getElementById("useCase").textContent = "Error loading content. Please try again later.";
+        document.getElementById("msg1").textContent = "Error loading message 1.";
+        document.getElementById("msg2").textContent = "Error loading message 2.";
+        document.getElementById("consentCopy").textContent = "Error loading consent info.";
       }
     }
 
@@ -252,3 +217,4 @@
   </script>
 </body>
 </html>
+
