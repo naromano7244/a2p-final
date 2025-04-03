@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your A2P Compliance Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      max-width: 850px;
+      margin: auto;
+      color: #222;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      color: #5025d1;
+    }
+    h2 {
+      font-size: 22px;
+      margin-top: 30px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .screenshot-url {
+      font-family: monospace;
+      background: #eee;
+      padding: 6px;
+      margin-top: 5px;
+      display: block;
+    }
+    .copy-btn {
+      margin: 5px 0 20px;
+      background: #5025d1;
+      color: #fff;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .loading {
+      font-style: italic;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>✅ Your A2P Compliance Guide</h1>
+    <p>Below are your screenshots and pre-written compliance messages. Just copy and paste.</p>
+  </div>
+
+  <div class="section">
+    <h2>📸 Screenshot Proofs</h2>
+    <strong>Initial Consent Screenshot:</strong><br>
+    <img id="img1" alt="Initial Consent Screenshot"/>
+    <code class="screenshot-url" id="img1url"></code>
+    <button class="copy-btn" onclick="copyText('img1url')">Copy</button>
+
+    <strong>Terms & Privacy Screenshot:</strong><br>
+    <img id="img2" alt="Terms Screenshot"/>
+    <code class="screenshot-url" id="img2url"></code>
+    <button class="copy-btn" onclick="copyText('img2url')">Copy</button>
+  </div>
+
+  <div class="section">
+    <h2>📝 Use Case Description</h2>
+    <pre id="useCase" class="loading">Loading...</pre>
+  </div>
+
+  <div class="section">
+    <h2>💬 Sample Messages</h2>
+    <strong>Message One:</strong>
+    <pre id="msg1" class="loading">Loading...</pre>
+    <strong>Message Two:</strong>
+    <pre id="msg2" class="loading">Loading...</pre>
+  </div>
+
+  <div class="section">
+    <h2>📋 User Consent Copy</h2>
+    <pre id="consentCopy" class="loading">Loading...</pre>
+  </div>
+
+  <script>
+    async function fetchData() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      if (!id) return;
+
+      try {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id=" + id);
+        const data = await res.json();
+
+        document.getElementById("img1").src = data.img1 || "";
+        document.getElementById("img2").src = data.img2 || "";
+        document.getElementById("img1url").textContent = data.img1 || "";
+        document.getElementById("img2url").textContent = data.img2 || "";
+
+        const business = data.business_name || "your business name";
+        const site = data.a2pwebsite || "your site";
+
+        document.getElementById("useCase").textContent =
+          `This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${business} on the website and opted-in to receive promotional and notification SMS from ${business}.`;
+
+        document.getElementById("msg1").textContent =
+          `Hi John! This is Jane from ${business}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`;
+
+        document.getElementById("msg2").textContent =
+          `Hello, this is Jason with ${business}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`;
+
+        document.getElementById("consentCopy").textContent =
+          `End users opt-in by visiting ${site} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent: ${data.img1 || ""}\nPhoto proof of terms/privacy: ${data.img2 || ""}`;
+      } catch (err) {
+        console.error("Error loading data:", err);
+      }
+    }
+
+    function copyText(elId) {
+      const el = document.getElementById(elId);
+      navigator.clipboard.writeText(el.textContent.trim());
+    }
+
+    fetchData();
+  </script>
+
+</body>
+</html>
+Add index.html
