@@ -133,7 +133,8 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>🧙‍♂️ Just like magic! Your A2P Compliance Kit is Ready, <span id="agent"></span>!</h1>
+      <!-- Added a <br> after "Just like magic!" -->
+      <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready, <span id="agent"></span>!</h1>
       <p>Thanks again for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
     <div class="section">
@@ -191,6 +192,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       fetchData();
     });
+
     async function fetchData() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id");
@@ -199,6 +201,7 @@
       const company = params.get("business_name") || "Test Agency";
       const site = params.get("a2pwebsite") || "https://testsite.com";
       const agent = params.get("agent") || "Agent";
+      
       if (img1) {
         document.getElementById("img1").src = img1;
         document.getElementById("img1url").textContent = img1;
@@ -212,19 +215,25 @@
       document.getElementById("company").textContent = company;
       document.getElementById("company2").textContent = company;
       document.getElementById("agent").textContent = agent;
+      
       try {
         if (!id) throw new Error("Missing ID parameter");
         const response = await fetch(`https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id=${id}`);
         if (!response.ok) throw new Error("Network response was not ok");
         const data = await response.json();
+        
         document.getElementById("useCase").textContent =
           `This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${company} on ${site} and opted-in to receive promotional and notification SMS from ${company}.\n\nPhoto proof of initial consent: ${img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${img2}`;
+          
         document.getElementById("msg1").textContent =
           `Hi John! This is Jane from ${company}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`;
+          
         document.getElementById("msg2").textContent =
           `Hello, this is Jason with ${company}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`;
+          
         document.getElementById("consentCopy").textContent =
           `End users opt-in by visiting ${site} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent: ${img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${img2}`;
+          
         removeLoadingClasses();
       } catch (err) {
         console.error("Error loading data:", err);
@@ -233,15 +242,27 @@
         });
       }
     }
+
     function removeLoadingClasses() {
       document.querySelectorAll('.loading').forEach(el => {
         el.classList.remove('loading');
       });
     }
+
     async function copyText(elId, btn) {
       const textToCopy = document.getElementById(elId).textContent.trim();
       try {
-        await navigator.clipboard.writeText(textToCopy);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(textToCopy);
+        } else {
+          // Fallback for older browsers
+          const textarea = document.createElement("textarea");
+          textarea.value = textToCopy;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+        }
         const originalText = btn.textContent;
         btn.textContent = "Copied!";
         setTimeout(() => {
