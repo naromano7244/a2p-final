@@ -21,6 +21,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.08);
       overflow: hidden;
+      position: relative;
     }
     .header {
       background: #5c27d4;
@@ -28,14 +29,8 @@
       text-align: center;
       padding: 30px 20px;
     }
-    .header h1 {
-      margin: 0;
-      font-size: 26px;
-    }
-    .header p {
-      margin: 10px 0 0;
-      font-size: 16px;
-    }
+    .header h1 { margin: 0; font-size: 26px; }
+    .header p { margin: 10px 0 0; font-size: 16px; }
     .section {
       padding: 30px 25px;
       border-bottom: 1px solid #eee;
@@ -60,32 +55,40 @@
       border-radius: 8px;
       margin: 15px 0;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      transition: opacity 0.3s ease-in-out;
+      background: #eee;
       opacity: 0;
+      transition: opacity 0.5s ease;
     }
     .screenshot.loaded {
       opacity: 1;
     }
     .copy-btn {
-      background: #FFD166;
-      color: #333;
+      background: #5025d1;
+      color: white;
       border: none;
       padding: 8px 16px;
       font-size: 14px;
       border-radius: 6px;
       cursor: pointer;
       margin: 10px 0;
-      font-weight: 600;
     }
     .copy-btn:hover { opacity: 0.9; }
+    .copied-msg {
+      display: inline-block;
+      margin-left: 10px;
+      color: green;
+      font-weight: 600;
+      font-size: 14px;
+      animation: fadeOut 2s forwards;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
     .pdf-section {
       background: #f3efff;
       text-align: center;
       padding: 30px;
-    }
-    .pdf-section h3 {
-      margin-top: 0;
-      font-weight: 600;
     }
     .pdf-section a {
       display: inline-block;
@@ -97,10 +100,27 @@
       font-weight: 600;
       text-decoration: none;
     }
-    .error {
-      font-style: italic;
-      color: #b10000;
-      margin-top: 5px;
+    .image-loading {
+      text-align: center;
+      font-size: 16px;
+      color: #666;
+      padding: 10px;
+    }
+    @media print {
+      .header,
+      .pdf-section,
+      .copy-btn,
+      .copied-msg,
+      .image-loading {
+        display: none !important;
+      }
+      .container {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+      body {
+        background: white !important;
+      }
     }
   </style>
 </head>
@@ -113,59 +133,14 @@
 
     <div class="section">
       <h2>📸 Screenshot Proofs</h2>
-      <img id="img1" class="screenshot" alt="Initial Consent Screenshot" onload="this.classList.add('loaded')">
+      <div class="image-loading" id="imgLoading">Images rendering... please wait</div>
+      <img id="img1" class="screenshot" alt="Initial Consent Screenshot">
       <code id="img1url"></code>
-      <button class="copy-btn" onclick="copyText('img1url')">Copy</button>
-      <br><br>
-      <img id="img2" class="screenshot" alt="Terms Screenshot" onload="this.classList.add('loaded')">
+      <button class="copy-btn" onclick="copyText('img1url', this)">Copy</button>
+      <br>
+      <img id="img2" class="screenshot" alt="Terms Screenshot">
       <code id="img2url"></code>
-      <button class="copy-btn" onclick="copyText('img2url')">Copy</button>
-    </div>
-
-    <div class="section">
-      <h2>📄 Copy & Paste Templates</h2>
-      <p>This is what regulators look for and is the key to getting approved. We base these off of what's been recently approved.</p>
-      <p><strong id="biz1">Test Agency</strong> Pt 1 Opt In: <a id="img1link" href="#" target="_blank">Link</a></p>
-      <p>Pt 2 Opt In: <a id="img2link" href="#" target="_blank">Link</a></p>
-    </div>
-
-    <div class="section">
-      <h2>📃 Use Case Description</h2>
-      <img src="https://i.ibb.co/pB2C9MVc/IMAGE-ONE.png" class="screenshot" alt="Use Case Screenshot">
-      <pre id="useCase">Loading use case description...</pre>
-      <button class="copy-btn" onclick="copyText('useCase')">Copy</button>
-    </div>
-
-    <div class="section">
-      <h2>💬 Sample Messages</h2>
-      <p><strong>Message One:</strong></p>
-      <pre id="msg1">Loading...</pre>
-      <p><strong>Message Two:</strong></p>
-      <pre id="msg2">Loading...</pre>
-    </div>
-
-    <div class="section">
-      <h2>📄 User Consent Copy</h2>
-      <img src="https://i.ibb.co/zHWqq3h8/IMAGE-2.png" class="screenshot" alt="User Consent Screenshot">
-      <pre id="consentCopy">Loading...</pre>
-      <button class="copy-btn" onclick="copyText('consentCopy')">Copy</button>
-    </div>
-
-    <div class="section">
-      <h2>📜 Opt-In Message</h2>
-      <img src="https://i.ibb.co/Xrgm89q2/IMAGE-3.png" class="screenshot" alt="Opt-In Screenshot">
-      <pre>You have successfully opted-in to receive notification and promotional SMS from <span id="biz2">Test Agency</span>. Please reply STOP if you need to Opt-out in the future.</pre>
-    </div>
-
-    <div class="section">
-      <h2>💡 Tips for Approval</h2>
-      <ul>
-        <li>Try submitting between 8am-11am on weekdays</li>
-        <li>Use a fresh number/campaign if resubmitting</li>
-        <li>Brand approval usually takes 24 hours</li>
-        <li><strong>Be sure</strong> to follow all best practices to avoid delays</li>
-      </ul>
-      <img src="https://i.ibb.co/Xfbh3S3T/IMAGE-4.png" class="screenshot" alt="Tips Screenshot">
+      <button class="copy-btn" onclick="copyText('img2url', this)">Copy</button>
     </div>
 
     <div class="pdf-section">
@@ -184,48 +159,50 @@
         const res = await fetch("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id=" + id);
         const data = await res.json();
 
-        document.getElementById("img1").src = data.img1;
-        document.getElementById("img2").src = data.img2;
+        const img1 = document.getElementById("img1");
+        const img2 = document.getElementById("img2");
+
+        let loaded = 0;
+        function markLoaded() {
+          loaded++;
+          if (loaded === 2) {
+            document.getElementById("imgLoading").style.display = "none";
+          }
+        }
+
+        img1.onload = () => {
+          img1.classList.add("loaded");
+          markLoaded();
+        };
+        img2.onload = () => {
+          img2.classList.add("loaded");
+          markLoaded();
+        };
+
+        img1.src = data.img1;
+        img2.src = data.img2;
+
         document.getElementById("img1url").textContent = data.img1;
         document.getElementById("img2url").textContent = data.img2;
-        document.getElementById("img1link").href = data.img1;
-        document.getElementById("img1link").textContent = data.img1;
-        document.getElementById("img2link").href = data.img2;
-        document.getElementById("img2link").textContent = data.img2;
+
         document.getElementById("agent").textContent = data.agent_name;
         document.getElementById("biz1").textContent = data.business_name;
         document.getElementById("biz2").textContent = data.business_name;
 
-        document.getElementById("useCase").textContent =
-          `This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${data.business_name} on ${data.a2pwebsite} and opted-in to receive promotional and notification SMS from ${data.business_name}
-
-Photo proof of initial consent:
-${data.img1}
-
-Photo proof of expressed consent, terms, and privacy policy:
-${data.img2}`;
-
-        document.getElementById("msg1").textContent =
-          `Hi John! This is Jane from ${data.business_name}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`;
-
-        document.getElementById("msg2").textContent =
-          `Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`;
-
-        document.getElementById("consentCopy").textContent =
-          `End users opt-in by visiting - ${data.a2pwebsite} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent:\n${data.img1}\n\nPhoto proof of expressed consent, terms, and privacy policy:\n${data.img2}`;
-
       } catch (err) {
-        document.getElementById("useCase").textContent = "Error loading content. Please try again later.";
-        document.getElementById("msg1").textContent = "Error loading message 1.";
-        document.getElementById("msg2").textContent = "Error loading message 2.";
-        document.getElementById("consentCopy").textContent = "Error loading consent info.";
+        console.error("Failed to fetch data", err);
       }
     }
 
-    function copyText(elId) {
+    function copyText(elId, btn) {
       const el = document.getElementById(elId);
-      const text = el.tagName.toLowerCase() === 'code' || el.tagName.toLowerCase() === 'pre' ? el.textContent.trim() : el.value;
-      navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+      navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+        const msg = document.createElement("span");
+        msg.className = "copied-msg";
+        msg.textContent = "Copied!";
+        btn.insertAdjacentElement("afterend", msg);
+        setTimeout(() => msg.remove(), 2000);
+      });
     }
 
     fetchData();
