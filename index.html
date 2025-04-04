@@ -4,160 +4,332 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Base Styles */
     * { box-sizing: border-box; }
+    
+    :root {
+      --primary-color: #5c27d4;
+      --primary-light: #f3efff;
+      --text-color: #2d3748;
+      --border-color: #e2e8f0;
+      --success-color: #48bb78;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
       background: #f7f7fa;
-      color: #333;
+      color: var(--text-color);
+      line-height: 1.6;
     }
+
+    /* Layout */
     .container {
       max-width: 850px;
       margin: 40px auto;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
       overflow: hidden;
     }
+
+    @media (max-width: 900px) {
+      .container {
+        margin: 20px;
+        width: auto;
+      }
+    }
+
+    /* Header Styles */
     .header {
-      background: #5c27d4;
+      background: var(--primary-color);
       color: white;
       text-align: center;
-      padding: 30px 20px;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
     }
-    .header h1 { margin: 0; font-size: 26px; }
-    .header p { margin: 10px 0 0; font-size: 16px; }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4c21b0, #6e3de8);
+    }
+
+    .header h1 { 
+      margin: 0; 
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .header p { 
+      margin: 15px 0 0; 
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    /* Section Styles */
     .section {
-      padding: 30px 25px;
-      border-bottom: 1px solid #eee;
+      padding: 35px 30px;
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.2s ease;
     }
-    .section:last-child { border: none; }
+
+    .section:hover {
+      background-color: #fafafa;
+    }
+
+    .section:last-child { 
+      border: none; 
+    }
+
     h2 {
-      font-size: 20px;
-      margin-bottom: 15px;
-      color: #5025d1;
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+
+    /* Image Styles */
+    .screenshot-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+
+    .screenshot {
+      max-width: 100%;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+      background: #f8fafc;
+      opacity: 0;
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-color);
+    }
+
+    .screenshot.loaded {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Code Block Styles */
     pre {
-      background: #f3f3f3;
-      padding: 15px;
-      border-radius: 6px;
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: var(--radius-sm);
       white-space: pre-wrap;
       word-break: break-word;
       font-family: monospace;
       font-size: 14px;
-    }
-    .screenshot {
-      max-width: 100%;
-      border-radius: 8px;
+      border: 1px solid var(--border-color);
       margin: 15px 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      background: #eee;
-      opacity: 0;
-      transition: opacity 0.5s ease;
     }
-    .screenshot.loaded {
-      opacity: 1;
+
+    code {
+      background: #f1f5f9;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+      color: var(--primary-color);
     }
+
+    /* Button Styles */
     .copy-btn {
-      background: #5025d1;
+      background: var(--primary-color);
       color: white;
       border: none;
       padding: 8px 16px;
       font-size: 14px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       margin: 10px 0;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .copy-btn:hover { opacity: 0.9; }
+
+    .copy-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Copy Message Animation */
     .copied-msg {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       margin-left: 10px;
-      color: green;
-      font-weight: 600;
+      color: var(--success-color);
+      font-weight: 500;
       font-size: 14px;
-      animation: fadeOut 2s forwards;
+      opacity: 0;
+      animation: fadeInOut 2s ease forwards;
     }
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      100% { opacity: 0; }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(5px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-5px); }
     }
+
+    /* PDF Section Styles */
     .pdf-section {
-      background: #f3efff;
+      background: var(--primary-light);
       text-align: center;
-      padding: 30px;
+      padding: 40px 30px;
     }
-    .pdf-section a {
-      display: inline-block;
-      margin-top: 12px;
-      background: #5025d1;
+
+    .pdf-section h3 {
+      margin: 0 0 20px;
+      color: var(--primary-color);
+    }
+
+    .pdf-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-color);
       color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
       font-weight: 600;
       text-decoration: none;
+      transition: all 0.2s ease;
     }
+
+    .pdf-button:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Loading States */
     .image-loading {
       text-align: center;
       font-size: 16px;
-      color: #666;
-      padding: 10px;
+      color: #64748b;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: var(--radius-sm);
+      margin: 10px 0;
     }
+
+    /* List Styles */
+    ul {
+      padding-left: 20px;
+      margin: 20px 0;
+    }
+
+    li {
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    li::marker {
+      color: var(--primary-color);
+    }
+
+    /* Utility Classes */
+    .mt-4 { margin-top: 16px; }
+    .mb-4 { margin-bottom: 16px; }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- Header Section -->
     <div class="header">
       <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready, <span id="agent">Nick Romano</span>!</h1>
       <p>Thanks again for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
 
+    <!-- Screenshot Proofs Section -->
     <div class="section">
       <h2>📸 Screenshot Proofs</h2>
       <div class="image-loading" id="imgLoading">Images rendering... please wait</div>
-      <img id="img1" class="screenshot" alt="Initial Consent Screenshot">
-      <code id="img1url"></code>
-      <button class="copy-btn" onclick="copyText('img1url', this)">Copy</button>
-      <br>
-      <img id="img2" class="screenshot" alt="Terms Screenshot">
-      <code id="img2url"></code>
-      <button class="copy-btn" onclick="copyText('img2url', this)">Copy</button>
+      <div class="screenshot-wrapper">
+        <img id="img1" class="screenshot" alt="Initial Consent Screenshot">
+        <code id="img1url"></code>
+        <button class="copy-btn" onclick="copyText('img1url', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
+      </div>
+      <div class="screenshot-wrapper">
+        <img id="img2" class="screenshot" alt="Terms Screenshot">
+        <code id="img2url"></code>
+        <button class="copy-btn" onclick="copyText('img2url', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
+      </div>
     </div>
 
+    <!-- Templates Section -->
     <div class="section">
       <h2>📄 Copy & Paste Templates</h2>
       <p>This is what regulators look for and is the key to getting approved. We base these off of what's been recently approved.</p>
-      <p><strong id="biz1">Client Business</strong> Pt 1 Opt In: <code id="img1link">https://i.ibb.co/wNKxM4Rq/file.png</code></p>
-      <p>Pt 2 Opt In: <code id="img2link">https://i.ibb.co/7dyspkcJ/file.png</code></p>
+      <p><strong id="biz1">Client Business</strong> Pt 1 Opt In: <code id="img1link"></code></p>
+      <p>Pt 2 Opt In: <code id="img2link"></code></p>
     </div>
 
+    <!-- Use Case Section -->
     <div class="section">
       <h2>📃 Use Case Description</h2>
+      <img src="https://i.ibb.co/pB2C9MVc/IMAGE-ONE.png" class="screenshot loaded" alt="Use Case Screenshot">
       <pre id="useCase">Loading use case description...</pre>
     </div>
 
+    <!-- Sample Messages Section -->
     <div class="section">
       <h2>💬 Sample Messages</h2>
-      <p><strong>Message One:</strong></p>
-      <pre id="msg1">Loading...</pre>
-      <p><strong>Message Two:</strong></p>
-      <pre id="msg2">Loading...</pre>
+      <div class="message-wrapper">
+        <p><strong>Message One:</strong></p>
+        <pre id="msg1">Loading...</pre>
+      </div>
+      <div class="message-wrapper">
+        <p><strong>Message Two:</strong></p>
+        <pre id="msg2">Loading...</pre>
+      </div>
     </div>
 
+    <!-- User Consent Section -->
     <div class="section">
       <h2>📄 User Consent Copy</h2>
       <img src="https://i.ibb.co/zHWqq3h8/IMAGE-2.png" class="screenshot loaded" alt="User Consent Screenshot">
       <pre id="consentCopy">Loading...</pre>
     </div>
 
+    <!-- Opt-In Message Section -->
     <div class="section">
       <h2>📜 Opt-In Message</h2>
       <img src="https://i.ibb.co/Xrgm89q2/IMAGE-3.png" class="screenshot loaded" alt="Opt-In Screenshot">
       <pre>You have successfully opted-in to receive notification and promotional SMS from <span id="biz2">Client Business</span>. Please reply STOP if you need to Opt-out in the future.</pre>
     </div>
 
+    <!-- Tips Section -->
     <div class="section">
       <h2>💡 Tips for Approval</h2>
       <ul>
@@ -169,9 +341,18 @@
       <img src="https://i.ibb.co/Xfbh3S3T/IMAGE-4.png" class="screenshot loaded" alt="Tips Screenshot">
     </div>
 
+    <!-- PDF Section -->
     <div class="pdf-section">
       <h3>Need to send this to a client? Here's a white labeled guide!</h3>
-      <a href="#" onclick="window.print()">Download PDF</a>
+      <a href="#" onclick="window.print()" class="pdf-button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="12" y1="18" x2="12" y2="12"></line>
+          <line x1="9" y1="15" x2="15" y2="15"></line>
+        </svg>
+        Download PDF
+      </a>
     </div>
   </div>
 
@@ -185,37 +366,56 @@
         const res = await fetch("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id=" + id);
         const data = await res.json();
 
+        // Handle Image Loading
         const img1 = document.getElementById("img1");
         const img2 = document.getElementById("img2");
 
-        img1.onload = img2.onload = () => {
-          img1.classList.add("loaded");
-          img2.classList.add("loaded");
-          document.getElementById("imgLoading").style.display = "none";
+        const handleImageLoad = (img) => {
+          img.classList.add("loaded");
+          if (img1.classList.contains("loaded") && img2.classList.contains("loaded")) {
+            document.getElementById("imgLoading").style.display = "none";
+          }
         };
 
+        img1.onload = () => handleImageLoad(img1);
+        img2.onload = () => handleImageLoad(img2);
+
+        // Set Image Sources
         img1.src = data.img1;
         img2.src = data.img2;
 
-        document.getElementById("img1url").textContent = data.img1;
-        document.getElementById("img2url").textContent = data.img2;
-        document.getElementById("img1link").textContent = data.img1;
-        document.getElementById("img2link").textContent = data.img2;
-        document.getElementById("agent").textContent = data.agent_name;
-        document.getElementById("biz1").textContent = data.business_name;
-        document.getElementById("biz2").textContent = data.business_name;
+        // Update Text Content
+        const updateElement = (id, text) => {
+          const element = document.getElementById(id);
+          if (element) element.textContent = text;
+        };
 
-        document.getElementById("useCase").textContent =
-          `This campaign sends appointment information — confirmation & reminder messages to customers once they have booked an appointment with ${data.business_name} on ${data.a2pwebsite} and opted-in to receive promotional and notification SMS from ${data.business_name}\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy:\n${data.img2}`;
+        updateElement("img1url", data.img1);
+        updateElement("img2url", data.img2);
+        updateElement("img1link", data.img1);
+        updateElement("img2link", data.img2);
+        updateElement("agent", data.agent_name);
+        updateElement("biz1", data.business_name);
+        updateElement("biz2", data.business_name);
 
-        document.getElementById("msg1").textContent =
-          `Hi John! This is Jane from ${data.business_name}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`;
+        // Update Use Case Description
+        updateElement("useCase",
+          `This campaign sends appointment information — confirmation & reminder messages to customers once they have booked an appointment with ${data.business_name} on ${data.a2pwebsite} and opted-in to receive promotional and notification SMS from ${data.business_name}\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy:\n${data.img2}`
+        );
 
-        document.getElementById("msg2").textContent =
-          `Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`;
+        // Update Sample Messages
+        updateElement("msg1",
+          `Hi John! This is Jane from ${data.business_name}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+        );
 
-        document.getElementById("consentCopy").textContent =
-          `End users opt-in by visiting - ${data.a2pwebsite} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`;
+        updateElement("msg2",
+          `Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+        );
+
+        // Update Consent Copy
+        updateElement("consentCopy",
+          `End users opt-in by visiting - ${data.a2pwebsite} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`
+        );
 
       } catch (err) {
         console.error("Error fetching data", err);
@@ -227,12 +427,18 @@
       navigator.clipboard.writeText(el.textContent.trim()).then(() => {
         const msg = document.createElement("span");
         msg.className = "copied-msg";
-        msg.textContent = "Copied!";
+        msg.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+          Copied!
+        `;
         btn.insertAdjacentElement("afterend", msg);
         setTimeout(() => msg.remove(), 2000);
       });
     }
 
+    // Initialize
     fetchData();
   </script>
 </body>
