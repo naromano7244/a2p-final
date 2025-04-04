@@ -30,19 +30,16 @@
     }
     .header h1 { margin: 0; font-size: 26px; }
     .header p { margin: 10px 0 0; font-size: 16px; }
-
     .section {
       padding: 30px 25px;
       border-bottom: 1px solid #eee;
     }
     .section:last-child { border: none; }
-
     h2 {
       font-size: 20px;
       margin-bottom: 15px;
       color: #5025d1;
     }
-
     pre {
       background: #f3f3f3;
       padding: 15px;
@@ -52,21 +49,13 @@
       font-family: monospace;
       font-size: 14px;
     }
-
     .screenshot {
       max-width: 100%;
       border-radius: 8px;
       margin: 15px 0;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       background: #eee;
-      opacity: 0;
-      transition: opacity 0.5s ease;
     }
-
-    .screenshot.loaded {
-      opacity: 1;
-    }
-
     .copy-btn {
       background: #5025d1;
       color: white;
@@ -77,34 +66,12 @@
       cursor: pointer;
       margin: 10px 0;
     }
-
-    .copied-msg {
-      display: inline-block;
-      margin-left: 10px;
-      color: green;
-      font-weight: 600;
-      font-size: 14px;
-      animation: fadeOut 2s forwards;
-    }
-
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-
-    .image-loading {
-      text-align: center;
-      font-size: 16px;
-      color: #666;
-      padding: 10px;
-    }
-
+    .copy-btn:hover { opacity: 0.9; }
     .pdf-section {
       background: #f3efff;
       text-align: center;
       padding: 30px;
     }
-
     .pdf-section a {
       display: inline-block;
       margin-top: 12px;
@@ -115,63 +82,62 @@
       font-weight: 600;
       text-decoration: none;
     }
-
-    @media print {
-      .pdf-section, .copy-btn, .copied-msg {
-        display: none !important;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready, <span id="agent">Nick Romano</span>!</h1>
+      <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready, Nick Romano!</h1>
       <p>Thanks again for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
 
     <div class="section">
       <h2>📸 Screenshot Proofs</h2>
-      <div class="image-loading" id="imgLoading">Images rendering... please wait</div>
-      <img id="img1" class="screenshot" alt="Initial Consent Screenshot">
-      <code id="img1url"></code>
-      <button class="copy-btn" onclick="copyText('img1url', this)">Copy</button>
+      <img src="https://i.ibb.co/wNKxM4Rq/file.png" class="screenshot" alt="Initial Consent Screenshot">
+      <code>https://i.ibb.co/wNKxM4Rq/file.png</code>
+      <button class="copy-btn" onclick="copyText(this)">Copy</button>
       <br>
-      <img id="img2" class="screenshot" alt="Terms Screenshot">
-      <code id="img2url"></code>
-      <button class="copy-btn" onclick="copyText('img2url', this)">Copy</button>
+      <img src="https://i.ibb.co/7dyspkcJ/file.png" class="screenshot" alt="Terms Screenshot">
+      <code>https://i.ibb.co/7dyspkcJ/file.png</code>
+      <button class="copy-btn" onclick="copyText(this)">Copy</button>
     </div>
 
     <div class="section">
       <h2>📄 Copy & Paste Templates</h2>
       <p>This is what regulators look for and is the key to getting approved. We base these off of what's been recently approved.</p>
-      <p><strong id="biz1">Test Agency</strong> Pt 1 Opt In: <a id="img1link" href="#" target="_blank">Link</a></p>
-      <p>Pt 2 Opt In: <a id="img2link" href="#" target="_blank">Link</a></p>
+      <p><strong>Client Business</strong> Pt 1 Opt In: <a href="https://i.ibb.co/wNKxM4Rq/file.png" target="_blank">Link</a></p>
+      <p>Pt 2 Opt In: <a href="https://i.ibb.co/7dyspkcJ/file.png" target="_blank">Link</a></p>
     </div>
 
     <div class="section">
       <h2>📃 Use Case Description</h2>
-      <pre id="useCase">Loading use case description...</pre>
-      <button class="copy-btn" onclick="copyText('useCase', this)">Copy</button>
+      <pre>This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with Client Business on www.clientsite.com and opted-in to receive promotional and notification SMS from Client Business
+
+Photo proof of initial consent: https://i.ibb.co/wNKxM4Rq/file.png
+Photo proof of expressed consent, terms, and privacy policy: https://i.ibb.co/7dyspkcJ/file.png</pre>
+      <button class="copy-btn" onclick="copyText(this)">Copy</button>
     </div>
 
     <div class="section">
       <h2>💬 Sample Messages</h2>
       <p><strong>Message One:</strong></p>
-      <pre id="msg1">Loading...</pre>
+      <pre>Hi John! This is Jane from Client Business. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.</pre>
       <p><strong>Message Two:</strong></p>
-      <pre id="msg2">Loading...</pre>
+      <pre>Hello, this is Jason with Client Business. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.</pre>
     </div>
 
     <div class="section">
       <h2>📄 User Consent Copy</h2>
-      <pre id="consentCopy">Loading...</pre>
-      <button class="copy-btn" onclick="copyText('consentCopy', this)">Copy</button>
+      <pre>End users opt-in by visiting www.clientsite.com and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.
+
+Photo proof of initial consent: https://i.ibb.co/wNKxM4Rq/file.png
+Photo proof of expressed consent, terms, and privacy policy: https://i.ibb.co/7dyspkcJ/file.png</pre>
+      <button class="copy-btn" onclick="copyText(this)">Copy</button>
     </div>
 
     <div class="section">
       <h2>📜 Opt-In Message</h2>
-      <pre>You have successfully opted-in to receive notification and promotional SMS from <span id="biz2">Test Agency</span>. Please reply STOP if you need to Opt-out in the future.</pre>
+      <pre>You have successfully opted-in to receive notification and promotional SMS from Client Business. Please reply STOP if you need to Opt-out in the future.</pre>
     </div>
 
     <div class="section">
@@ -191,61 +157,9 @@
   </div>
 
   <script>
-    async function fetchData() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
-      if (!id) return;
-
-      try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id=" + id);
-        const data = await res.json();
-
-        const img1 = document.getElementById("img1");
-        const img2 = document.getElementById("img2");
-        let loaded = 0;
-
-        const onImageLoad = () => {
-          loaded++;
-          if (loaded === 2) {
-            img1.classList.add("loaded");
-            img2.classList.add("loaded");
-            document.getElementById("imgLoading").style.display = "none";
-          }
-        };
-
-        img1.onload = onImageLoad;
-        img2.onload = onImageLoad;
-        img1.src = data.img1;
-        img2.src = data.img2;
-
-        document.getElementById("img1url").textContent = data.img1;
-        document.getElementById("img2url").textContent = data.img2;
-        document.getElementById("img1link").href = data.img1;
-        document.getElementById("img2link").href = data.img2;
-
-        document.getElementById("agent").textContent = data.agent_name;
-        document.getElementById("biz1").textContent = data.business_name;
-        document.getElementById("biz2").textContent = data.business_name;
-
-        document.getElementById("useCase").textContent =
-          `This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${data.business_name} on ${data.a2pwebsite} and opted-in to receive promotional and notification SMS from ${data.business_name}\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`;
-
-        document.getElementById("msg1").textContent =
-          `Hi John! This is Jane from ${data.business_name}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`;
-
-        document.getElementById("msg2").textContent =
-          `Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`;
-
-        document.getElementById("consentCopy").textContent =
-          `End users opt-in by visiting - ${data.a2pwebsite} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent: ${data.img1}\n\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`;
-      } catch (err) {
-        console.error("Error loading data", err);
-      }
-    }
-
-    function copyText(elId, btn) {
-      const el = document.getElementById(elId);
-      navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+    function copyText(btn) {
+      const text = btn.previousElementSibling.textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
         const msg = document.createElement("span");
         msg.className = "copied-msg";
         msg.textContent = "Copied!";
@@ -253,8 +167,6 @@
         setTimeout(() => msg.remove(), 2000);
       });
     }
-
-    fetchData();
   </script>
 </body>
 </html>
