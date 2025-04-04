@@ -106,20 +106,22 @@
       color: #666;
       padding: 10px;
     }
+
     @media print {
-      .header,
-      .pdf-section,
-      .copy-btn,
-      .copied-msg,
-      .image-loading {
+      body {
+        background: white !important;
+        color: #000 !important;
+      }
+      .pdf-section, .copy-btn, .copied-msg, .image-loading {
         display: none !important;
       }
       .container {
         box-shadow: none !important;
         border-radius: 0 !important;
+        margin: 0 !important;
       }
-      body {
-        background: white !important;
+      img.screenshot {
+        opacity: 1 !important;
       }
     }
   </style>
@@ -162,33 +164,15 @@
         const img1 = document.getElementById("img1");
         const img2 = document.getElementById("img2");
 
-        let loaded = 0;
-        function markLoaded() {
-          loaded++;
-          if (loaded === 2) {
-            document.getElementById("imgLoading").style.display = "none";
-          }
-        }
-
-        img1.onload = () => {
-          img1.classList.add("loaded");
-          markLoaded();
-        };
-        img2.onload = () => {
-          img2.classList.add("loaded");
-          markLoaded();
-        };
-
+        img1.onload = () => img1.classList.add("loaded");
+        img2.onload = () => img2.classList.add("loaded");
         img1.src = data.img1;
         img2.src = data.img2;
+        document.getElementById("imgLoading").style.display = "none";
 
         document.getElementById("img1url").textContent = data.img1;
         document.getElementById("img2url").textContent = data.img2;
-
         document.getElementById("agent").textContent = data.agent_name;
-        document.getElementById("biz1").textContent = data.business_name;
-        document.getElementById("biz2").textContent = data.business_name;
-
       } catch (err) {
         console.error("Failed to fetch data", err);
       }
@@ -209,3 +193,4 @@
   </script>
 </body>
 </html>
+
