@@ -67,29 +67,45 @@
       background: linear-gradient(90deg, #4c21b0, #6e3de8);
     }
 
-    .header h1 { margin: 0; font-size: 28px; font-weight: 700; line-height: 1.4; }
-    .header p  { margin: 15px 0 0; font-size: 16px; opacity: 0.9; }
+    .header h1 { 
+      margin: 0; 
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
 
-    /* Disclosure */
+    .header p { 
+      margin: 15px 0 0; 
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    /* Disclosure Styles */
     .disclosure {
       background: #fff3cd;
       color: #856404;
       border: 1px solid #ffeeba;
       border-radius: var(--radius-sm);
       padding: 10px 20px;
-      margin: 20px 40px 0;
-      text-align: center;
+      margin: 20px 40px 0; /* top and side margin */
       font-size: 14px;
+      text-align: center;
     }
-
-    /* Sections */
+    
+    /* Section Styles */
     .section {
       padding: 35px 30px;
       border-bottom: 1px solid var(--border-color);
       transition: background-color 0.2s ease;
     }
-    .section:hover { background-color: #fafafa; }
-    .section:last-child { border: none; }
+
+    .section:hover {
+      background-color: #fafafa;
+    }
+
+    .section:last-child { 
+      border: none; 
+    }
 
     h2 {
       font-size: 22px;
@@ -100,20 +116,27 @@
       gap: 8px;
     }
 
-    /* Images */
-    .screenshot-wrapper { position: relative; margin: 20px 0; }
+    /* Image Styles */
+    .screenshot-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+
     .screenshot {
       max-width: 100%;
       border-radius: var(--radius-sm);
       box-shadow: var(--shadow-sm);
       background: #f8fafc;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       border: 1px solid var(--border-color);
     }
-    .screenshot.loaded { opacity: 1; }
 
-    /* Code blocks */
+    .screenshot.loaded {
+      opacity: 1;
+    }
+
+    /* Code Block Styles */
     pre {
       background: #f8fafc;
       padding: 20px;
@@ -125,6 +148,7 @@
       border: 1px solid var(--border-color);
       margin: 15px 0;
     }
+
     code {
       background: #f1f5f9;
       padding: 4px 8px;
@@ -133,7 +157,7 @@
       color: var(--primary-color);
     }
 
-    /* Copy button */
+    /* Button Styles */
     .copy-btn {
       background: var(--primary-color);
       color: white;
@@ -142,162 +166,222 @@
       font-size: 14px;
       border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin: 10px 0;
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
       gap: 6px;
     }
-    .copy-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
-    .copy-btn:active { transform: translateY(0); }
 
-    /* PDF Section */
+    .copy-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Copy Message Animation */
+    .copied-msg {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 10px;
+      color: var(--success-color);
+      font-weight: 500;
+      font-size: 14px;
+      opacity: 0;
+      animation: fadeInOut 2s ease forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(5px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-5px); }
+    }
+
+    /* PDF Section Styles */
     .pdf-section {
       background: var(--primary-light);
       text-align: center;
       padding: 40px 30px;
     }
+
+    .pdf-section h3 {
+      margin: 0 0 20px;
+      color: var(--primary-color);
+    }
+
     .pdf-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       background: var(--primary-color);
       color: white;
       padding: 12px 24px;
       border-radius: var(--radius-sm);
-      text-decoration: none;
       font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      transition: all 0.2s ease;
     }
-    .pdf-button:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
 
-    /* List */
-    ul { padding-left: 20px; margin: 20px 0; }
-    li { margin-bottom: 12px; }
-    li::marker { color: var(--primary-color); }
-
-    /* CTA Button */
-    .cta-btn {
-      background: #dc2626;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .pdf-button:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
-    .cta-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
 
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
+    /* List Styles */
+    ul {
+      padding-left: 20px;
+      margin: 20px 0;
     }
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: var(--radius-sm);
-      max-width: 90%;
-      max-height: 90%;
-      overflow: auto;
+
+    li {
+      margin-bottom: 12px;
       position: relative;
     }
-    .modal-close {
-      position: absolute;
-      top: 10px; right: 10px;
-      background: transparent;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
+
+    li::marker {
+      color: var(--primary-color);
     }
 
+    /* Utility Classes */
+    .mt-4 { margin-top: 16px; }
+    .mb-4 { margin-bottom: 16px; }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
+    <!-- Header Section -->
     <div class="header">
       <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready!</h1>
       <p>Thanks again for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
-
-    <!-- Disclosure -->
+    
+    <!-- Disclosure Section -->
     <div class="disclosure">
       ⚠️ Important: If your campaign was previously rejected, please <u>recreate and resubmit your campaign</u> to ensure approval. Resubmissions may default to the original submission.
     </div>
-
-    <!-- CTA After Disclosure -->
-    <div class="section" style="text-align:center; background:#f9f9ff; padding:25px;">
-      <h3 style="color:var(--primary-color); margin-bottom:10px;">📈 Agencies: Want more time to grow revenue?</h3>
-      <p style="margin:0 auto; max-width:600px;">Get done for you service for only $50!</p>
-      <button class="cta-btn open-form-btn">Get done for you service for only $50!</button>
+    
+    <!-- Inserted CTA Section After Disclosure -->
+    <div class="section" style="text-align: center; background: #f9f9ff; padding: 25px;">
+      <h3 style="color: var(--primary-color); margin-bottom: 10px;">📈 Agencies: Want more time to grow revenue?</h3>
+      <p style="margin: 0 auto; max-width: 600px;">
+        Our white-label A2P service handles everything for you — fast approvals, clean integrations, and no stress.
+      </p>
+      <a href="https://a2pwizard.com/done-for-you" class="pdf-button" style="margin-top: 20px; display: inline-block;">Get Done-For-You Help →</a>
     </div>
-
-    <!-- Screenshot Proofs -->
+    
+    <!-- Screenshot Proofs Section -->
     <div class="section">
       <h2>📸 Screenshot Proofs</h2>
       <div class="image-loading" id="imgLoading">Images rendering... please wait</div>
       <div class="screenshot-wrapper">
         <img id="img1" class="screenshot" alt="Initial Consent Screenshot">
         <code id="img1url"></code>
-        <button class="copy-btn" onclick="copyText('img1url', this)">Copy</button>
+        <button class="copy-btn" onclick="copyText('img1url', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
       </div>
       <div class="screenshot-wrapper">
         <img id="img2" class="screenshot" alt="Terms Screenshot">
         <code id="img2url"></code>
-        <button class="copy-btn" onclick="copyText('img2url', this)">Copy</button>
+        <button class="copy-btn" onclick="copyText('img2url', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
       </div>
     </div>
 
-    <!-- Templates -->
+    <!-- Templates Section -->
     <div class="section">
       <h2>📄 Copy & Paste Templates</h2>
-      <p><strong id="biz1"></strong> Pt 1 Opt In: <code id="img1link"></code></p>
+      <p>This is what regulators look for and is the key to getting approved. We base these off of what's been recently approved.</p>
+      <p><strong id="biz1">Client Business</strong> Pt 1 Opt In: <code id="img1link"></code></p>
       <p>Pt 2 Opt In: <code id="img2link"></code></p>
     </div>
 
-    <!-- Use Case -->
+    <!-- Use Case Section -->
     <div class="section">
       <h2>📃 Use Case Description</h2>
+      <!-- UPDATED -->
       <img src="https://i.ibb.co/w8d1GfT/IMAGE-ONE.png" class="screenshot loaded" alt="Use Case Screenshot">
       <pre id="useCase">Loading use case description...</pre>
-      <button class="copy-btn" onclick="copyText('useCase', this)">Copy</button>
+      <button class="copy-btn" onclick="copyText('useCase', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Copy
+      </button>
     </div>
 
-    <!-- Sample Messages -->
+    <!-- Sample Messages Section -->
     <div class="section">
       <h2>💬 Sample Messages</h2>
-      <p><strong>Message One:</strong></p>
-      <pre id="msg1">Loading...</pre>
-      <button class="copy-btn" onclick="copyText('msg1', this)">Copy</button>
-      <p><strong>Message Two:</strong></p>
-      <pre id="msg2">Loading...</pre>
-      <button class="copy-btn" onclick="copyText('msg2', this)">Copy</button>
+      <div class="message-wrapper">
+        <p><strong>Message One:</strong></p>
+        <pre id="msg1">Loading...</pre>
+        <button class="copy-btn" onclick="copyText('msg1', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
+      </div>  
+      <div class="message-wrapper">
+        <p><strong>Message Two:</strong></p>
+        <pre id="msg2">Loading...</pre>
+        <button class="copy-btn" onclick="copyText('msg2', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
+      </div>
     </div>
 
-    <!-- User Consent -->
+    <!-- User Consent Section -->
     <div class="section">
       <h2>📄 User Consent Copy</h2>
+      <!-- UPDATED -->
       <img src="https://i.ibb.co/kgm5KXW9/three.png" class="screenshot loaded" alt="User Consent Screenshot">
       <pre id="consentCopy">Loading...</pre>
-      <button class="copy-btn" onclick="copyText('consentCopy', this)">Copy</button>
+      <button class="copy-btn" onclick="copyText('consentCopy', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Copy
+      </button>
     </div>
 
-    <!-- Opt-In Message -->
+    <!-- Opt-In Message Section -->
     <div class="section">
       <h2>📜 Opt-In Message</h2>
+      <!-- UPDATED -->
       <img src="https://i.ibb.co/m51b0yZd/IMAGE-2-USE.png" class="screenshot loaded" alt="Opt-In Screenshot">
-      <pre id="optInMessage">Loading...</pre>
-      <button class="copy-btn" onclick="copyText('optInMessage', this)">Copy</button>
+      <pre id="optInMessage">You have successfully opted-in to receive notification and promotional SMS from <span id="biz2">Client Business</span>. Please reply STOP if you need to Opt-out in the future.</pre>
+      <button class="copy-btn" onclick="copyText('optInMessage', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Copy
+      </button>
     </div>
 
-    <!-- Tips -->
+    <!-- Tips Section -->
     <div class="section">
       <h2>💡 Tips for Approval</h2>
       <ul>
@@ -306,43 +390,33 @@
         <li>Brand approval usually takes 24 hours</li>
         <li><strong>Be sure</strong> to follow all best practices to avoid delays</li>
       </ul>
+      <!-- UPDATED -->
       <img src="https://i.ibb.co/S4JzfBYz/image-4.png" class="screenshot loaded" alt="Tips Screenshot">
     </div>
 
     <!-- PDF Section -->
     <div class="pdf-section">
       <h3>Need to send this to a client? Here's a white labeled guide!</h3>
-      <a href="#" onclick="window.print()" class="pdf-button">Download PDF</a>
+      <a href="#" onclick="window.print()" class="pdf-button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="12" y1="18" x2="12" y2="12"></line>
+          <line x1="9" y1="15" x2="15" y2="15"></line>
+        </svg>
+        Download PDF
+      </a>
+    </div>
+    
+    <!-- Inserted CTA Section After PDF -->
+    <div class="section" style="text-align: center; background: #f9f9ff; padding: 25px;">
+      <h3 style="color: var(--primary-color); margin-bottom: 10px;">📈 Agencies: Want more time to grow revenue?</h3>
+      <p style="margin: 0 auto; max-width: 600px;">
+        Our white-label A2P service handles everything for you — fast approvals, clean integrations, and no stress.
+      </p>
+      <a href="https://a2pwizard.com/done-for-you" class="pdf-button" style="margin-top: 20px; display: inline-block;">Get Done-For-You Help →</a>
     </div>
 
-    <!-- CTA After PDF -->
-    <div class="section" style="text-align:center; background:#f9f9ff; padding:25px;">
-      <h3 style="color:var(--primary-color); margin-bottom:10px;">📈 Agencies: Want more time to grow revenue?</h3>
-      <p style="margin:0 auto; max-width:600px;">Get done for you service for only $50!</p>
-      <button class="cta-btn open-form-btn">Get done for you service for only $50!</button>
-    </div>
-
-  </div>
-
-  <!-- Modal -->
-  <div id="modal-form" class="modal">
-    <div class="modal-content">
-      <button class="modal-close" id="modal-close">&times;</button>
-      <iframe
-        src="https://api.leadconnectorhq.com/widget/form/21SbtJgXZ5jDnEZKQ3K9"
-        style="width:100%;height:100%;border:none;border-radius:4px"
-        data-layout="{'id':'INLINE'}"
-        data-trigger-type="alwaysShow"
-        data-activation-type="alwaysActivated"
-        data-deactivation-type="neverDeactivate"
-        data-form-name="A2P Contact Us - Results Page Version"
-        data-height="590"
-        data-layout-iframe-id="inline-21SbtJgXZ5jDnEZKQ3K9"
-        data-form-id="21SbtJgXZ5jDnEZKQ3K9"
-        title="A2P Contact Us - Results Page Version"
-      ></iframe>
-      <script src="https://link.msgsndr.com/js/form_embed.js"></script>
-    </div>
   </div>
 
   <script>
@@ -350,27 +424,64 @@
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id");
       if (!id) return;
+
       try {
         const res = await fetch("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id=" + id);
         const data = await res.json();
+
+        // Handle Image Loading
         const img1 = document.getElementById("img1");
         const img2 = document.getElementById("img2");
-        img1.onload = () => img1.classList.add("loaded");
-        img2.onload = () => img2.classList.add("loaded");
+
+        const handleImageLoad = (img) => {
+          img.classList.add("loaded");
+          if (img1.classList.contains("loaded") && img2.classList.contains("loaded")) {
+            document.getElementById("imgLoading").style.display = "none";
+          }
+        };
+
+        img1.onload = () => handleImageLoad(img1);
+        img2.onload = () => handleImageLoad(img2);
+
+        // Set Image Sources
         img1.src = data.img1;
         img2.src = data.img2;
-        document.getElementById("biz1").textContent = data.business_name;
-        document.getElementById("img1url").textContent = data.img1;
-        document.getElementById("img2url").textContent = data.img2;
-        document.getElementById("img1link").textContent = data.img1;
-        document.getElementById("img2link").textContent = data.img2;
-        document.getElementById("useCase").textContent = data.use_case;
-        document.getElementById("msg1").textContent = data.msg1;
-        document.getElementById("msg2").textContent = data.msg2;
-        document.getElementById("consentCopy").textContent = data.consentCopy;
-        document.getElementById("optInMessage").textContent = data.optInMessage;
+
+        // Update Text Content
+        const updateElement = (id, text) => {
+          const element = document.getElementById(id);
+          if (element) element.textContent = text;
+        };
+
+        updateElement("img1url", data.img1);
+        updateElement("img2url", data.img2);
+        updateElement("img1link", data.img1);
+        updateElement("img2link", data.img2);
+        updateElement("agent", data.agent_name);
+        updateElement("biz1", data.business_name);
+        updateElement("biz2", data.business_name);
+
+        // Update Use Case Description
+        updateElement("useCase",
+          `This campaign sends appointment information — confirmation & reminder messages to customers once they have booked an appointment with ${data.business_name} on ${data.a2pwebsite} and opted-in to receive promotional and notification SMS from ${data.business_name}\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy:\n${data.img2}`
+        );
+
+        // Update Sample Messages
+        updateElement("msg1",
+          `Hi John! This is Jane from ${data.business_name}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+        );
+
+        updateElement("msg2",
+          `Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+        );
+
+        // Update Consent Copy
+        updateElement("consentCopy",
+          `End users opt-in by visiting - ${data.a2pwebsite} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`
+        );
+
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching data", err);
       }
     }
 
@@ -379,22 +490,18 @@
       navigator.clipboard.writeText(el.textContent.trim()).then(() => {
         const msg = document.createElement("span");
         msg.className = "copied-msg";
-        msg.innerHTML = "Copied!";
+        msg.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+          Copied!
+        `;
         btn.insertAdjacentElement("afterend", msg);
         setTimeout(() => msg.remove(), 2000);
       });
     }
 
-    // Modal handlers
-    document.querySelectorAll('.open-form-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('modal-form').style.display = 'flex';
-      });
-    });
-    document.getElementById('modal-close').addEventListener('click', () => {
-      document.getElementById('modal-form').style.display = 'none';
-    });
-
+    // Initialize
     fetchData();
   </script>
 </body>
