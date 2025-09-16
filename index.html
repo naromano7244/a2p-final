@@ -4,505 +4,269 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
+  <!-- A2P Results v1.3 – perf + polish -->
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://i.ibb.co" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    /* Base Styles */
-    * { box-sizing: border-box; }
-    
-    :root {
-      --primary-color: #5c27d4;
-      --primary-light: #f3efff;
-      --text-color: #2d3748;
-      --border-color: #e2e8f0;
-      --success-color: #48bb78;
-      --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-      --radius-md: 12px;
-      --radius-sm: 8px;
+    *{box-sizing:border-box}
+    :root{
+      --primary:#5c27d4; --primary-2:#6e3de8; --primary-light:#f3efff;
+      --text:#2d3748; --muted:#667085; --border:#e2e8f0;
+      --success:#48bb78; --shadow-sm:0 2px 4px rgba(0,0,0,.05);
+      --shadow-md:0 6px 22px rgba(0,0,0,.09); --r-md:12px; --r-sm:8px;
     }
+    body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;background:#f7f7fa;color:var(--text);line-height:1.6}
+    .container{max-width:900px;margin:36px auto;background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-md);overflow:hidden}
+    @media (max-width:940px){.container{margin:18px}}
+    .header{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;text-align:center;padding:36px 20px;position:relative}
+    .header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#4c21b0,#6e3de8)}
+    .header h1{margin:0;font-size:28px;font-weight:700;line-height:1.35}
+    .header p{margin:12px 0 0;font-size:15.5px;opacity:.95}
+    .disclosure{background:#fff3cd;color:#7a5a00;border:1px solid #ffe08a;border-radius:var(--r-sm);padding:10px 16px;margin:18px 24px 0;text-align:center;font-size:14px}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f7f7fa;
-      color: var(--text-color);
-      line-height: 1.6;
-    }
+    .section{padding:28px 28px;border-top:1px solid var(--border);transition:background .18s ease}
+    .section:first-of-type{border-top:0}
+    .section:hover{background:#fafafa}
+    h2{font-size:20px;margin:0 0 16px;color:var(--primary);display:flex;align-items:center;gap:8px}
 
-    /* Layout */
-    .container {
-      max-width: 850px;
-      margin: 40px auto;
-      background: white;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-    }
+    /* Screenshots */
+    .screenshot-wrapper{margin:14px 0}
+    .skeleton{border:1px solid var(--border);border-radius:var(--r-sm);background:linear-gradient(90deg,#f4f6f9, #eef2f7, #f4f6f9);background-size:200% 100%;animation:shimmer 1.2s linear infinite;height:260px}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .screenshot{width:100%;height:auto;border-radius:var(--r-sm);box-shadow:var(--shadow-sm);background:#f8fafc;border:1px solid var(--border);opacity:0;transition:opacity .25s ease}
+    .screenshot.loaded{opacity:1}
+    /* ensure no layout shift; adjust to your typical size */
+    .screenshot[width][height]{aspect-ratio: attr(width) / attr(height);}
 
-    @media (max-width: 900px) {
-      .container {
-        margin: 20px;
-        width: auto;
-      }
-    }
+    /* Code + copy */
+    pre{background:#f8fafc;padding:16px;border-radius:var(--r-sm);white-space:pre-wrap;word-break:break-word;font:13.5px ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--border);margin:12px 0}
+    code{background:#f1f5f9;padding:3px 6px;border-radius:4px;font-size:13.5px;color:var(--primary)}
+    .copy-btn{background:var(--primary);color:#fff;border:0;padding:8px 14px;font-size:13.5px;border-radius:var(--r-sm);cursor:pointer;margin:8px 0;display:inline-flex;align-items:center;gap:6px;transition:transform .15s ease, box-shadow .2s ease}
+    .copy-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+    .copied-msg{display:inline-flex;align-items:center;margin-left:10px;color:var(--success);font-weight:600;font-size:13.5px;opacity:0;animation:copfade 2s ease forwards}
+    @keyframes copfade{0%{opacity:0;transform:translateY(4px)}10%,90%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-3px)}}
 
-    /* Header Styles */
-    .header {
-      background: var(--primary-color);
-      color: white;
-      text-align: center;
-      padding: 40px 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .header::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #4c21b0, #6e3de8);
-    }
-
-    .header h1 { 
-      margin: 0; 
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1.4;
-    }
-
-    .header p { 
-      margin: 15px 0 0; 
-      font-size: 16px;
-      opacity: 0.9;
-    }
-
-    /* Disclosure Styles */
-    .disclosure {
-      background: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffeeba;
-      border-radius: var(--radius-sm);
-      padding: 10px 20px;
-      margin: 20px 40px 0; /* top and side margin */
-      font-size: 14px;
-      text-align: center;
-    }
-    
-    /* Section Styles */
-    .section {
-      padding: 35px 30px;
-      border-bottom: 1px solid var(--border-color);
-      transition: background-color 0.2s ease;
-    }
-
-    .section:hover {
-      background-color: #fafafa;
-    }
-
-    .section:last-child { 
-      border: none; 
-    }
-
-    h2 {
-      font-size: 22px;
-      margin-bottom: 20px;
-      color: var(--primary-color);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Image Styles */
-    .screenshot-wrapper {
-      position: relative;
-      margin: 20px 0;
-    }
-
-    .screenshot {
-      max-width: 100%;
-      border-radius: var(--radius-sm);
-      box-shadow: var(--shadow-sm);
-      background: #f8fafc;
-      opacity: 0;
-      transition: all 0.3s ease;
-      border: 1px solid var(--border-color);
-    }
-
-    .screenshot.loaded {
-      opacity: 1;
-    }
-
-    /* Code Block Styles */
-    pre {
-      background: #f8fafc;
-      padding: 20px;
-      border-radius: var(--radius-sm);
-      white-space: pre-wrap;
-      word-break: break-word;
-      font-family: monospace;
-      font-size: 14px;
-      border: 1px solid var(--border-color);
-      margin: 15px 0;
-    }
-
-    code {
-      background: #f1f5f9;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 14px;
-      color: var(--primary-color);
-    }
-
-    /* Button Styles */
-    .copy-btn {
-      background: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      font-size: 14px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      margin: 10px 0;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .copy-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .copy-btn:active {
-      transform: translateY(0);
-    }
-
-    /* Copy Message Animation */
-    .copied-msg {
-      display: inline-flex;
-      align-items: center;
-      margin-left: 10px;
-      color: var(--success-color);
-      font-weight: 500;
-      font-size: 14px;
-      opacity: 0;
-      animation: fadeInOut 2s ease forwards;
-    }
-
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateY(5px); }
-      10% { opacity: 1; transform: translateY(0); }
-      90% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-5px); }
-    }
-
-    /* PDF Section Styles */
-    .pdf-section {
-      background: var(--primary-light);
-      text-align: center;
-      padding: 40px 30px;
-    }
-
-    .pdf-section h3 {
-      margin: 0 0 20px;
-      color: var(--primary-color);
-    }
-
-    .pdf-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--primary-color);
-      color: white;
-      padding: 12px 24px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .pdf-button:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* List Styles */
-    ul {
-      padding-left: 20px;
-      margin: 20px 0;
-    }
-
-    li {
-      margin-bottom: 12px;
-      position: relative;
-    }
-
-    li::marker {
-      color: var(--primary-color);
-    }
-
-    /* Utility Classes */
-    .mt-4 { margin-top: 16px; }
-    .mb-4 { margin-bottom: 16px; }
+    .pdf-section{background:var(--primary-light);text-align:center;padding:32px}
+    .pdf-section h3{margin:0 0 14px;color:var(--primary)}
+    .pdf-button{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;padding:11px 20px;border-radius:var(--r-sm);font-weight:600;text-decoration:none;transition:transform .15s}
+    .pdf-button:hover{transform:translateY(-1px)}
+    ul{padding-left:20px;margin:14px 0} li{margin-bottom:10px} li::marker{color:var(--primary)}
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Header Section -->
     <div class="header">
       <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready!</h1>
-      <p>Thanks again for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
+      <p>Thanks for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
-    
-    <!-- Disclosure Section -->
-    <div class="disclosure">
-      ⚠️ Important: If your campaign was previously rejected, please <u>recreate and resubmit your campaign</u> to ensure approval. Resubmissions may default to the original submission.
+
+    <div class="disclosure">⚠️ If your campaign was previously rejected, <u>recreate and resubmit</u> a new campaign for best results.</div>
+
+    <div class="section" style="text-align:center;background:#f9f9ff;padding:22px">
+      <h3 style="color:var(--primary);margin:0 0 8px">📈 Agencies: Want more time to grow revenue?</h3>
+      <p style="margin:0 auto;max-width:640px">White-label A2P done-for-you — fast approvals, clean integrations, no stress.</p>
+      <a href="https://a2pwizard.com/contactus" class="pdf-button" style="margin-top:14px">Get Done-For-You Help for $50 →</a>
     </div>
-    
-    <!-- Inserted CTA Section After Disclosure -->
-    <div class="section" style="text-align: center; background: #f9f9ff; padding: 25px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 10px;">📈 Agencies: Want more time to grow revenue?</h3>
-      <p style="margin: 0 auto; max-width: 600px;">
-        Our white-label A2P service handles everything for you — fast approvals, clean integrations, and no stress.
-      </p>
-      <a href="https://a2pwizard.com/contactus" class="pdf-button" style="margin-top: 20px; display: inline-block;">Get Done-For-You Help for $50! →</a>
-    </div>
-    
-    <!-- Screenshot Proofs Section -->
+
     <div class="section">
       <h2>📸 Screenshot Proofs</h2>
-      <div class="image-loading" id="imgLoading">Images rendering... please wait</div>
+      <div id="imgLoading" class="muted">Images rendering…</div>
+
       <div class="screenshot-wrapper">
-        <img id="img1" class="screenshot" alt="Initial Consent Screenshot">
+        <div id="sk1" class="skeleton"></div>
+        <img id="img1" class="screenshot" alt="Initial Consent Screenshot" loading="lazy" decoding="async" width="1200" height="675" />
         <code id="img1url"></code>
-        <button class="copy-btn" onclick="copyText('img1url', this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          Copy
-        </button>
+        <button class="copy-btn" onclick="copyText('img1url', this)">Copy</button>
       </div>
+
       <div class="screenshot-wrapper">
-        <img id="img2" class="screenshot" alt="Terms Screenshot">
+        <div id="sk2" class="skeleton"></div>
+        <img id="img2" class="screenshot" alt="Terms Screenshot" loading="lazy" decoding="async" width="1200" height="675" />
         <code id="img2url"></code>
-        <button class="copy-btn" onclick="copyText('img2url', this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          Copy
-        </button>
+        <button class="copy-btn" onclick="copyText('img2url', this)">Copy</button>
       </div>
     </div>
 
-    <!-- Templates Section -->
     <div class="section">
       <h2>📄 Copy & Paste Templates</h2>
-      <p>This is what regulators look for and is the key to getting approved. We base these off of what's been recently approved.</p>
+      <p>This is what regulators look for and is the key to getting approved.</p>
       <p><strong id="biz1">Client Business</strong> Pt 1 Opt In: <code id="img1link"></code></p>
       <p>Pt 2 Opt In: <code id="img2link"></code></p>
     </div>
 
-    <!-- Use Case Section -->
     <div class="section">
       <h2>📃 Use Case Description</h2>
-      <!-- UPDATED -->
-      <img src="https://i.ibb.co/w8d1GfT/IMAGE-ONE.png" class="screenshot loaded" alt="Use Case Screenshot">
+      <img src="https://i.ibb.co/w8d1GfT/IMAGE-ONE.png" class="screenshot loaded" alt="Use Case Screenshot" loading="lazy" decoding="async" width="1200" height="675">
       <pre id="useCase">Loading use case description...</pre>
-      <button class="copy-btn" onclick="copyText('useCase', this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-        Copy
-      </button>
+      <button class="copy-btn" onclick="copyText('useCase', this)">Copy</button>
     </div>
 
-    <!-- Sample Messages Section -->
     <div class="section">
       <h2>💬 Sample Messages</h2>
-      <div class="message-wrapper">
-        <p><strong>Message One:</strong></p>
-        <pre id="msg1">Loading...</pre>
-        <button class="copy-btn" onclick="copyText('msg1', this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          Copy
-        </button>
-      </div>  
-      <div class="message-wrapper">
-        <p><strong>Message Two:</strong></p>
-        <pre id="msg2">Loading...</pre>
-        <button class="copy-btn" onclick="copyText('msg2', this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          Copy
-        </button>
-      </div>
+      <p><strong>Message One:</strong></p>
+      <pre id="msg1">Loading...</pre>
+      <button class="copy-btn" onclick="copyText('msg1', this)">Copy</button>
+
+      <p style="margin-top:14px"><strong>Message Two:</strong></p>
+      <pre id="msg2">Loading...</pre>
+      <button class="copy-btn" onclick="copyText('msg2', this)">Copy</button>
     </div>
 
-    <!-- User Consent Section -->
     <div class="section">
       <h2>📄 User Consent Copy</h2>
-      <!-- UPDATED -->
-      <img src="https://i.ibb.co/kgm5KXW9/three.png" class="screenshot loaded" alt="User Consent Screenshot">
+      <img src="https://i.ibb.co/kgm5KXW9/three.png" class="screenshot loaded" alt="User Consent Screenshot" loading="lazy" decoding="async" width="1200" height="675">
       <pre id="consentCopy">Loading...</pre>
-      <button class="copy-btn" onclick="copyText('consentCopy', this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-        Copy
-      </button>
+      <button class="copy-btn" onclick="copyText('consentCopy', this)">Copy</button>
     </div>
 
-    <!-- Opt-In Message Section -->
     <div class="section">
       <h2>📜 Opt-In Message</h2>
-      <!-- UPDATED -->
-      <img src="https://i.ibb.co/m51b0yZd/IMAGE-2-USE.png" class="screenshot loaded" alt="Opt-In Screenshot">
-      <pre id="optInMessage">You have successfully opted-in to receive notification and promotional SMS from <span id="biz2">Client Business</span>. Please reply STOP if you need to Opt-out in the future.</pre>
-      <button class="copy-btn" onclick="copyText('optInMessage', this)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-        Copy
-      </button>
+      <img src="https://i.ibb.co/m51b0yZd/IMAGE-2-USE.png" class="screenshot loaded" alt="Opt-In Screenshot" loading="lazy" decoding="async" width="1200" height="675">
+      <pre id="optInMessage">You have successfully opted-in to receive notification and promotional SMS from <span id="biz2">Client Business</span>. Please reply STOP to opt-out.</pre>
+      <button class="copy-btn" onclick="copyText('optInMessage', this)">Copy</button>
     </div>
 
-    <!-- Tips Section -->
     <div class="section">
       <h2>💡 Tips for Approval</h2>
       <ul>
-        <li>Try submitting between 8am-11am on weekdays</li>
+        <li>Submit between 8am–11am on weekdays</li>
         <li>Use a fresh number/campaign if resubmitting</li>
-        <li>Brand approval usually takes 24 hours</li>
-        <li><strong>Be sure</strong> to follow all best practices to avoid delays</li>
+        <li>Brand approval usually takes ~24 hours</li>
+        <li><strong>Follow all best practices</strong> to avoid delays</li>
       </ul>
-      <!-- UPDATED -->
-      <img src="https://i.ibb.co/S4JzfBYz/image-4.png" class="screenshot loaded" alt="Tips Screenshot">
+      <img src="https://i.ibb.co/S4JzfBYz/image-4.png" class="screenshot loaded" alt="Tips Screenshot" loading="lazy" decoding="async" width="1200" height="675">
     </div>
 
-    <!-- PDF Section -->
     <div class="pdf-section">
-      <h3>Need to send this to a client? Here's a white labeled guide!</h3>
-      <a href="#" onclick="window.print()" class="pdf-button">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-          <line x1="12" y1="18" x2="12" y2="12"></line>
-          <line x1="9" y1="15" x2="15" y2="15"></line>
-        </svg>
-        Download PDF
-      </a>
-    </div>
-    
-    <!-- Inserted CTA Section After PDF -->
-    <div class="section" style="text-align: center; background: #f9f9ff; padding: 25px;">
-      <h3 style="color: var(--primary-color); margin-bottom: 10px;">📈 Agencies: Want more time to grow revenue?</h3>
-      <p style="margin: 0 auto; max-width: 600px;">
-        Our white-label A2P service handles everything for you — fast approvals, clean integrations, and no stress.
-      </p>
-      <a href="https://a2pwizard.com/contactus" class="pdf-button" style="margin-top: 20px; display: inline-block;">Get Done-For-You Help for only $50! →</a>
+      <h3>Need to send this to a client? Here’s a white-labeled guide!</h3>
+      <a href="#" onclick="window.print()" class="pdf-button">Download PDF</a>
     </div>
 
+    <div class="section" style="text-align:center;background:#f9f9ff;padding:22px">
+      <h3 style="color:var(--primary);margin:0 0 8px">📈 Agencies: Want more time to grow revenue?</h3>
+      <p style="margin:0 auto;max-width:640px">White-label A2P done-for-you — fast approvals, clean integrations, no stress.</p>
+      <a href="https://a2pwizard.com/contactus" class="pdf-button" style="margin-top:14px">Get Done-For-You Help for only $50 →</a>
+    </div>
   </div>
 
   <script>
-    async function fetchData() {
-      const params = new URLSearchParams(window.location.search);
+    // tiny helper
+    const $ = (id)=>document.getElementById(id);
+
+    // Cache key per results id
+    function cacheKey(id){ return "a2p_results_" + id; }
+
+    async function fetchJSON(url, timeoutMs=12000){
+      const ctrl = new AbortController();
+      const t = setTimeout(()=>ctrl.abort(), timeoutMs);
+      try{
+        const r = await fetch(url, {signal: ctrl.signal, cache: "no-store"});
+        if(!r.ok) throw new Error("HTTP "+r.status);
+        return await r.json();
+      } finally { clearTimeout(t); }
+    }
+
+    // Render image with skeleton; don't block the rest of the page
+    function pipeImage(imgEl, skeletonEl, src){
+      if(!imgEl) return;
+      imgEl.onload = ()=>{ imgEl.classList.add("loaded"); if(skeletonEl) skeletonEl.style.display="none"; maybeHideGlobalImgMsg(); };
+      imgEl.onerror = ()=>{ if(skeletonEl) skeletonEl.style.display="none"; maybeHideGlobalImgMsg(); };
+      imgEl.src = src;
+    }
+
+    function maybeHideGlobalImgMsg(){
+      const imgLoading = $("imgLoading");
+      const done = (img)=>img && img.classList.contains("loaded");
+      if (done($("img1")) && done($("img2")) && imgLoading) imgLoading.style.display="none";
+    }
+
+    function updateText(id, text){ const el=$(id); if (el) el.textContent = text; }
+
+    function hydrate(data){
+      // text first (instant)
+      updateText("img1url", data.img1);
+      updateText("img2url", data.img2);
+      updateText("img1link", data.img1);
+      updateText("img2link", data.img2);
+      updateText("biz1", data.business_name);
+      updateText("biz2", data.business_name);
+
+      updateText("useCase",
+        `This campaign sends appointment information — confirmation & reminder messages to customers once they have booked an appointment with ${data.business_name} on ${data.a2pwebsite} and opted-in to receive promotional and notification SMS from ${data.business_name}.\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy:\n${data.img2}`
+      );
+
+      updateText("msg1",
+        `Hi John! This is Jane from ${data.business_name}. Our appointment for Feburary 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+      );
+
+      updateText("msg2",
+        `Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+      );
+
+      updateText("consentCopy",
+        `End users opt-in by visiting ${data.a2pwebsite} and filling in their details. Users check a box to receive notifications & promotional messages to provide consent.\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`
+      );
+
+      // images (progressive)
+      pipeImage($("img1"), $("sk1"), data.img1);
+      pipeImage($("img2"), $("sk2"), data.img2);
+    }
+
+    async function init(){
+      const params = new URLSearchParams(location.search);
       const id = params.get("id");
-      if (!id) return;
+      if(!id) return;
 
-      try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id=" + id);
-        const data = await res.json();
+      const key = cacheKey(id);
+      // 1) If cached, render instantly
+      try{
+        const cached = localStorage.getItem(key);
+        if(cached){
+          hydrate(JSON.parse(cached));
+          // refresh in background
+          fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+id)
+            .then(d=>{ localStorage.setItem(key, JSON.stringify(d)); hydrate(d); })
+            .catch(()=>{});
+          return;
+        }
+      }catch(e){}
 
-        // Handle Image Loading
-        const img1 = document.getElementById("img1");
-        const img2 = document.getElementById("img2");
-
-        const handleImageLoad = (img) => {
-          img.classList.add("loaded");
-          if (img1.classList.contains("loaded") && img2.classList.contains("loaded")) {
-            document.getElementById("imgLoading").style.display = "none";
-          }
-        };
-
-        img1.onload = () => handleImageLoad(img1);
-        img2.onload = () => handleImageLoad(img2);
-
-        // Set Image Sources
-        img1.src = data.img1;
-        img2.src = data.img2;
-
-        // Update Text Content
-        const updateElement = (id, text) => {
-          const element = document.getElementById(id);
-          if (element) element.textContent = text;
-        };
-
-        updateElement("img1url", data.img1);
-        updateElement("img2url", data.img2);
-        updateElement("img1link", data.img1);
-        updateElement("img2link", data.img2);
-        updateElement("agent", data.agent_name);
-        updateElement("biz1", data.business_name);
-        updateElement("biz2", data.business_name);
-
-        // Update Use Case Description
-        updateElement("useCase",
-          `This campaign sends appointment information — confirmation & reminder messages to customers once they have booked an appointment with ${data.business_name} on ${data.a2pwebsite} and opted-in to receive promotional and notification SMS from ${data.business_name}\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy:\n${data.img2}`
-        );
-
-        // Update Sample Messages
-        updateElement("msg1",
-          `Hi John! This is Jane from ${data.business_name}. Our appointment for July 20 at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
-        );
-
-        updateElement("msg2",
-          `Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
-        );
-
-        // Update Consent Copy
-        updateElement("consentCopy",
-          `End users opt-in by visiting - ${data.a2pwebsite} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`
-        );
-
-      } catch (err) {
+      // 2) No cache: fetch with timeout
+      try{
+        const data = await fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+id, 12000);
+        localStorage.setItem(key, JSON.stringify(data));
+        hydrate(data);
+      }catch(err){
         console.error("Error fetching data", err);
+        const warn = document.createElement("div");
+        warn.style.cssText="margin:8px 28px 18px;color:#b42318";
+        warn.textContent="We’re having trouble loading live data. Try refreshing, or check back in a minute.";
+        document.querySelector(".container").prepend(warn);
+        // still hide the image spinner after a bit
+        setTimeout(()=>{ const l=$("imgLoading"); if(l) l.style.display="none"; }, 3000);
       }
     }
 
-    function copyText(elId, btn) {
-      const el = document.getElementById(elId);
-      navigator.clipboard.writeText(el.textContent.trim()).then(() => {
-        const msg = document.createElement("span");
-        msg.className = "copied-msg";
-        msg.innerHTML = `
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 6L9 17l-5-5"></path>
-          </svg>
-          Copied!
-        `;
+    function copyText(elId, btn){
+      const el=$(elId);
+      const txt=(el?.textContent||"").trim();
+      if(!txt) return;
+      navigator.clipboard.writeText(txt).then(()=>{
+        const msg=document.createElement("span");
+        msg.className="copied-msg";
+        msg.innerHTML=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg> Copied!`;
         btn.insertAdjacentElement("afterend", msg);
-        setTimeout(() => msg.remove(), 2000);
+        setTimeout(()=>msg.remove(), 2000);
       });
     }
 
-    // Initialize
-    fetchData();
+    init();
   </script>
 </body>
 </html>
+
