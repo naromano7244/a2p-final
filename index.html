@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v1.3 – perf + polish -->
+  <!-- A2P Results v1.3 – updated for SINGLE image -->
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,8 +40,6 @@
     @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
     .screenshot{width:100%;height:auto;border-radius:var(--r-sm);box-shadow:var(--shadow-sm);background:#f8fafc;border:1px solid var(--border);opacity:0;transition:opacity .25s ease}
     .screenshot.loaded{opacity:1}
-    /* ensure no layout shift; adjust to your typical size */
-    .screenshot[width][height]{aspect-ratio: attr(width) / attr(height);}
 
     /* Code + copy */
     pre{background:#f8fafc;padding:16px;border-radius:var(--r-sm);white-space:pre-wrap;word-break:break-word;font:13.5px ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--border);margin:12px 0}
@@ -74,88 +72,78 @@
     </div>
 
     <div class="section">
-      <h2>📸 Screenshot Proofs</h2>
-      <div id="imgLoading" class="muted">Images rendering…</div>
+      <h2>📸 Screenshot Proof</h2>
+      <div id="imgLoading" class="muted">Image rendering…</div>
 
       <div class="screenshot-wrapper">
         <div id="sk1" class="skeleton"></div>
-        <img id="img1" class="screenshot" alt="Initial Consent Screenshot" loading="lazy" decoding="async" width="1200" height="675" />
+        <img id="img1" class="screenshot" alt="Opt-in Proof Image" loading="lazy" decoding="async" width="1200" height="675" />
         <code id="img1url"></code>
         <button class="copy-btn" onclick="copyText('img1url', this)">Copy</button>
-      </div>
-
-      <div class="screenshot-wrapper">
-        <div id="sk2" class="skeleton"></div>
-        <img id="img2" class="screenshot" alt="Terms Screenshot" loading="lazy" decoding="async" width="1200" height="675" />
-        <code id="img2url"></code>
-        <button class="copy-btn" onclick="copyText('img2url', this)">Copy</button>
       </div>
     </div>
 
     <div class="section">
       <h2>📄 Copy & Paste Templates</h2>
-      <p>This is what regulators look for and is the key to getting approved.</p>
-      <p><strong id="biz1">Client Business</strong> Pt 1 Opt In: <code id="img1link"></code></p>
-      <p>Pt 2 Opt In: <code id="img2link"></code></p>
+      <p>This is what reviewers look for and is the key to getting approved.</p>
+      <p><strong id="biz1">Client Business</strong> Opt-in Form / Image URL: <code id="img1link"></code></p>
     </div>
 
     <div class="section">
       <h2>📃 Use Case Description</h2>
-      <img src="https://i.ibb.co/w8d1GfT/IMAGE-ONE.png" class="screenshot loaded" alt="Use Case Screenshot" loading="lazy" decoding="async" width="1200" height="675">
       <pre id="useCase">Loading use case description...</pre>
       <button class="copy-btn" onclick="copyText('useCase', this)">Copy</button>
     </div>
 
     <div class="section">
       <h2>💬 Sample Messages</h2>
-      <p><strong>Message One:</strong></p>
+      <p><strong>Sample Message One:</strong></p>
       <pre id="msg1">Loading...</pre>
       <button class="copy-btn" onclick="copyText('msg1', this)">Copy</button>
 
-      <p style="margin-top:14px"><strong>Message Two:</strong></p>
+      <p style="margin-top:14px"><strong>Sample Message Two:</strong></p>
       <pre id="msg2">Loading...</pre>
       <button class="copy-btn" onclick="copyText('msg2', this)">Copy</button>
     </div>
 
     <div class="section">
-      <h2>📄 User Consent Copy</h2>
-      <img src="https://i.ibb.co/kgm5KXW9/three.png" class="screenshot loaded" alt="User Consent Screenshot" loading="lazy" decoding="async" width="1200" height="675">
+      <h2>✅ How do Contacts Opt-in to Messages?</h2>
       <pre id="consentCopy">Loading...</pre>
       <button class="copy-btn" onclick="copyText('consentCopy', this)">Copy</button>
     </div>
 
     <div class="section">
       <h2>📜 Opt-In Message</h2>
-      <img src="https://i.ibb.co/m51b0yZd/IMAGE-2-USE.png" class="screenshot loaded" alt="Opt-In Screenshot" loading="lazy" decoding="async" width="1200" height="675">
-      <pre id="optInMessage">I agree to receive SMS appointment confirmations and reminders from <span id="biz2">Client Business</span> at the number provided. Message frequency varies. Message & data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase.</pre>
+      <pre id="optInMessage">Loading...</pre>
       <button class="copy-btn" onclick="copyText('optInMessage', this)">Copy</button>
     </div>
-    
-<div class="section">
-  <h2>✅ Final Step: HighLevel Opt-In Method</h2>
 
-  <p>
-    HighLevel now requires an <strong>Opt-In Method</strong> and a
-    <strong>public Opt-in Form / Image URL</strong>.
-  </p>
+    <div class="section">
+      <h2>✅ Final Step: HighLevel Opt-In Method</h2>
 
-  <ul>
-    <li><strong>Opt-In Method:</strong> Website Form</li>
-    <li>
-      <strong>Opt-in Form / Image URL:</strong><br>
-      Paste the link below into the HighLevel field exactly as shown.
-    </li>
-  </ul>
+      <p>
+        HighLevel now requires an <strong>Opt-In Method</strong> and a
+        <strong>public Opt-in Form / Image URL</strong>.
+      </p>
 
-  <pre id="optInFormUrl">Loading...</pre>
-  <button class="copy-btn" onclick="copyText('optInFormUrl', this)">
-    Copy Opt-In URL
-  </button>
+      <ul>
+        <li><strong>Opt-In Method:</strong> Facebook Leadform</li>
+        <li>
+          <strong>Opt-in Form / Image URL:</strong><br>
+          Paste the link below into the HighLevel field exactly as shown.
+        </li>
+      </ul>
 
-  <p style="margin-top:12px;font-size:14px;color:var(--muted)">
-    ✅ This link must be publicly accessible and show clear consent language.
-  </p>
-</div>
+      <pre id="optInFormUrl">Loading...</pre>
+      <button class="copy-btn" onclick="copyText('optInFormUrl', this)">
+        Copy Opt-In URL
+      </button>
+
+      <p style="margin-top:12px;font-size:14px;color:var(--muted)">
+        ✅ This link must be publicly accessible and show clear consent language.
+      </p>
+    </div>
+
     <div class="section">
       <h2>💡 Tips for Approval</h2>
       <ul>
@@ -180,10 +168,7 @@
   </div>
 
   <script>
-    // tiny helper
     const $ = (id)=>document.getElementById(id);
-
-    // Cache key per results id
     function cacheKey(id){ return "a2p_results_" + id; }
 
     async function fetchJSON(url, timeoutMs=12000){
@@ -196,51 +181,46 @@
       } finally { clearTimeout(t); }
     }
 
-    // Render image with skeleton; don't block the rest of the page
     function pipeImage(imgEl, skeletonEl, src){
       if(!imgEl) return;
-      imgEl.onload = ()=>{ imgEl.classList.add("loaded"); if(skeletonEl) skeletonEl.style.display="none"; maybeHideGlobalImgMsg(); };
-      imgEl.onerror = ()=>{ if(skeletonEl) skeletonEl.style.display="none"; maybeHideGlobalImgMsg(); };
+      imgEl.onload = ()=>{ imgEl.classList.add("loaded"); if(skeletonEl) skeletonEl.style.display="none"; const l=$("imgLoading"); if(l) l.style.display="none"; };
+      imgEl.onerror = ()=>{ if(skeletonEl) skeletonEl.style.display="none"; const l=$("imgLoading"); if(l) l.style.display="none"; };
       imgEl.src = src;
-    }
-
-    function maybeHideGlobalImgMsg(){
-      const imgLoading = $("imgLoading");
-      const done = (img)=>img && img.classList.contains("loaded");
-      if (done($("img1")) && done($("img2")) && imgLoading) imgLoading.style.display="none";
     }
 
     function updateText(id, text){ const el=$(id); if (el) el.textContent = text; }
 
     function hydrate(data){
-      // text first (instant)
-      updateText("img1url", data.img1);
-      updateText("img2url", data.img2);
-      updateText("img1link", data.img1);
-      updateText("img2link", data.img2);
-      updateText("biz1", data.business_name);
-      updateText("biz2", data.business_name);
-      updateText("optInFormUrl", data.img1);
+      const proofImg = (data.img1 || "").trim();
+
+      updateText("img1url", proofImg);
+      updateText("img1link", proofImg);
+      updateText("biz1", data.business_name || "Client Business");
+      updateText("optInFormUrl", proofImg);
 
       updateText("useCase",
-        `This campaign sends appointment information — confirmation & reminder messages to customers once they have booked an appointment with ${data.business_name} on ${data.a2pwebsite} and opted-in to receive promotional and notification SMS from ${data.business_name}.\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy:\n${data.img2}`
+`This campaign sends appointment-related text messages, including confirmations and reminders, to customers who submit a Facebook Lead Form for ${data.business_name}. By completing the lead form, users request appointment-related information and explicitly opt in to receive promotional and notification SMS messages from ${data.business_name}.
+
+Screenshot of the Facebook Lead Form consent section: ${proofImg}`
       );
 
       updateText("msg1",
-        `Hi John! This is Jane from ${data.business_name}. Our appointment for February 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+`Hi John! This is Jane from ${data.business_name}. Our appointment for February 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
       );
 
       updateText("msg2",
-        `Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+`Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
       );
 
       updateText("consentCopy",
-        `End users opt-in by visiting ${data.a2pwebsite} and filling in their details. Users check a box to receive notifications & promotional messages to provide consent.\n\nPhoto proof of initial consent: ${data.img1}\nPhoto proof of expressed consent, terms, and privacy policy: ${data.img2}`
+`End users opt-in by visiting ${proofImg} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.`
       );
 
-      // images (progressive)
-      pipeImage($("img1"), $("sk1"), data.img1);
-      pipeImage($("img2"), $("sk2"), data.img2);
+      updateText("optInMessage",
+`You have successfully opted-in to receive notification and promotional SMS from ${data.business_name} Please reply STOP if you need to Opt-out in the future.`
+      );
+
+      pipeImage($("img1"), $("sk1"), proofImg);
     }
 
     async function init(){
@@ -249,12 +229,11 @@
       if(!id) return;
 
       const key = cacheKey(id);
-      // 1) If cached, render instantly
+
       try{
         const cached = localStorage.getItem(key);
         if(cached){
           hydrate(JSON.parse(cached));
-          // refresh in background
           fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+id)
             .then(d=>{ localStorage.setItem(key, JSON.stringify(d)); hydrate(d); })
             .catch(()=>{});
@@ -262,7 +241,6 @@
         }
       }catch(e){}
 
-      // 2) No cache: fetch with timeout
       try{
         const data = await fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+id, 12000);
         localStorage.setItem(key, JSON.stringify(data));
@@ -273,7 +251,6 @@
         warn.style.cssText="margin:8px 28px 18px;color:#b42318";
         warn.textContent="We’re having trouble loading live data. Try refreshing, or check back in a minute.";
         document.querySelector(".container").prepend(warn);
-        // still hide the image spinner after a bit
         setTimeout(()=>{ const l=$("imgLoading"); if(l) l.style.display="none"; }, 3000);
       }
     }
@@ -295,4 +272,3 @@
   </script>
 </body>
 </html>
-
