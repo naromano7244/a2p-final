@@ -191,36 +191,63 @@
     function updateText(id, text){ const el=$(id); if (el) el.textContent = text; }
 
     function hydrate(data){
-      const proofImg = (data.img1 || "").trim();
+      // Map sheet headers (exact names) -> variables used by the page
+      const businessName   = String(data["Legal Business name"] || "").trim();
+      const a2pWebsite     = String(data["a2pwebsite"] || "").trim();
+      const proofImg       = String(data["img1"] || "").trim();
+      // (Available if you want later)
+      const proofImg2      = String(data["img2"] || "").trim();
+      const businessEmail  = String(data["Business Email"] || "").trim();
+      const logoUrl        = String(data["LOGO URL"] || "").trim();
+      const supportPhone   = String(data["Support Phone"] || "").trim();
+      const supportEmail   = String(data["Support Email"] || "").trim();
+      const businessAddr   = String(data["Business Address"] || "").trim();
+      const slug           = String(data["Slug"] || "").trim();
+      const agentName      = String(data["agent_name"] || "").trim();
 
-      updateText("img1url", proofImg);
-      updateText("img1link", proofImg);
-      updateText("biz1", data.business_name || "Client Business");
-      updateText("optInFormUrl", proofImg);
+      // Fallbacks so nothing shows as "undefined"
+      const bn = businessName || "Client Business";
+      const websiteForText = a2pWebsite || "the opt-in form link";
+      const imgForText = proofImg || "";
+
+      // Single screenshot block
+      updateText("img1url", imgForText);
+      updateText("img1link", imgForText);
+      updateText("biz1", bn);
+      updateText("optInFormUrl", imgForText);
 
       updateText("useCase",
-`This campaign sends appointment-related text messages, including confirmations and reminders, to customers who submit a Facebook Lead Form for ${data.business_name}. By completing the lead form, users request appointment-related information and explicitly opt in to receive promotional and notification SMS messages from ${data.business_name}.
+`This campaign sends appointment-related text messages, including confirmations and reminders, to customers who submit a Facebook Lead Form for ${bn}. By completing the lead form, users request appointment-related information and explicitly opt in to receive promotional and notification SMS messages from ${bn}.
 
-Screenshot of the Facebook Lead Form consent section: ${proofImg}`
+Screenshot of the Facebook Lead Form consent section: ${imgForText}`
       );
 
       updateText("msg1",
-`Hi John! This is Jane from ${data.business_name}. Our appointment for February 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+`Hi John! This is Jane from ${bn}. Our appointment for February 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
       );
 
       updateText("msg2",
-`Hello, this is Jason with ${data.business_name}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+`Hello, this is Jason with ${bn}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
       );
 
       updateText("consentCopy",
-`End users opt-in by visiting ${proofImg} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.`
+`End users opt-in by visiting ${websiteForText} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.`
       );
 
       updateText("optInMessage",
-`You have successfully opted-in to receive notification and promotional SMS from ${data.business_name} Please reply STOP if you need to Opt-out in the future.`
+`I agree to receive SMS appointment confirmations and reminders from ${bn} at the number provided. Message frequency varies. Message & data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase.`
       );
 
-      pipeImage($("img1"), $("sk1"), proofImg);
+      // Render image
+      if (imgForText) pipeImage($("img1"), $("sk1"), imgForText);
+      else {
+        // If missing image, hide skeleton + loading line
+        const sk = $("sk1"); if(sk) sk.style.display="none";
+        const l = $("imgLoading"); if(l) l.style.display="none";
+      }
+
+      // (Optional) If you ever want to use these on page later:
+      // console.log({businessEmail, logoUrl, supportPhone, supportEmail, businessAddr, slug, agentName, proofImg2});
     }
 
     async function init(){
@@ -234,7 +261,7 @@ Screenshot of the Facebook Lead Form consent section: ${proofImg}`
         const cached = localStorage.getItem(key);
         if(cached){
           hydrate(JSON.parse(cached));
-          fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+id)
+          fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+encodeURIComponent(id))
             .then(d=>{ localStorage.setItem(key, JSON.stringify(d)); hydrate(d); })
             .catch(()=>{});
           return;
@@ -242,7 +269,7 @@ Screenshot of the Facebook Lead Form consent section: ${proofImg}`
       }catch(e){}
 
       try{
-        const data = await fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+id, 12000);
+        const data = await fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+encodeURIComponent(id), 12000);
         localStorage.setItem(key, JSON.stringify(data));
         hydrate(data);
       }catch(err){
