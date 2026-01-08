@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v1.4 – updates: no slug error banner, fixed "..", new Start Here snapshot, removed $50 promos -->
+  <!-- A2P Results v1.5 – Start Here is informational (no snapshot textbox), clickable domain link, reminder to use sections below -->
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,9 +56,8 @@
     ul{padding-left:20px;margin:14px 0} li{margin-bottom:10px} li::marker{color:var(--primary)}
     .muted{color:var(--muted)}
     .soft-card{background:#f9f9ff;border:1px solid #e9e3ff;border-radius:12px;padding:16px}
-    .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:8px 12px;font-size:13px}
-    .pill a{color:var(--primary);text-decoration:none;font-weight:600}
-    .pill a:hover{text-decoration:underline}
+    .site-link{font-weight:700;color:var(--primary);text-decoration:none;word-break:break-word}
+    .site-link:hover{text-decoration:underline}
   </style>
 </head>
 <body>
@@ -70,24 +69,25 @@
 
     <div class="disclosure">⚠️ If your campaign was previously rejected, <u>recreate and resubmit</u> a new campaign for best results.</div>
 
-    <!-- NEW: Start Here snapshot (moved up) -->
+    <!-- Start Here (informational only) -->
     <div class="section" id="startHere">
       <h2>🚀 Start Here</h2>
 
       <div class="soft-card">
         <p style="margin:0 0 10px">
-          <strong>Your custom built, domain-matched website is ready!</strong>
-          Hero images on-site may take up to <strong>60 seconds</strong> to load.
-          Use the compliance snapshot below <strong>exactly</strong> to get approved — it’s as easy as copy, paste, submit.
+          <strong>Your custom-built, domain-matched compliance website is ready.</strong>
+          It’s designed to match opt-in requirements and help your campaign get approved.
+          Hero images on the website may take up to <strong>60 seconds</strong> to load.
         </p>
 
-        <div class="pill" style="margin-top:10px">
-          🌐 <span>Website:</span> <a id="siteLinkA" href="#" target="_blank" rel="noopener">Loading…</a>
-        </div>
+        <p class="muted" style="margin:0 0 10px">
+          Use the <strong>Copy & Paste</strong> sections below to fill out your application exactly.
+        </p>
 
-        <p style="margin:14px 0 6px;font-weight:700;color:var(--primary)">Compliance Snapshot (Copy/Paste)</p>
-        <pre id="snapshotCopy">Loading…</pre>
-        <button class="copy-btn" onclick="copyText('snapshotCopy', this)">Copy Snapshot</button>
+        <p style="margin:0">
+          🌐 Website:
+          <a id="siteLinkA" class="site-link" href="#" target="_blank" rel="noopener">Loading…</a>
+        </p>
       </div>
     </div>
 
@@ -202,8 +202,6 @@
     function updateText(id, text){ const el=$(id); if (el) el.textContent = text; }
 
     // Slug must be safe for subdomain use
-    // Allowed: a-z, 0-9, hyphen
-    // We NO LONGER show a blocking error banner for slug issues.
     function buildWebsiteFromSlug(slugRaw){
       const slug = String(slugRaw || "").trim();
       const lower = slug.toLowerCase();
@@ -216,20 +214,16 @@
     }
 
     function hydrate(data){
-      // Map sheet headers (exact names) -> variables used by the page
       const businessName   = String((data && data["Legal Business name"]) || "").trim();
       const proofImg       = String((data && data["img1"]) || "").trim(); // NON-website proof image
       const slug           = String((data && data["Slug"]) || "").trim();
 
-      // Fallbacks
       const bn = businessName || "Client Business";
-      updateText("biz1", bn);
 
-      // Build website from slug
       const websiteRes = buildWebsiteFromSlug(slug);
       const website = websiteRes.ok ? websiteRes.website : "";
 
-      // Website links (top + final step)
+      // Start Here clickable link
       const siteLinkA = $("siteLinkA");
       if(siteLinkA){
         if(website){
@@ -241,29 +235,18 @@
         }
       }
 
-      // IMPORTANT: "Opt-in Form / Image URL" must be the WEBSITE (not the image)
+      // Final Step field must be WEBSITE
       updateText("optInFormUrl", website || "Website link not available yet");
 
-      // Screenshot block (IMG1)
+      // Screenshot proof image url
       updateText("img1url", proofImg || "");
-
-      // Snapshot copy (goes at top)
-      updateText("snapshotCopy",
-`Your custom built, domain matched website is ready! Hero images on-site may take up to 60 seconds to load.
-
-Website: ${website || "[WEBSITE LINK PENDING]"}
-
-End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.
-
-Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING]"}`
-      );
 
       // Use case
       updateText("useCase",
 `This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${bn} on ${website || "[WEBSITE LINK PENDING]"} and opted-in to receive promotional and notification SMS from ${bn}.`
       );
 
-      // Sample messages (FIXED: removed double "..")
+      // Sample messages
       updateText("msg1",
 `Hi John! This is Jane from ${bn}. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
       );
@@ -272,9 +255,9 @@ Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING
 `Hello, this is Jason with ${bn}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
       );
 
-      // Consent copy box (ADD screenshot line in SAME box)
+      // Consent copy box (includes screenshot line)
       updateText("consentCopy",
-`End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.
+`End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent
 
 Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING]"}`
       );
@@ -299,12 +282,11 @@ Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING
 
       const queryVal = (slug || id || "").trim();
 
-      // IMPORTANT CHANGE: No missing slug error handler / no early return.
-      // If query is missing, we simply leave the page in "pending" state.
+      // No missing slug error handler / no early return with banner.
+      // If query is missing, show neutral placeholders.
       if(!queryVal){
         const l = $("imgLoading"); if(l) l.style.display="none";
         const sk = $("sk1"); if(sk) sk.style.display="none";
-        updateText("snapshotCopy", "Waiting for a link… Please reopen this page using the full link from your system.");
         updateText("useCase", "Waiting for data…");
         updateText("msg1", "Waiting for data…");
         updateText("msg2", "Waiting for data…");
@@ -318,7 +300,6 @@ Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING
 
       const key = cacheKey(queryVal);
 
-      // Build API url: prefer explicit slug
       const apiUrl = slug
         ? (API_BASE + "?slug=" + encodeURIComponent(slug))
         : (API_BASE + "?id=" + encodeURIComponent(id));
@@ -340,8 +321,7 @@ Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING
         hydrate(data);
       }catch(err){
         console.error("Error fetching data", err);
-        // No loud error banner; keep it subtle.
-        updateText("snapshotCopy", "We’re having trouble loading live data. Try refreshing, or check back in a minute.");
+        updateText("useCase", "We’re having trouble loading live data. Try refreshing, or check back in a minute.");
         setTimeout(()=>{ const l=$("imgLoading"); if(l) l.style.display="none"; }, 1500);
       }
     }
@@ -364,7 +344,3 @@ Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING
 </body>
 </html>
 
-    init();
-  </script>
-</body>
-</html>
