@@ -87,6 +87,7 @@
       <h2>📄 Copy & Paste Templates</h2>
       <p>This is what reviewers look for and is the key to getting approved.</p>
       <p><strong id="biz1">Client Business</strong> Opt-in Form / Image URL: <code id="img1link"></code></p>
+      <button class="copy-btn" onclick="copyText('img1link', this)">Copy</button>
     </div>
 
     <div class="section">
@@ -127,7 +128,7 @@
       </p>
 
       <ul>
-        <li><strong>Opt-In Method:</strong> Facebook Leadform</li>
+        <li><strong>Opt-In Method:</strong> Website form</li>
         <li>
           <strong>Opt-in Form / Image URL:</strong><br>
           Paste the link below into the HighLevel field exactly as shown.
@@ -169,7 +170,10 @@
 
   <script>
     const $ = (id)=>document.getElementById(id);
-    function cacheKey(id){ return "a2p_results_" + id; }
+    function cacheKey(q){ return "a2p_results_" + String(q || "").toLowerCase().trim(); }
+
+    const API_BASE = "https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec";
+    const SITE_DOMAIN = "smsdatareg.com";
 
     async function fetchJSON(url, timeoutMs=12000){
       const ctrl = new AbortController();
@@ -190,78 +194,128 @@
 
     function updateText(id, text){ const el=$(id); if (el) el.textContent = text; }
 
+    function showTopError(message){
+      const container = document.querySelector(".container");
+      if(!container) return;
+      let warn = document.getElementById("a2pTopWarn");
+      if(!warn){
+        warn = document.createElement("div");
+        warn.id = "a2pTopWarn";
+        warn.style.cssText = "margin:12px 28px 0;color:#b42318;background:#fff5f5;border:1px solid #fecaca;border-radius:10px;padding:10px 14px;font-size:14px;";
+        container.prepend(warn);
+      }
+      warn.textContent = message;
+    }
+
+    // Slug must be safe for subdomain use
+    // Allowed: a-z, 0-9, hyphen
+    // If anything else exists, we show the exact error requested.
+    function buildWebsiteFromSlug(slugRaw){
+      const slug = String(slugRaw || "").trim();
+
+      if(!slug){
+        return { ok:false, error: "Error! could not generate the website (missing slug)." };
+      }
+
+      const lower = slug.toLowerCase();
+      const allowed = /^[a-z0-9-]+$/;
+
+      if(!allowed.test(lower)){
+        return {
+          ok:false,
+          error: "Error! could not generate the website, make sure to avoid using special characters ( & , ' space / ? # % + . )"
+        };
+      }
+
+      return { ok:true, website: `https://${lower}.${SITE_DOMAIN}` };
+    }
+
     function hydrate(data){
+      // Handle API-level errors without breaking the page
+      if(data && data.ok === false){
+        showTopError(data.error || "Error loading your results. Please try again.");
+      }
+
       // Map sheet headers (exact names) -> variables used by the page
-      const businessName   = String(data["Legal Business name"] || "").trim();
-      const a2pWebsite     = String(data["a2pwebsite"] || "").trim();
-      const proofImg       = String(data["img1"] || "").trim();
-      // (Available if you want later)
-      const proofImg2      = String(data["img2"] || "").trim();
-      const businessEmail  = String(data["Business Email"] || "").trim();
-      const logoUrl        = String(data["LOGO URL"] || "").trim();
-      const supportPhone   = String(data["Support Phone"] || "").trim();
-      const supportEmail   = String(data["Support Email"] || "").trim();
-      const businessAddr   = String(data["Business Address"] || "").trim();
-      const slug           = String(data["Slug"] || "").trim();
-      const agentName      = String(data["agent_name"] || "").trim();
+      const businessName   = String((data && data["Legal Business name"]) || "").trim();
+      const proofImg       = String((data && data["img1"]) || "").trim();
+      const slug           = String((data && data["Slug"]) || "").trim();
 
       // Fallbacks so nothing shows as "undefined"
       const bn = businessName || "Client Business";
-      const websiteForText = a2pWebsite || "the opt-in form link";
-      const imgForText = proofImg || "";
-
-      // Single screenshot block
-      updateText("img1url", imgForText);
-      updateText("img1link", imgForText);
       updateText("biz1", bn);
-      updateText("optInFormUrl", imgForText);
 
+      // Build website from slug (SOURCE OF TRUTH)
+      const websiteRes = buildWebsiteFromSlug(slug);
+      const website = websiteRes.ok ? websiteRes.website : "";
+
+      if(!websiteRes.ok){
+        showTopError(websiteRes.error);
+      }
+
+      // IMPORTANT: "Opt-in Form / Image URL" must be the WEBSITE (not the image)
+      updateText("img1link", website || "ERROR: Website could not be generated");
+
+      // Final Step field must be WEBSITE
+      updateText("optInFormUrl", website || "ERROR: Website could not be generated");
+
+      // Screenshot block (IMG1)
+      updateText("img1url", proofImg);
+
+      // Approved templates (dynamic)
       updateText("useCase",
-`This campaign sends appointment-related text messages, including confirmations and reminders, to customers who submit a Facebook Lead Form for ${bn}. By completing the lead form, users request appointment-related information and explicitly opt in to receive promotional and notification SMS messages from ${bn}.
-
-Screenshot of the Facebook Lead Form consent section: ${imgForText}`
+`This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${bn} on ${website || "[WEBSITE ERROR]"} and opted-in to receive promotional and notification SMS from ${bn}`
       );
 
       updateText("msg1",
-`Hi John! This is Jane from ${bn}. Our appointment for February 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+`Hi John! This is Jane from ${bn}.. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
       );
 
       updateText("msg2",
-`Hello, this is Jason with ${bn}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+`Hello, this is Jason with ${bn}.. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
       );
 
       updateText("consentCopy",
-`End users opt-in by visiting ${websiteForText} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.`
+`End users opt-in by visiting ${website || "[WEBSITE ERROR]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent`
       );
 
       updateText("optInMessage",
-`I agree to receive SMS appointment confirmations and reminders from ${bn} at the number provided. Message frequency varies. Message & data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase.`
+`You have successfully opted-in to receive notification and promotional SMS from ${bn}. Please reply STOP if you need to Opt-out in the future.`
       );
 
       // Render image
-      if (imgForText) pipeImage($("img1"), $("sk1"), imgForText);
+      if (proofImg) pipeImage($("img1"), $("sk1"), proofImg);
       else {
-        // If missing image, hide skeleton + loading line
         const sk = $("sk1"); if(sk) sk.style.display="none";
         const l = $("imgLoading"); if(l) l.style.display="none";
       }
-
-      // (Optional) If you ever want to use these on page later:
-      // console.log({businessEmail, logoUrl, supportPhone, supportEmail, businessAddr, slug, agentName, proofImg2});
     }
 
     async function init(){
       const params = new URLSearchParams(location.search);
+      const slug = params.get("slug");
       const id = params.get("id");
-      if(!id) return;
 
-      const key = cacheKey(id);
+      const queryVal = (slug || id || "").trim();
+      if(!queryVal){
+        showTopError("Missing id or slug. Add ?slug=businessslug or ?id=uid-... to the URL.");
+        const l = $("imgLoading"); if(l) l.style.display="none";
+        const sk = $("sk1"); if(sk) sk.style.display="none";
+        return;
+      }
+
+      const key = cacheKey(queryVal);
+
+      // Build API url: prefer explicit slug
+      const apiUrl = slug
+        ? (API_BASE + "?slug=" + encodeURIComponent(slug))
+        : (API_BASE + "?id=" + encodeURIComponent(id));
 
       try{
         const cached = localStorage.getItem(key);
         if(cached){
           hydrate(JSON.parse(cached));
-          fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+encodeURIComponent(id))
+          fetchJSON(apiUrl)
             .then(d=>{ localStorage.setItem(key, JSON.stringify(d)); hydrate(d); })
             .catch(()=>{});
           return;
@@ -269,15 +323,12 @@ Screenshot of the Facebook Lead Form consent section: ${imgForText}`
       }catch(e){}
 
       try{
-        const data = await fetchJSON("https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec?id="+encodeURIComponent(id), 12000);
+        const data = await fetchJSON(apiUrl, 12000);
         localStorage.setItem(key, JSON.stringify(data));
         hydrate(data);
       }catch(err){
         console.error("Error fetching data", err);
-        const warn = document.createElement("div");
-        warn.style.cssText="margin:8px 28px 18px;color:#b42318";
-        warn.textContent="We’re having trouble loading live data. Try refreshing, or check back in a minute.";
-        document.querySelector(".container").prepend(warn);
+        showTopError("We’re having trouble loading live data. Try refreshing, or check back in a minute.");
         setTimeout(()=>{ const l=$("imgLoading"); if(l) l.style.display="none"; }, 3000);
       }
     }
