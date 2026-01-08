@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v1.3 – updated for SINGLE image -->
+  <!-- A2P Results v1.4 – updates: no slug error banner, fixed "..", new Start Here snapshot, removed $50 promos -->
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,6 +54,11 @@
     .pdf-button{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;padding:11px 20px;border-radius:var(--r-sm);font-weight:600;text-decoration:none;transition:transform .15s}
     .pdf-button:hover{transform:translateY(-1px)}
     ul{padding-left:20px;margin:14px 0} li{margin-bottom:10px} li::marker{color:var(--primary)}
+    .muted{color:var(--muted)}
+    .soft-card{background:#f9f9ff;border:1px solid #e9e3ff;border-radius:12px;padding:16px}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:8px 12px;font-size:13px}
+    .pill a{color:var(--primary);text-decoration:none;font-weight:600}
+    .pill a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
@@ -65,10 +70,25 @@
 
     <div class="disclosure">⚠️ If your campaign was previously rejected, <u>recreate and resubmit</u> a new campaign for best results.</div>
 
-    <div class="section" style="text-align:center;background:#f9f9ff;padding:22px">
-      <h3 style="color:var(--primary);margin:0 0 8px">📈 Agencies: Want more time to grow revenue?</h3>
-      <p style="margin:0 auto;max-width:640px">White-label A2P done-for-you — fast approvals, clean integrations, no stress.</p>
-      <a href="https://a2pwizard.com/contactus" class="pdf-button" style="margin-top:14px">Get Done-For-You Help for $50 →</a>
+    <!-- NEW: Start Here snapshot (moved up) -->
+    <div class="section" id="startHere">
+      <h2>🚀 Start Here</h2>
+
+      <div class="soft-card">
+        <p style="margin:0 0 10px">
+          <strong>Your custom built, domain-matched website is ready!</strong>
+          Hero images on-site may take up to <strong>60 seconds</strong> to load.
+          Use the compliance snapshot below <strong>exactly</strong> to get approved — it’s as easy as copy, paste, submit.
+        </p>
+
+        <div class="pill" style="margin-top:10px">
+          🌐 <span>Website:</span> <a id="siteLinkA" href="#" target="_blank" rel="noopener">Loading…</a>
+        </div>
+
+        <p style="margin:14px 0 6px;font-weight:700;color:var(--primary)">Compliance Snapshot (Copy/Paste)</p>
+        <pre id="snapshotCopy">Loading…</pre>
+        <button class="copy-btn" onclick="copyText('snapshotCopy', this)">Copy Snapshot</button>
+      </div>
     </div>
 
     <div class="section">
@@ -81,13 +101,6 @@
         <code id="img1url"></code>
         <button class="copy-btn" onclick="copyText('img1url', this)">Copy</button>
       </div>
-    </div>
-
-    <div class="section">
-      <h2>📄 Copy & Paste Templates</h2>
-      <p>This is what reviewers look for and is the key to getting approved.</p>
-      <p><strong id="biz1">Client Business</strong> Opt-in Form / Image URL: <code id="img1link"></code></p>
-      <button class="copy-btn" onclick="copyText('img1link', this)">Copy</button>
     </div>
 
     <div class="section">
@@ -160,12 +173,6 @@
       <h3>Need to send this to a client? Here’s a white-labeled guide!</h3>
       <a href="#" onclick="window.print()" class="pdf-button">Download PDF</a>
     </div>
-
-    <div class="section" style="text-align:center;background:#f9f9ff;padding:22px">
-      <h3 style="color:var(--primary);margin:0 0 8px">📈 Agencies: Want more time to grow revenue?</h3>
-      <p style="margin:0 auto;max-width:640px">White-label A2P done-for-you — fast approvals, clean integrations, no stress.</p>
-      <a href="https://a2pwizard.com/contactus" class="pdf-button" style="margin-top:14px">Get Done-For-You Help for only $50 →</a>
-    </div>
   </div>
 
   <script>
@@ -194,91 +201,85 @@
 
     function updateText(id, text){ const el=$(id); if (el) el.textContent = text; }
 
-    function showTopError(message){
-      const container = document.querySelector(".container");
-      if(!container) return;
-      let warn = document.getElementById("a2pTopWarn");
-      if(!warn){
-        warn = document.createElement("div");
-        warn.id = "a2pTopWarn";
-        warn.style.cssText = "margin:12px 28px 0;color:#b42318;background:#fff5f5;border:1px solid #fecaca;border-radius:10px;padding:10px 14px;font-size:14px;";
-        container.prepend(warn);
-      }
-      warn.textContent = message;
-    }
-
     // Slug must be safe for subdomain use
     // Allowed: a-z, 0-9, hyphen
-    // If anything else exists, we show the exact error requested.
+    // We NO LONGER show a blocking error banner for slug issues.
     function buildWebsiteFromSlug(slugRaw){
       const slug = String(slugRaw || "").trim();
-
-      if(!slug){
-        return { ok:false, error: "Error! could not generate the website (missing slug)." };
-      }
-
       const lower = slug.toLowerCase();
       const allowed = /^[a-z0-9-]+$/;
 
-      if(!allowed.test(lower)){
-        return {
-          ok:false,
-          error: "Error! could not generate the website, make sure to avoid using special characters ( & , ' space / ? # % + . )"
-        };
-      }
+      if(!slug) return { ok:false, website:"" };
+      if(!allowed.test(lower)) return { ok:false, website:"" };
 
       return { ok:true, website: `https://${lower}.${SITE_DOMAIN}` };
     }
 
     function hydrate(data){
-      // Handle API-level errors without breaking the page
-      if(data && data.ok === false){
-        showTopError(data.error || "Error loading your results. Please try again.");
-      }
-
       // Map sheet headers (exact names) -> variables used by the page
       const businessName   = String((data && data["Legal Business name"]) || "").trim();
-      const proofImg       = String((data && data["img1"]) || "").trim();
+      const proofImg       = String((data && data["img1"]) || "").trim(); // NON-website proof image
       const slug           = String((data && data["Slug"]) || "").trim();
 
-      // Fallbacks so nothing shows as "undefined"
+      // Fallbacks
       const bn = businessName || "Client Business";
       updateText("biz1", bn);
 
-      // Build website from slug (SOURCE OF TRUTH)
+      // Build website from slug
       const websiteRes = buildWebsiteFromSlug(slug);
       const website = websiteRes.ok ? websiteRes.website : "";
 
-      if(!websiteRes.ok){
-        showTopError(websiteRes.error);
+      // Website links (top + final step)
+      const siteLinkA = $("siteLinkA");
+      if(siteLinkA){
+        if(website){
+          siteLinkA.textContent = website;
+          siteLinkA.href = website;
+        } else {
+          siteLinkA.textContent = "Website link will appear here";
+          siteLinkA.href = "#";
+        }
       }
 
       // IMPORTANT: "Opt-in Form / Image URL" must be the WEBSITE (not the image)
-      updateText("img1link", website || "ERROR: Website could not be generated");
-
-      // Final Step field must be WEBSITE
-      updateText("optInFormUrl", website || "ERROR: Website could not be generated");
+      updateText("optInFormUrl", website || "Website link not available yet");
 
       // Screenshot block (IMG1)
-      updateText("img1url", proofImg);
+      updateText("img1url", proofImg || "");
 
-      // Approved templates (dynamic)
-      updateText("useCase",
-`This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${bn} on ${website || "[WEBSITE ERROR]"} and opted-in to receive promotional and notification SMS from ${bn}`
+      // Snapshot copy (goes at top)
+      updateText("snapshotCopy",
+`Your custom built, domain matched website is ready! Hero images on-site may take up to 60 seconds to load.
+
+Website: ${website || "[WEBSITE LINK PENDING]"}
+
+End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.
+
+Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING]"}`
       );
 
+      // Use case
+      updateText("useCase",
+`This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${bn} on ${website || "[WEBSITE LINK PENDING]"} and opted-in to receive promotional and notification SMS from ${bn}.`
+      );
+
+      // Sample messages (FIXED: removed double "..")
       updateText("msg1",
-`Hi John! This is Jane from ${bn}.. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+`Hi John! This is Jane from ${bn}. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
       );
 
       updateText("msg2",
-`Hello, this is Jason with ${bn}.. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+`Hello, this is Jason with ${bn}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
       );
 
+      // Consent copy box (ADD screenshot line in SAME box)
       updateText("consentCopy",
-`End users opt-in by visiting ${website || "[WEBSITE ERROR]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent`
+`End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent.
+
+Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING]"}`
       );
 
+      // Opt-in message
       updateText("optInMessage",
 `You have successfully opted-in to receive notification and promotional SMS from ${bn}. Please reply STOP if you need to Opt-out in the future.`
       );
@@ -297,10 +298,21 @@
       const id = params.get("id");
 
       const queryVal = (slug || id || "").trim();
+
+      // IMPORTANT CHANGE: No missing slug error handler / no early return.
+      // If query is missing, we simply leave the page in "pending" state.
       if(!queryVal){
-        showTopError("Missing id or slug. Add ?slug=businessslug or ?id=uid-... to the URL.");
         const l = $("imgLoading"); if(l) l.style.display="none";
         const sk = $("sk1"); if(sk) sk.style.display="none";
+        updateText("snapshotCopy", "Waiting for a link… Please reopen this page using the full link from your system.");
+        updateText("useCase", "Waiting for data…");
+        updateText("msg1", "Waiting for data…");
+        updateText("msg2", "Waiting for data…");
+        updateText("consentCopy", "Waiting for data…");
+        updateText("optInMessage", "Waiting for data…");
+        updateText("optInFormUrl", "Waiting for a link…");
+        const siteLinkA = $("siteLinkA");
+        if(siteLinkA){ siteLinkA.textContent = "Waiting for a link…"; siteLinkA.href="#"; }
         return;
       }
 
@@ -328,8 +340,9 @@
         hydrate(data);
       }catch(err){
         console.error("Error fetching data", err);
-        showTopError("We’re having trouble loading live data. Try refreshing, or check back in a minute.");
-        setTimeout(()=>{ const l=$("imgLoading"); if(l) l.style.display="none"; }, 3000);
+        // No loud error banner; keep it subtle.
+        updateText("snapshotCopy", "We’re having trouble loading live data. Try refreshing, or check back in a minute.");
+        setTimeout(()=>{ const l=$("imgLoading"); if(l) l.style.display="none"; }, 1500);
       }
     }
 
@@ -345,6 +358,11 @@
         setTimeout(()=>msg.remove(), 2000);
       });
     }
+
+    init();
+  </script>
+</body>
+</html>
 
     init();
   </script>
