@@ -180,6 +180,7 @@
     function cacheKey(q){ return "a2p_results_" + String(q || "").toLowerCase().trim(); }
 
     const API_BASE = "https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec";
+    const SITE_DOMAIN = "smsdatareg.com";
     const SITE_DOMAIN = "nebulabrandgroup.com";
 
     async function fetchJSON(url, timeoutMs=12000){
@@ -236,7 +237,7 @@
       }
 
       // Final Step field must be WEBSITE
-updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
+      updateText("optInFormUrl", website || "Website link not available yet");
 
       // Screenshot proof image url
       updateText("img1url", proofImg || "");
@@ -248,16 +249,18 @@ updateText("optInFormUrl", (website ? website + "/contact" : "Website link not a
 
       // Sample messages
       updateText("msg1",
-`Hi John! This is Mark from ${bn}. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+`Hi John! This is Jane from ${bn}. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
       );
 
       updateText("msg2",
-`Hello, this is Jackie with ${bn}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+`Hello, this is Jason with ${bn}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
       );
 
       // Consent copy box (includes screenshot line)
       updateText("consentCopy",
 `End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent
+
+Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING]"}`
       );
 
       // Opt-in message
@@ -341,4 +344,4 @@ updateText("optInFormUrl", (website ? website + "/contact" : "Website link not a
   </script>
 </body>
 </html>
-
+~
