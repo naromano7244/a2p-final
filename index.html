@@ -201,7 +201,6 @@
 
     function updateText(id, text){ const el=$(id); if (el) el.textContent = text; }
 
-    // Slug must be safe for subdomain use
     function buildWebsiteFromSlug(slugRaw){
       const slug = String(slugRaw || "").trim();
       const lower = slug.toLowerCase();
@@ -215,7 +214,7 @@
 
     function hydrate(data){
       const businessName   = String((data && data["Legal Business name"]) || "").trim();
-      const proofImg       = String((data && data["img1"]) || "").trim(); // NON-website proof image
+      const proofImg       = String((data && data["img1"]) || "").trim();
       const slug           = String((data && data["Slug"]) || "").trim();
 
       const bn = businessName || "Client Business";
@@ -223,7 +222,6 @@
       const websiteRes = buildWebsiteFromSlug(slug);
       const website = websiteRes.ok ? websiteRes.website : "";
 
-      // Start Here clickable link
       const siteLinkA = $("siteLinkA");
       if(siteLinkA){
         if(website){
@@ -235,39 +233,33 @@
         }
       }
 
-      // Final Step field must be WEBSITE
-      updateText("optInFormUrl", website || "Website link not available yet");
+      // Final Step field must be WEBSITE (with /contact)
+      updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
 
-      // Screenshot proof image url
       updateText("img1url", proofImg || "");
 
-      // Use case
       updateText("useCase",
 `This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${bn} on ${website || "[WEBSITE LINK PENDING]"} and opted-in to receive promotional and notification SMS from ${bn}.`
       );
 
-      // Sample messages
+      // Jane -> Mark
       updateText("msg1",
-`Hi John! This is Jane from ${bn}. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+`Hi John! This is Mark from ${bn}. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
       );
 
       updateText("msg2",
 `Hello, this is Jason with ${bn}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
       );
 
-      // Consent copy box (includes screenshot line)
+      // Consent copy box (removed screenshot line)
       updateText("consentCopy",
-`End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent
-
-Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING]"}`
+`End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent`
       );
 
-      // Opt-in message
       updateText("optInMessage",
 `You have successfully opted-in to receive notification and promotional SMS from ${bn}. Please reply STOP if you need to Opt-out in the future.`
       );
 
-      // Render image
       if (proofImg) pipeImage($("img1"), $("sk1"), proofImg);
       else {
         const sk = $("sk1"); if(sk) sk.style.display="none";
@@ -282,8 +274,6 @@ Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING
 
       const queryVal = (slug || id || "").trim();
 
-      // No missing slug error handler / no early return with banner.
-      // If query is missing, show neutral placeholders.
       if(!queryVal){
         const l = $("imgLoading"); if(l) l.style.display="none";
         const sk = $("sk1"); if(sk) sk.style.display="none";
@@ -343,3 +333,4 @@ Screenshot of optin funnel for verification: ${proofImg || "[PROOF IMAGE PENDING
   </script>
 </body>
 </html>
+
