@@ -405,23 +405,23 @@
       updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
 
       updateText("useCase",
-`This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${bn} on ${website || "[WEBSITE LINK PENDING]"} and opted-in to receive promotional and notification SMS from ${bn}.`
+`This campaign sends appointment-related SMS messages to customers who request or schedule an appointment with ${bn} via ${website || "[WEBSITE LINK PENDING]"}. Messages include appointment confirmations, reminders, and rescheduling updates. Users provide their mobile number and explicitly opt in by selecting the consent checkbox on the website form.`
       );
 
-      updateText("msg1",
-`Hi John! This is Mark from ${bn}. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+       updateText("msg1",
+`Hi John — this is Alex from ${bn}. Your appointment is confirmed for March 20 at 11:00 AM. Reply STOP to opt out.`
       );
 
       updateText("msg2",
-`Hello, this is Jason with ${bn}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+`Hi John — this is Jordan from ${bn}. Reminder: your appointment is tomorrow at 9:00 AM. Reply STOP to opt out.`
       );
 
       updateText("consentCopy",
-`End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent`
+`End users opt in by visiting ${website || "[WEBSITE LINK PENDING]"} and submitting a website form to request or schedule an appointment. Users voluntarily provide their mobile number and explicitly consent to receive appointment-related SMS messages by selecting the opt-in checkbox on the form.`
       );
 
-      updateText("optInMessage",
-`You have successfully opted-in to receive notification and promotional SMS from ${bn}. Please reply STOP if you need to Opt-out in the future.`
+     updateText("optInMessage",
+`You’re opted in to receive appointment-related SMS from ${bn}. Reply STOP to opt out at any time.`
       );
     }
 
