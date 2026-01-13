@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
+  <!-- A2P Results v1.6 – Removed screenshot proof dependency, added Instructions, kept Final Step + Tips, UI polish -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://i.ibb.co" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -16,162 +18,384 @@
     :root{
       --primary:#5c27d4; --primary-2:#6e3de8; --primary-light:#f3efff;
       --text:#2d3748; --muted:#667085; --border:#e2e8f0;
-      --success:#48bb78; --shadow-sm:0 2px 4px rgba(0,0,0,.05);
-      --shadow-md:0 6px 22px rgba(0,0,0,.09); --r-md:12px; --r-sm:8px;
+      --success:#48bb78; --shadow-sm:0 2px 6px rgba(0,0,0,.06);
+      --shadow-md:0 10px 30px rgba(0,0,0,.10); --r-md:14px; --r-sm:10px;
+      --warn-bg:#fff3cd; --warn-bd:#ffe08a; --warn-tx:#7a5a00;
     }
     body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;background:#f7f7fa;color:var(--text);line-height:1.6}
-    .container{max-width:900px;margin:36px auto;background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-md);overflow:hidden}
-    @media (max-width:940px){.container{margin:18px}}
-    .header{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;text-align:center;padding:36px 20px}
-    .header h1{margin:0;font-size:28px;font-weight:700}
+
+    .container{max-width:920px;margin:34px auto;background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-md);overflow:hidden}
+    @media (max-width:980px){.container{margin:18px}}
+
+    .header{
+      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      color:#fff;text-align:center;padding:38px 22px;position:relative
+    }
+    .header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#4c21b0,#6e3de8)}
+    .header h1{margin:0;font-size:28px;font-weight:800;line-height:1.25;letter-spacing:-.2px}
     .header p{margin:12px 0 0;font-size:15.5px;opacity:.95}
 
-    .disclosure{background:#fff3cd;color:#7a5a00;border:1px solid #ffe08a;border-radius:8px;padding:10px 16px;margin:18px 24px 0;text-align:center;font-size:14px}
+    .disclosure{
+      background:var(--warn-bg);color:var(--warn-tx);border:1px solid var(--warn-bd);
+      border-radius:var(--r-sm);padding:10px 16px;margin:18px 24px 0;text-align:center;font-size:14px
+    }
 
-    .section{padding:28px;border-top:1px solid var(--border)}
-    h2{font-size:20px;margin:0 0 16px;color:var(--primary)}
+    .section{padding:28px 28px;border-top:1px solid var(--border)}
+    .section:first-of-type{border-top:0}
 
-    pre{background:#f8fafc;padding:16px;border-radius:8px;white-space:pre-wrap;word-break:break-word;font:13.5px ui-monospace,Menlo,monospace;border:1px solid var(--border)}
-    .copy-btn{background:var(--primary);color:#fff;border:0;padding:8px 14px;font-size:13.5px;border-radius:8px;cursor:pointer;margin-top:8px}
-    .copy-btn:hover{opacity:.9}
+    h2{
+      font-size:20px;margin:0 0 14px;color:var(--primary);
+      display:flex;align-items:center;gap:10px;letter-spacing:-.1px
+    }
+    .muted{color:var(--muted)}
+    .soft-card{
+      background:#f9f9ff;border:1px solid #e9e3ff;border-radius:14px;padding:16px 16px
+    }
 
-    .soft-card{background:#f9f9ff;border:1px solid #e9e3ff;border-radius:12px;padding:16px}
-    .site-link{font-weight:700;color:var(--primary);text-decoration:none}
-    .site-link:hover{text-decoration:underline}
+    /* New callout card */
+    .callout{
+      border-radius:14px;padding:16px;border:1px solid var(--border);
+      background:linear-gradient(180deg,#ffffff, #fbfbff);
+      box-shadow:var(--shadow-sm)
+    }
+    .callout strong{font-weight:800}
+    .callout .big-note{
+      margin-top:10px;padding:12px 12px;border-radius:12px;
+      background:var(--primary-light);border:1px solid #e5dcff
+    }
+
+    .site-link{font-weight:800;color:#fff;text-decoration:none;word-break:break-word}
+    .site-pill{
+      display:inline-flex;align-items:center;gap:8px;
+      margin-top:10px;padding:10px 12px;border-radius:999px;
+      background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28)
+    }
+    .site-pill a{color:#fff}
+    .site-pill svg{opacity:.9}
+
+    pre{
+      background:#f8fafc;padding:16px;border-radius:12px;white-space:pre-wrap;word-break:break-word;
+      font:13.5px ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--border);margin:12px 0
+    }
+    code{background:#f1f5f9;padding:3px 6px;border-radius:6px;font-size:13.5px;color:var(--primary)}
+
+    .copy-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .copy-btn{
+      background:var(--primary);color:#fff;border:0;padding:9px 14px;font-size:13.5px;border-radius:10px;
+      cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:var(--shadow-sm);
+      transition:transform .12s ease, opacity .12s ease
+    }
+    .copy-btn:hover{transform:translateY(-1px);opacity:.95}
+    .copied-msg{display:inline-flex;align-items:center;color:var(--success);font-weight:700;font-size:13.5px}
+
+    ul{padding-left:20px;margin:12px 0}
+    li{margin-bottom:10px}
+    li::marker{color:var(--primary)}
+
+    .tips-img{
+      width:100%;height:auto;border-radius:12px;border:1px solid var(--border);
+      box-shadow:var(--shadow-sm);margin-top:12px;background:#f8fafc
+    }
 
     .pdf-section{background:var(--primary-light);text-align:center;padding:32px}
-    .pdf-button{background:var(--primary);color:#fff;padding:11px 20px;border-radius:8px;font-weight:600;text-decoration:none}
+    .pdf-section h3{margin:0 0 12px;color:var(--primary)}
+    .pdf-button{
+      display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;padding:11px 20px;
+      border-radius:12px;font-weight:700;text-decoration:none;box-shadow:var(--shadow-sm)
+    }
+    .pdf-button:hover{opacity:.95}
   </style>
 </head>
+
 <body>
+  <div class="container">
+    <div class="header">
+      <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready!</h1>
+      <p>Thanks for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
 
-<div class="container">
-  <div class="header">
-    <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready!</h1>
-    <p>Everything you need to submit your brand and campaign correctly.</p>
-  </div>
+      <div class="site-pill" aria-label="Website link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"></path>
+          <path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"></path>
+        </svg>
+        <span>Website:</span>
+        <a id="siteLinkA" class="site-link" href="#" target="_blank" rel="noopener">Loading…</a>
+      </div>
+    </div>
 
-  <div class="disclosure">
-    ⚠️ If your campaign was previously rejected, recreate and resubmit a new campaign for best results.
-  </div>
+    <div class="disclosure">⚠️ If your campaign was previously rejected, <u>recreate and resubmit</u> a new campaign for best results.</div>
 
-  <!-- Start Here -->
-  <div class="section">
-    <h2>🚀 Start Here</h2>
-    <div class="soft-card">
-      <p><strong>Your custom-built, domain-matched compliance website is ready.</strong></p>
-      <p class="muted">Use the copy & paste sections below exactly as shown.</p>
-      <p>🌐 Website:
-        <a id="siteLinkA" class="site-link" href="#" target="_blank">Loading…</a>
+    <!-- Start Here -->
+    <div class="section" id="startHere">
+      <h2>🚀 Start Here</h2>
+
+      <div class="soft-card">
+        <p style="margin:0 0 10px">
+          <strong>Your custom-built, domain-matched compliance website is ready.</strong>
+          It’s designed to match opt-in requirements and help your campaign get approved.
+          Hero images on the website may take up to <strong>60 seconds</strong> to load.
+        </p>
+
+        <p class="muted" style="margin:0">
+          Use the <strong>Copy & Paste</strong> sections below to fill out your application exactly.
+        </p>
+      </div>
+    </div>
+
+    <!-- NEW Instructions -->
+    <div class="section">
+      <h2>📌 Instructions</h2>
+      <div class="callout">
+        <p style="margin:0 0 10px">
+          Make sure to <strong>register the brand and campaign using the output below</strong>.
+        </p>
+        <div class="big-note">
+          You <strong>must</strong> register the brand with the <strong>website shown in this output</strong>
+          or you will likely face a campaign rejection <strong>~50% of the time</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📃 Use Case Description</h2>
+      <pre id="useCase">Loading use case description...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('useCase', this)">Copy</button>
+        <span id="copyUseCaseMsg"></span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>💬 Sample Messages</h2>
+
+      <p style="margin:0 0 6px"><strong>Sample Message One:</strong></p>
+      <pre id="msg1">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('msg1', this)">Copy</button>
+        <span id="copyMsg1Msg"></span>
+      </div>
+
+      <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message Two:</strong></p>
+      <pre id="msg2">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('msg2', this)">Copy</button>
+        <span id="copyMsg2Msg"></span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>✅ How do Contacts Opt-in to Messages?</h2>
+      <pre id="consentCopy">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('consentCopy', this)">Copy</button>
+        <span id="copyConsentMsg"></span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📜 Opt-In Message</h2>
+      <pre id="optInMessage">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('optInMessage', this)">Copy</button>
+        <span id="copyOptInMsg"></span>
+      </div>
+    </div>
+
+    <!-- KEEP Final Step wording -->
+    <div class="section">
+      <h2>✅ Final Step: HighLevel Opt-In Method</h2>
+
+      <p>
+        HighLevel now requires an <strong>Opt-In Method</strong> and a
+        <strong>public Opt-in Form / Image URL</strong>.
       </p>
+
+      <ul>
+        <li><strong>Opt-In Method:</strong> Website form</li>
+        <li>
+          <strong>Opt-in Form / Image URL:</strong><br>
+          Paste the link below into the HighLevel field exactly as shown.
+        </li>
+      </ul>
+
+      <pre id="optInFormUrl">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('optInFormUrl', this)">Copy Opt-In URL</button>
+        <span id="copyOptUrlMsg"></span>
+      </div>
+
+      <p style="margin-top:10px;font-size:14px;color:var(--muted)">
+        ✅ This link must be publicly accessible and show clear consent language.
+      </p>
+    </div>
+
+    <!-- KEEP Tips for Approval + hardcoded image -->
+    <div class="section">
+      <h2>💡 Tips for Approval</h2>
+      <ul>
+        <li>Submit between 8am–11am on weekdays</li>
+        <li>Use a fresh number/campaign if resubmitting</li>
+        <li>Brand approval usually takes ~24 hours</li>
+        <li><strong>Follow all best practices</strong> to avoid delays</li>
+      </ul>
+      <img
+        src="https://i.ibb.co/S4JzfBYz/image-4.png"
+        class="tips-img"
+        alt="Tips Screenshot"
+        loading="lazy"
+        decoding="async"
+        width="1200"
+        height="675"
+      >
+    </div>
+
+    <div class="pdf-section">
+      <h3>Need to send this to a client? Here’s a white-labeled guide!</h3>
+      <a href="#" onclick="window.print()" class="pdf-button">Download PDF</a>
     </div>
   </div>
 
-  <!-- Instructions -->
-  <div class="section">
-    <h2>📌 Instructions</h2>
-    <div class="soft-card">
-      <p>
-        Make sure to <strong>register the brand and campaign using the output below</strong>.
-      </p>
-      <p>
-        You <strong>must</strong> register the brand with the
-        <strong>website shown in this output</strong> or you will likely face a
-        campaign rejection <strong>~50% of the time</strong>.
-      </p>
-    </div>
-  </div>
+  <script>
+    const $ = (id)=>document.getElementById(id);
+    function cacheKey(q){ return "a2p_results_" + String(q || "").toLowerCase().trim(); }
 
-  <div class="section">
-    <h2>📃 Use Case Description</h2>
-    <pre id="useCase">Loading…</pre>
-    <button class="copy-btn" onclick="copyText('useCase')">Copy</button>
-  </div>
+    const API_BASE = "https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec";
+    const SITE_DOMAIN = "nebulabrandgroup.com";
 
-  <div class="section">
-    <h2>💬 Sample Messages</h2>
-    <pre id="msg1">Loading…</pre>
-    <button class="copy-btn" onclick="copyText('msg1')">Copy</button>
-    <pre id="msg2" style="margin-top:12px">Loading…</pre>
-    <button class="copy-btn" onclick="copyText('msg2')">Copy</button>
-  </div>
+    async function fetchJSON(url, timeoutMs=12000){
+      const ctrl = new AbortController();
+      const t = setTimeout(()=>ctrl.abort(), timeoutMs);
+      try{
+        const r = await fetch(url, {signal: ctrl.signal, cache: "no-store"});
+        if(!r.ok) throw new Error("HTTP "+r.status);
+        return await r.json();
+      } finally { clearTimeout(t); }
+    }
 
-  <div class="section">
-    <h2>✅ How do Contacts Opt-in?</h2>
-    <pre id="consentCopy">Loading…</pre>
-    <button class="copy-btn" onclick="copyText('consentCopy')">Copy</button>
-  </div>
+    function updateText(id, text){
+      const el=$(id);
+      if (el) el.textContent = text;
+    }
 
-  <div class="section">
-    <h2>📜 Opt-In Message</h2>
-    <pre id="optInMessage">Loading…</pre>
-    <button class="copy-btn" onclick="copyText('optInMessage')">Copy</button>
-  </div>
+    function buildWebsiteFromSlug(slugRaw){
+      const slug = String(slugRaw || "").trim();
+      const lower = slug.toLowerCase();
+      const allowed = /^[a-z0-9-]+$/;
 
-  <div class="section">
-    <h2>✅ Final Step: HighLevel Opt-In URL</h2>
-    <pre id="optInFormUrl">Loading…</pre>
-    <button class="copy-btn" onclick="copyText('optInFormUrl')">Copy</button>
-  </div>
+      if(!slug) return { ok:false, website:"" };
+      if(!allowed.test(lower)) return { ok:false, website:"" };
 
-  <div class="pdf-section">
-    <h3>Need to send this to a client?</h3>
-    <a href="#" onclick="window.print()" class="pdf-button">Download PDF</a>
-  </div>
-</div>
+      return { ok:true, website: `https://${lower}.${SITE_DOMAIN}` };
+    }
 
-<script>
-const API_BASE = "https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec";
-const SITE_DOMAIN = "nebulabrandgroup.com";
-const $ = id => document.getElementById(id);
+    function hydrate(data){
+      const businessName = String((data && data["Legal Business name"]) || "").trim();
+      const slug         = String((data && data["Slug"]) || "").trim();
 
-function buildWebsite(slug){
-  if(!slug) return "";
-  return `https://${slug.toLowerCase()}.${SITE_DOMAIN}`;
-}
+      const bn = businessName || "Client Business";
 
-async function init(){
-  const params = new URLSearchParams(location.search);
-  const slug = params.get("slug");
-  const id = params.get("id");
-  const q = slug || id;
-  if(!q) return;
+      const websiteRes = buildWebsiteFromSlug(slug);
+      const website = websiteRes.ok ? websiteRes.website : "";
 
-  const res = await fetch(API_BASE + (slug ? "?slug=" : "?id=") + q);
-  const data = await res.json();
+      const siteLinkA = $("siteLinkA");
+      if(siteLinkA){
+        if(website){
+          siteLinkA.textContent = website;
+          siteLinkA.href = website;
+        } else {
+          siteLinkA.textContent = "Website link will appear here";
+          siteLinkA.href = "#";
+        }
+      }
 
-  const bn = data["Legal Business name"] || "Client Business";
-  const website = buildWebsite(data["Slug"]);
+      // Final Step field must be WEBSITE (with /contact)
+      updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
 
-  $("siteLinkA").textContent = website;
-  $("siteLinkA").href = website;
+      updateText("useCase",
+`This campaign sends appointment information – confirmation & reminder messages to customers once they have booked an appointment with ${bn} on ${website || "[WEBSITE LINK PENDING]"} and opted-in to receive promotional and notification SMS from ${bn}.`
+      );
 
-  $("useCase").textContent =
-`This campaign sends appointment confirmation and reminder messages to customers who have booked with ${bn} on ${website} and opted-in to receive SMS notifications.`;
+      updateText("msg1",
+`Hi John! This is Mark from ${bn}. Our appointment for March 20th at 11:00 AM is confirmed. Please reach out in case you need to reschedule. Reply STOP to unsubscribe.`
+      );
 
-  $("msg1").textContent =
-`Hi John! This is Mark from ${bn}. Your appointment is confirmed. Reply STOP to unsubscribe.`;
+      updateText("msg2",
+`Hello, this is Jason with ${bn}. We are confirming your appointment tomorrow at 9 AM. Reply STOP to cancel.`
+      );
 
-  $("msg2").textContent =
-`Hello, this is Jason with ${bn}. We are confirming your appointment tomorrow. Reply STOP to cancel.`;
+      updateText("consentCopy",
+`End users opt-in by visiting ${website || "[WEBSITE LINK PENDING]"} and filling in their details. Users check a box to receive notifications & promotional messages to provide their consent`
+      );
 
-  $("consentCopy").textContent =
-`End users opt-in by visiting ${website} and submitting a form with explicit SMS consent.`;
+      updateText("optInMessage",
+`You have successfully opted-in to receive notification and promotional SMS from ${bn}. Please reply STOP if you need to Opt-out in the future.`
+      );
+    }
 
-  $("optInMessage").textContent =
-`You have successfully opted in to receive SMS messages from ${bn}. Reply STOP to opt out.`;
+    async function init(){
+      const params = new URLSearchParams(location.search);
+      const slug = params.get("slug");
+      const id = params.get("id");
 
-  $("optInFormUrl").textContent = website + "/contact";
-}
+      const queryVal = (slug || id || "").trim();
 
-function copyText(id){
-  navigator.clipboard.writeText($(id).textContent.trim());
-}
+      if(!queryVal){
+        updateText("useCase", "Waiting for data…");
+        updateText("msg1", "Waiting for data…");
+        updateText("msg2", "Waiting for data…");
+        updateText("consentCopy", "Waiting for data…");
+        updateText("optInMessage", "Waiting for data…");
+        updateText("optInFormUrl", "Waiting for a link…");
+        const siteLinkA = $("siteLinkA");
+        if(siteLinkA){ siteLinkA.textContent = "Waiting for a link…"; siteLinkA.href="#"; }
+        return;
+      }
 
-init();
-</script>
+      const key = cacheKey(queryVal);
 
+      const apiUrl = slug
+        ? (API_BASE + "?slug=" + encodeURIComponent(slug))
+        : (API_BASE + "?id=" + encodeURIComponent(id));
+
+      try{
+        const cached = localStorage.getItem(key);
+        if(cached){
+          hydrate(JSON.parse(cached));
+          fetchJSON(apiUrl)
+            .then(d=>{ localStorage.setItem(key, JSON.stringify(d)); hydrate(d); })
+            .catch(()=>{});
+          return;
+        }
+      }catch(e){}
+
+      try{
+        const data = await fetchJSON(apiUrl, 12000);
+        localStorage.setItem(key, JSON.stringify(data));
+        hydrate(data);
+      }catch(err){
+        console.error("Error fetching data", err);
+        updateText("useCase", "We’re having trouble loading live data. Try refreshing, or check back in a minute.");
+      }
+    }
+
+    function copyText(elId, btn){
+      const el=$(elId);
+      const txt=(el?.textContent||"").trim();
+      if(!txt) return;
+
+      navigator.clipboard.writeText(txt).then(()=>{
+        const msg=document.createElement("span");
+        msg.className="copied-msg";
+        msg.textContent="✓ Copied!";
+        btn.insertAdjacentElement("afterend", msg);
+        setTimeout(()=>msg.remove(), 1800);
+      });
+    }
+
+    init();
+  </script>
 </body>
 </html>
+
 
 
