@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v1.6 – Removed screenshot proof dependency, added Instructions, kept Final Step + Tips, UI polish -->
+  <!-- A2P Results v1.7.1 – Larger/cleaner copy boxes + top tip banner about special characters -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,12 +18,11 @@
     :root{
       --primary:#5c27d4; --primary-2:#6e3de8; --primary-light:#f3efff;
       --text:#2d3748; --muted:#667085; --border:#e2e8f0;
-      --success:#48bb78; --shadow-sm:0 2px 6px rgba(0,0,0,.06);
+      --success:#48bb78; --danger:#e11d48;
+      --shadow-sm:0 2px 6px rgba(0,0,0,.06);
       --shadow-md:0 10px 30px rgba(0,0,0,.10); --r-md:14px; --r-sm:10px;
-      --warn-bg:#fff3cd; --warn-bd:#ffe08a; --warn-tx:#7a5a00;
     }
     body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;background:#f7f7fa;color:var(--text);line-height:1.6}
-
     .container{max-width:920px;margin:34px auto;background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-md);overflow:hidden}
     @media (max-width:980px){.container{margin:18px}}
 
@@ -36,57 +35,100 @@
     .header p{margin:12px 0 0;font-size:15.5px;opacity:.95}
 
     .disclosure{
-      background:var(--warn-bg);color:var(--warn-tx);border:1px solid var(--warn-bd);
+      background:#fff3cd;color:#7a5a00;border:1px solid #ffe08a;
       border-radius:var(--r-sm);padding:10px 16px;margin:18px 24px 0;text-align:center;font-size:14px
     }
 
     .section{padding:28px 28px;border-top:1px solid var(--border)}
     .section:first-of-type{border-top:0}
 
-    h2{
-      font-size:20px;margin:0 0 14px;color:var(--primary);
-      display:flex;align-items:center;gap:10px;letter-spacing:-.1px
-    }
+    h2{font-size:20px;margin:0 0 14px;color:var(--primary);display:flex;align-items:center;gap:10px}
     .muted{color:var(--muted)}
-    .soft-card{
-      background:#f9f9ff;border:1px solid #e9e3ff;border-radius:14px;padding:16px 16px
-    }
+    .soft-card{background:#f9f9ff;border:1px solid #e9e3ff;border-radius:14px;padding:16px}
 
-    /* New callout card */
     .callout{
       border-radius:14px;padding:16px;border:1px solid var(--border);
       background:linear-gradient(180deg,#ffffff, #fbfbff);
       box-shadow:var(--shadow-sm)
     }
-    .callout strong{font-weight:800}
-    .callout .big-note{
-      margin-top:10px;padding:12px 12px;border-radius:12px;
+    .big-note{
+      margin-top:10px;padding:12px;border-radius:12px;
       background:var(--primary-light);border:1px solid #e5dcff
     }
 
-    .site-link{font-weight:800;color:#fff;text-decoration:none;word-break:break-word}
-    .site-pill{
-      display:inline-flex;align-items:center;gap:8px;
-      margin-top:10px;padding:10px 12px;border-radius:999px;
-      background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28)
+    /* NEW: tip banner styling (uses existing callout) */
+    .tip-callout{
+      border-color:#fde68a;
+      background:#fffbeb;
     }
-    .site-pill a{color:#fff}
-    .site-pill svg{opacity:.9}
 
-    pre{
-      background:#f8fafc;padding:16px;border-radius:12px;white-space:pre-wrap;word-break:break-word;
-      font:13.5px ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--border);margin:12px 0
+    /* Website box */
+    .site-box{
+      margin-top:12px;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+      box-shadow:var(--shadow-sm);
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
     }
-    code{background:#f1f5f9;padding:3px 6px;border-radius:6px;font-size:13.5px;color:var(--primary)}
+    .site-left{min-width:240px;flex:1}
+    .site-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+    .site-link{
+      display:block;
+      font-weight:800;
+      color:var(--primary);
+      text-decoration:none;
+      word-break:break-word;
+      font-size:15px;
+    }
+    .site-link:hover{text-decoration:underline}
+    .site-actions{display:flex;align-items:center;gap:10px}
+
+    /* UPDATED: larger/cleaner copy boxes */
+    pre{
+      background:#f8fafc;
+      padding:18px 18px;
+      border-radius:14px;
+      white-space:pre-wrap;
+      word-break:break-word;
+
+      font-size:15px;
+      line-height:1.55;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+      border:1px solid var(--border);
+      margin:12px 0;
+      color:#1f2937;
+    }
 
     .copy-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+    /* UPDATED: slightly larger nicer buttons */
     .copy-btn{
-      background:var(--primary);color:#fff;border:0;padding:9px 14px;font-size:13.5px;border-radius:10px;
+      background:var(--primary);color:#fff;border:0;
+      padding:10px 16px;
+      font-size:14px;
+      border-radius:12px;
       cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:var(--shadow-sm);
       transition:transform .12s ease, opacity .12s ease
     }
     .copy-btn:hover{transform:translateY(-1px);opacity:.95}
     .copied-msg{display:inline-flex;align-items:center;color:var(--success);font-weight:700;font-size:13.5px}
+    .warn{
+      margin-top:10px;
+      border:1px solid #fecaca;
+      background:#fff1f2;
+      color:#9f1239;
+      border-radius:12px;
+      padding:10px 12px;
+      font-size:14px;
+      display:none;
+    }
 
     ul{padding-left:20px;margin:12px 0}
     li{margin-bottom:10px}
@@ -112,18 +154,20 @@
     <div class="header">
       <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready!</h1>
       <p>Thanks for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
-
-      <div class="site-pill" aria-label="Website link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-          <path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"></path>
-          <path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"></path>
-        </svg>
-        <span>Website:</span>
-        <a id="siteLinkA" class="site-link" href="#" target="_blank" rel="noopener">Loading…</a>
-      </div>
     </div>
 
     <div class="disclosure">⚠️ If your campaign was previously rejected, <u>recreate and resubmit</u> a new campaign for best results.</div>
+
+    <!-- NEW: Top tip banner -->
+    <div class="section" style="padding-top:16px">
+      <div class="callout tip-callout">
+        <p style="margin:0;font-size:14.5px">
+          ⚠️ <strong>Website not generating?</strong>
+          Make sure you did not use special characters in the company name.
+          Special characters do not work for web addresses. 🙂
+        </p>
+      </div>
+    </div>
 
     <!-- Start Here -->
     <div class="section" id="startHere">
@@ -139,10 +183,24 @@
         <p class="muted" style="margin:0">
           Use the <strong>Copy & Paste</strong> sections below to fill out your application exactly.
         </p>
+
+        <!-- Website box moved BACK DOWN (visible) -->
+        <div class="site-box" style="margin-top:14px">
+          <div class="site-left">
+            <div class="site-label">Website (Brand must match this)</div>
+            <a id="siteLinkA" class="site-link" href="#" target="_blank" rel="noopener">Loading…</a>
+            <div id="siteWarn" class="warn"></div>
+          </div>
+          <div class="site-actions">
+            <button class="copy-btn" onclick="copyText('siteLinkA', this)" title="Copy website">
+              Copy Website
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- NEW Instructions -->
+    <!-- Instructions -->
     <div class="section">
       <h2>📌 Instructions</h2>
       <div class="callout">
@@ -161,7 +219,6 @@
       <pre id="useCase">Loading use case description...</pre>
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('useCase', this)">Copy</button>
-        <span id="copyUseCaseMsg"></span>
       </div>
     </div>
 
@@ -172,14 +229,12 @@
       <pre id="msg1">Loading...</pre>
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('msg1', this)">Copy</button>
-        <span id="copyMsg1Msg"></span>
       </div>
 
       <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message Two:</strong></p>
       <pre id="msg2">Loading...</pre>
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('msg2', this)">Copy</button>
-        <span id="copyMsg2Msg"></span>
       </div>
     </div>
 
@@ -188,7 +243,6 @@
       <pre id="consentCopy">Loading...</pre>
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('consentCopy', this)">Copy</button>
-        <span id="copyConsentMsg"></span>
       </div>
     </div>
 
@@ -197,11 +251,10 @@
       <pre id="optInMessage">Loading...</pre>
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('optInMessage', this)">Copy</button>
-        <span id="copyOptInMsg"></span>
       </div>
     </div>
 
-    <!-- KEEP Final Step wording -->
+    <!-- Final Step kept -->
     <div class="section">
       <h2>✅ Final Step: HighLevel Opt-In Method</h2>
 
@@ -221,7 +274,6 @@
       <pre id="optInFormUrl">Loading...</pre>
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('optInFormUrl', this)">Copy Opt-In URL</button>
-        <span id="copyOptUrlMsg"></span>
       </div>
 
       <p style="margin-top:10px;font-size:14px;color:var(--muted)">
@@ -229,7 +281,7 @@
       </p>
     </div>
 
-    <!-- KEEP Tips for Approval + hardcoded image -->
+    <!-- Tips kept -->
     <div class="section">
       <h2>💡 Tips for Approval</h2>
       <ul>
@@ -274,41 +326,82 @@
 
     function updateText(id, text){
       const el=$(id);
-      if (el) el.textContent = text;
+      if (!el) return;
+      el.textContent = text;
+    }
+
+    // Sanitize slug more aggressively so website always builds
+    function normalizeSlug(slugRaw){
+      return String(slugRaw || "")
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "")         // remove spaces
+        .replace(/[_]/g, "-")        // underscore -> hyphen (optional)
+        .replace(/[^a-z0-9-]/g, ""); // strip anything else
     }
 
     function buildWebsiteFromSlug(slugRaw){
-      const slug = String(slugRaw || "").trim();
-      const lower = slug.toLowerCase();
-      const allowed = /^[a-z0-9-]+$/;
-
-      if(!slug) return { ok:false, website:"" };
-      if(!allowed.test(lower)) return { ok:false, website:"" };
-
-      return { ok:true, website: `https://${lower}.${SITE_DOMAIN}` };
+      const s = normalizeSlug(slugRaw);
+      if(!s) return { ok:false, website:"" };
+      return { ok:true, website: `https://${s}.${SITE_DOMAIN}` };
     }
 
-    function hydrate(data){
-      const businessName = String((data && data["Legal Business name"]) || "").trim();
-      const slug         = String((data && data["Slug"]) || "").trim();
+    // Accept multiple possible response shapes
+    function unwrapRow(resp){
+      if(!resp) return null;
+      if(resp.ok === false) return resp; // keep explicit fail
+      return resp.data || resp.record || resp.row || resp.result || resp;
+    }
 
-      const bn = businessName || "Client Business";
-
-      const websiteRes = buildWebsiteFromSlug(slug);
-      const website = websiteRes.ok ? websiteRes.website : "";
-
+    function setWebsiteUI(website){
       const siteLinkA = $("siteLinkA");
+      const warn = $("siteWarn");
+
       if(siteLinkA){
         if(website){
           siteLinkA.textContent = website;
           siteLinkA.href = website;
-        } else {
+        }else{
           siteLinkA.textContent = "Website link will appear here";
           siteLinkA.href = "#";
         }
       }
 
-      // Final Step field must be WEBSITE (with /contact)
+      if(warn){
+        if(!website){
+          warn.style.display = "block";
+          warn.innerHTML = `Website could not be generated. This usually means the <strong>Slug</strong> field is missing or invalid in your sheet.`;
+        }else{
+          warn.style.display = "none";
+          warn.textContent = "";
+        }
+      }
+    }
+
+    function hydrate(row){
+      if(row && row.ok === false){
+        setWebsiteUI("");
+        updateText("useCase", "Lookup failed. This record could not be found from the endpoint.");
+        updateText("msg1", "—");
+        updateText("msg2", "—");
+        updateText("consentCopy", "—");
+        updateText("optInMessage", "—");
+        updateText("optInFormUrl", "—");
+        return;
+      }
+
+      const businessName =
+        String((row && (row["Legal Business name"] || row["Legal Business Name"] || row["business_name"])) || "").trim();
+
+      const slug =
+        String((row && (row["Slug"] || row["slug"] || row["SLUG"])) || "").trim();
+
+      const bn = businessName || "Client Business";
+
+      const websiteRes = buildWebsiteFromSlug(slug);
+      const website = websiteRes.ok ? websiteRes.website : "";
+      setWebsiteUI(website);
+
       updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
 
       updateText("useCase",
@@ -336,23 +429,20 @@
       const params = new URLSearchParams(location.search);
       const slug = params.get("slug");
       const id = params.get("id");
-
       const queryVal = (slug || id || "").trim();
 
       if(!queryVal){
+        setWebsiteUI("");
         updateText("useCase", "Waiting for data…");
         updateText("msg1", "Waiting for data…");
         updateText("msg2", "Waiting for data…");
         updateText("consentCopy", "Waiting for data…");
         updateText("optInMessage", "Waiting for data…");
         updateText("optInFormUrl", "Waiting for a link…");
-        const siteLinkA = $("siteLinkA");
-        if(siteLinkA){ siteLinkA.textContent = "Waiting for a link…"; siteLinkA.href="#"; }
         return;
       }
 
       const key = cacheKey(queryVal);
-
       const apiUrl = slug
         ? (API_BASE + "?slug=" + encodeURIComponent(slug))
         : (API_BASE + "?id=" + encodeURIComponent(id));
@@ -360,9 +450,10 @@
       try{
         const cached = localStorage.getItem(key);
         if(cached){
-          hydrate(JSON.parse(cached));
+          const cachedObj = JSON.parse(cached);
+          hydrate(unwrapRow(cachedObj));
           fetchJSON(apiUrl)
-            .then(d=>{ localStorage.setItem(key, JSON.stringify(d)); hydrate(d); })
+            .then(d=>{ localStorage.setItem(key, JSON.stringify(d)); hydrate(unwrapRow(d)); })
             .catch(()=>{});
           return;
         }
@@ -371,24 +462,30 @@
       try{
         const data = await fetchJSON(apiUrl, 12000);
         localStorage.setItem(key, JSON.stringify(data));
-        hydrate(data);
+        hydrate(unwrapRow(data));
       }catch(err){
         console.error("Error fetching data", err);
+        setWebsiteUI("");
         updateText("useCase", "We’re having trouble loading live data. Try refreshing, or check back in a minute.");
       }
     }
 
     function copyText(elId, btn){
       const el=$(elId);
-      const txt=(el?.textContent||"").trim();
-      if(!txt) return;
+      if(!el) return;
+
+      const txt = (el.tagName === "A")
+        ? (el.href && el.href !== "#" ? el.href : el.textContent.trim())
+        : (el.textContent || "").trim();
+
+      if(!txt || txt === "Loading…") return;
 
       navigator.clipboard.writeText(txt).then(()=>{
         const msg=document.createElement("span");
         msg.className="copied-msg";
         msg.textContent="✓ Copied!";
         btn.insertAdjacentElement("afterend", msg);
-        setTimeout(()=>msg.remove(), 1800);
+        setTimeout(()=>msg.remove(), 1400);
       });
     }
 
@@ -396,6 +493,7 @@
   </script>
 </body>
 </html>
+
 
 
 
