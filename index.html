@@ -405,38 +405,24 @@
       updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
 
 updateText("useCase",
-`End users opt in to receive SMS messages from ${bn} by submitting a form on ${website || "[WEBSITE LINK PENDING]"}.
-This campaign sends recurring appointment-related and informational SMS messages, including appointment confirmations, reminders, rescheduling updates, and follow-ups.
-Message frequency varies based on user interaction and typically does not exceed 4 messages per month.
-Message and data rates may apply.
-Users may reply STOP to opt out or HELP for assistance.`
+`End users opt in to receive SMS messages from ${bn} by submitting a form on ${website || "[WEBSITE LINK PENDING]"}. This campaign sends recurring appointment-related and informational SMS messages, including appointment confirmations, reminders, rescheduling updates, and follow-ups. Message frequency varies based on user interaction and typically does not exceed 4 messages per month. Message and data rates may apply. Users may reply STOP to opt out or HELP for assistance.`
 );
 
 updateText("msg1",
-`Hi Adam, this is Alex from ${bn}. You are receiving this message because you opted in on ${website || "[WEBSITE LINK PENDING]"} to receive appointment-related SMS.
-Your appointment is confirmed for March 20 at 11:00 AM.
-Reply STOP to opt out or HELP for help. Message and data rates may apply.`
+`Hi Adam, this is Alex from ${bn}. You are receiving this message because you opted in on ${website || "[WEBSITE LINK PENDING]"} to receive appointment-related SMS. Your appointment is confirmed for March 20 at 11:00 AM. Reply STOP to opt out or HELP for help. Message and data rates may apply.`
 );
 
 updateText("msg2",
-`Hi John, this is Jordan from ${bn}. Thanks for opting in to receive SMS updates from us.
-A team member will reach out within the next 24 hours.
-Reply STOP to opt out or HELP for help. Message and data rates may apply.`
+`Hi John, this is Jordan from ${bn}. Thanks for opting in to receive SMS updates from us. A team member will reach out within the next 24 hours. Reply STOP to opt out or HELP for help. Message and data rates may apply.`
 );
 
 updateText("consentCopy",
-`End users opt in by visiting ${website || "[WEBSITE LINK PENDING]"} and submitting a web form.
-Users enter their mobile phone number and actively select an unchecked consent checkbox agreeing to receive appointment-related and informational SMS messages from ${bn}.
-Message frequency varies. Message and data rates may apply.
-Users may reply STOP to opt out or HELP for assistance.`
+`End users opt in by visiting ${website || "[WEBSITE LINK PENDING]"} and submitting a web form. Users enter their mobile phone number and actively select an unchecked consent checkbox agreeing to receive appointment-related and informational SMS messages from ${bn}. Message frequency varies. Message and data rates may apply. Users may reply STOP to opt out or HELP for assistance.`
 );
 
 updateText("optInMessage",
-`You are opted in to receive appointment-related SMS messages from ${bn}.
-Message frequency varies. Message and data rates may apply.
-Reply STOP to opt out or HELP for assistance.`
+`You are opted in to receive appointment-related SMS messages from ${bn}. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance.`
 );
-
 
     async function init(){
       const params = new URLSearchParams(location.search);
