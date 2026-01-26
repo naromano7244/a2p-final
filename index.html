@@ -176,7 +176,7 @@
       <div class="soft-card">
         <p style="margin:0 0 10px">
           <strong>Your custom-built, domain-matched compliance website is ready.</strong>
-          It’s designed to match opt-in requirements and help your campaign get approved.
+          It's designed to match opt-in requirements and help your campaign get approved.
           Hero images on the website may take up to <strong>60 seconds</strong> to load.
         </p>
 
@@ -211,6 +211,25 @@
           You <strong>must</strong> register the brand with the <strong>website shown in this output</strong>
           or you will likely face a campaign rejection <strong>~50% of the time</strong>.
         </div>
+      </div>
+    </div>
+
+    <!-- Pro Tip Section -->
+    <div class="section">
+      <h2>💡 Pro Tip</h2>
+      <div class="callout" style="background:#fff4e6;border-color:#ffd69a">
+        <p style="margin:0 0 14px;font-weight:600;color:#b45309">
+          <strong>Tip!</strong> Generations can vary. Best practice is to match the USE CASE and "How do users opt in to receive messages" box to the actual opt-in form on your website. The templates below work 9/10 times, but if you face a rejection, this is the reason.
+        </p>
+        <p style="margin:0 0 8px;font-size:14px;color:var(--muted)"><strong>Example:</strong></p>
+        <img
+          src="https://storage.googleapis.com/msgsndr/komZ0pRB88cwzgvEo7MW/media/69778ee867c219f71093796e.png"
+          class="tips-img"
+          alt="Opt-in form example"
+          loading="lazy"
+          decoding="async"
+          style="margin-top:0"
+        >
       </div>
     </div>
 
@@ -302,7 +321,7 @@
     </div>
 
     <div class="pdf-section">
-      <h3>Need to send this to a client? Here’s a white-labeled guide!</h3>
+      <h3>Need to send this to a client? Here's a white-labeled guide!</h3>
       <a href="#" onclick="window.print()" class="pdf-button">Download PDF</a>
     </div>
   </div>
@@ -405,7 +424,17 @@
       updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
 
 updateText("useCase",
-`End users opt in to receive SMS messages from ${bn} by submitting a form on ${website || "[WEBSITE LINK PENDING]"}. This campaign sends recurring informational and promotional SMS messages, including service updates, special offers, and follow-ups. Message frequency varies based on user interaction and typically does not exceed 4 messages per month. Message and data rates may apply. Users may reply STOP to opt out or HELP for assistance.`
+`End users opt in to receive SMS messages from ${bn} by submitting a form on ${website || "[WEBSITE LINK PENDING]"}. 
+
+The form includes two checkboxes with the following disclosures (users must check the unchecked relevant box to receive those types of messages):
+
+"I consent to receive marketing text messages from ${bn} at the phone number provided. Message frequency may vary. Message & data rates may apply. Text HELP for assistance, reply STOP to opt out."
+
+"I consent to receive non-marketing text messages from ${bn} about my order updates, appointment reminders, etc. Message frequency may vary. Message & data rates may apply. Text HELP for assistance, reply STOP to opt out."
+
+After submitting the form and checking the appropriate box(es), users receive a confirmation SMS:
+
+"Thank you for subscribing to ${bn}! We will contact you regarding a quote in the next 24 hours. Reply HELP for help, STOP to unsubscribe."`
 );
 
 updateText("msg1",
@@ -417,7 +446,7 @@ updateText("msg2",
 );
 
 updateText("consentCopy",
-`End users opt in by visiting ${website || "[WEBSITE LINK PENDING]"} and submitting a web form. Users enter their mobile phone number and actively select an unchecked consent checkbox agreeing to receive informational and promotional SMS messages from ${bn}. Message frequency varies. Message and data rates may apply. Users may reply STOP to opt out or HELP for assistance.`
+`End users opt in by visiting ${website || "[WEBSITE LINK PENDING]"} and submitting a web form. Users enter their mobile phone number and actively select one or both of the unchecked consent checkboxes agreeing to receive marketing and non-marketing SMS messages from ${bn}. Message frequency varies. Message and data rates may apply. Users may reply STOP to opt out or HELP for assistance. The privacy policy and terms are linked at the point of opt-in.`
 );
 
 updateText("optInMessage",
@@ -466,7 +495,7 @@ updateText("optInMessage",
       }catch(err){
         console.error("Error fetching data", err);
         setWebsiteUI("");
-        updateText("useCase", "We’re having trouble loading live data. Try refreshing, or check back in a minute.");
+        updateText("useCase", "We're having trouble loading live data. Try refreshing, or check back in a minute.");
       }
     }
 
@@ -493,7 +522,3 @@ updateText("optInMessage",
   </script>
 </body>
 </html>
-
-
-
-
