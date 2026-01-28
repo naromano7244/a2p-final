@@ -424,33 +424,33 @@
       updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
 
 updateText("useCase",
-`End users opt in to receive SMS messages from ${bn} by submitting a form on ${website || "[WEBSITE LINK PENDING]"} . 
+`End users opt in to receive SMS messages from ${bn} by submitting a form on ${website || "[WEBSITE LINK PENDING]"}.
+The form includes two checkboxes with the following disclosures (users must check the relevant unchecked box to receive those types of messages):
 
-The form includes two checkboxes with the following disclosures (users must check the unchecked relevant box to receive those types of messages):
+"I consent to receive marketing text messages from ${bn} at the phone number provided. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Text HELP to [BUSINESS PHONE] for assistance, reply STOP to opt out."
 
-"I consent to receive marketing text messages from ${bn} at the phone number provided. Message frequency may vary. Message & data rates may apply. Text HELP for assistance, reply STOP to opt out."
+"I consent to receive non-marketing text messages from ${bn} about service updates and inquiries. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Text HELP to [BUSINESS PHONE] for assistance, reply STOP to opt out."
 
-"I consent to receive non-marketing text messages from ${bn} about my order updates, appointment reminders, etc. Message frequency may vary. Message & data rates may apply. Text HELP for assistance, reply STOP to opt out."
+The form also includes the following email consent statement tied to the submit action:
+"By submitting this form, you consent to receive emails from ${bn} regarding your inquiry and services. Email frequency varies, up to 4 emails per month. You can unsubscribe at any time. If you provide a phone number and check the boxes above, you also consent to receive SMS messages."
 
-After submitting the form and checking the appropriate box(es), users receive a confirmation SMS:
-
-"Thank you for subscribing to ${bn}! We will contact you regarding a quote in the next 24 hours. Reply HELP for help, STOP to unsubscribe."`
+Privacy Policy and Terms of Service links are displayed above the submit button.`
 );
 
 updateText("msg1",
-`Hi Adam, this is Alex from ${bn}. You are receiving this message because you opted in on ${website || "[WEBSITE LINK PENDING]"} to receive SMS updates. We wanted to follow up regarding your inquiry. Reply STOP to opt out or HELP for help. Message and data rates may apply.`
+`Hi Adam, this is Alex from ${bn}. You opted in at ${website || "[WEBSITE LINK PENDING]"} to receive SMS updates. We wanted to follow up regarding your inquiry. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
 );
 
 updateText("msg2",
-`Hi John, this is Jordan from ${bn}. Thanks for opting in to receive SMS updates from us. A team member will reach out within the next 24 hours. Reply STOP to opt out or HELP for help. Message and data rates may apply.`
+`Hi John, this is Jordan from ${bn}. Thanks for opting in to receive SMS updates from us. A team member will reach out within the next 24 hours. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
 );
 
 updateText("consentCopy",
-`End users opt in by visiting ${website || "[WEBSITE LINK PENDING]"} and submitting a web form. Users enter their mobile phone number and actively select one or both of the unchecked consent checkboxes agreeing to receive marketing and non-marketing SMS messages from ${bn}. Message frequency varies. Message and data rates may apply. Users may reply STOP to opt out or HELP for assistance. The privacy policy and terms are linked at the point of opt-in.`
+`End users opt in by visiting ${website || "[WEBSITE LINK PENDING]"} and submitting a web form. Users enter their mobile phone number and actively select one or both of the unchecked consent checkboxes agreeing to receive marketing and/or non-marketing SMS messages from ${bn}. Message frequency varies, up to 4 messages per month. Message and data rates may apply. Users may reply STOP to opt out or HELP for assistance. By submitting the form, users also consent to receive emails. Privacy Policy and Terms of Service are linked above the submit button.`
 );
 
 updateText("optInMessage",
-`You are opted in to receive SMS messages from ${bn}. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance.`
+`You are opted in to receive SMS messages from ${bn}. Message frequency varies, up to 4 messages per month. Message and data rates may apply. Reply STOP to opt out or HELP for assistance.`
 );
     }
 
