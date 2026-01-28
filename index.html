@@ -419,6 +419,7 @@
 
       const websiteRes = buildWebsiteFromSlug(slug);
       const website = websiteRes.ok ? websiteRes.website : "";
+      const phone = String((row && (row["Support Phone"] || row["support_phone"])) || "").trim() || "[BUSINESS PHONE]";
       setWebsiteUI(website);
 
       updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
@@ -427,9 +428,9 @@ updateText("useCase",
 `End users opt in to receive SMS messages from ${bn} by submitting a form on ${website || "[WEBSITE LINK PENDING]"}.
 The form includes two checkboxes with the following disclosures (users must check the relevant unchecked box to receive those types of messages):
 
-"I consent to receive marketing text messages from ${bn} at the phone number provided. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Text HELP to [BUSINESS PHONE] for assistance, reply STOP to opt out."
+"I consent to receive marketing text messages from ${bn} at the phone number provided. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Text HELP to ${phone} for assistance, reply STOP to opt out."
 
-"I consent to receive non-marketing text messages from ${bn} about service updates and inquiries. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Text HELP to [BUSINESS PHONE] for assistance, reply STOP to opt out."
+"I consent to receive non-marketing text messages from ${bn} about service updates and inquiries. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Text HELP to ${phone} for assistance, reply STOP to opt out."
 
 The form also includes the following email consent statement tied to the submit action:
 "By submitting this form, you consent to receive emails from ${bn} regarding your inquiry and services. Email frequency varies, up to 4 emails per month. You can unsubscribe at any time. If you provide a phone number and check the boxes above, you also consent to receive SMS messages."
