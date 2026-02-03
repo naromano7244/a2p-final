@@ -398,36 +398,36 @@
     }
 
     function hydrate(row){
-  if(row && row.ok === false){
-    setWebsiteUI("");
-    updateText("useCase", "Lookup failed. This record could not be found from the endpoint.");
-    updateText("msg1", "—");
-    updateText("msg2", "—");
-    updateText("consentCopy", "—");
-    updateText("optInMessage", "—");
-    updateText("optInFormUrl", "—");
-    return;
-  }
+      if(row && row.ok === false){
+        setWebsiteUI("");
+        updateText("useCase", "Lookup failed. This record could not be found from the endpoint.");
+        updateText("msg1", "—");
+        updateText("msg2", "—");
+        updateText("consentCopy", "—");
+        updateText("optInMessage", "—");
+        updateText("optInFormUrl", "—");
+        return;
+      }
 
-  const businessName =
-    String((row && (row["Legal Business name"] || row["Legal Business Name"] || row["business_name"])) || "").trim();
+      const businessName =
+        String((row && (row["Legal Business name"] || row["Legal Business Name"] || row["business_name"])) || "").trim();
 
-  const slug =
-    String((row && (row["Slug"] || row["slug"] || row["SLUG"])) || "").trim();
+      const slug =
+        String((row && (row["Slug"] || row["slug"] || row["SLUG"])) || "").trim();
 
-  const bn = businessName || "Client Business";
+      const bn = businessName || "Client Business";
 
-  const websiteRes = buildWebsiteFromSlug(slug);
-  const website = websiteRes.ok ? websiteRes.website : "";
-  const phone = String((row && (row["Support Phone"] || row["support_phone"])) || "").trim() || "[BUSINESS PHONE]";
-  const marketingConsent = String((row && (row["Marketing Consent"] || row["marketing_consent"])) || "").trim() || "promotional offers, discounts, and updates";
-  const nonMarketingConsent = String((row && (row["Non-Marketing Consent"] || row["non_marketing_consent"])) || "").trim() || "service updates and inquiries";
-  
-  setWebsiteUI(website);
+      const websiteRes = buildWebsiteFromSlug(slug);
+      const website = websiteRes.ok ? websiteRes.website : "";
+      const phone = String((row && (row["Support Phone"] || row["support_phone"])) || "").trim() || "[BUSINESS PHONE]";
+      const marketingConsent = String((row && (row["Marketing Consent"] || row["marketing_consent"])) || "").trim() || "promotional offers, discounts, and updates";
+      const nonMarketingConsent = String((row && (row["Non-Marketing Consent"] || row["non_marketing_consent"])) || "").trim() || "service updates and inquiries";
+      
+      setWebsiteUI(website);
 
-  updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
+      updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
 
-  updateText("useCase",
+      updateText("useCase",
 `End users opt in to receive SMS messages from ${bn} by submitting a form on ${website || "[WEBSITE LINK PENDING]"} .
 The form includes two checkboxes with the following disclosures (users must check the relevant unchecked box to receive those types of messages):
 
@@ -436,24 +436,25 @@ The form includes two checkboxes with the following disclosures (users must chec
 "I consent to receive ${nonMarketingConsent} from ${bn}. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Text HELP to ${phone} for assistance, reply STOP to opt out."
 
 Privacy Policy and Terms of Service links are displayed above the submit button.`
-  );
+      );
 
-  updateText("msg1",
+      updateText("msg1",
 `Hi Adam, this is Alex from ${bn}. You opted in at ${website || "[WEBSITE LINK PENDING]"} to receive SMS updates. We wanted to follow up regarding your inquiry. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
-  );
+      );
 
-  updateText("msg2",
+      updateText("msg2",
 `Hi John, this is Jordan from ${bn}. Thanks for opting in to receive SMS updates from us. A team member will reach out within the next 24 hours. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
-  );
+      );
 
-  updateText("consentCopy",
+      updateText("consentCopy",
 `End users opt in by visiting ${website || "[WEBSITE LINK PENDING]"} and submitting a web form. Users enter their mobile phone number and actively select one or both of the unchecked consent checkboxes agreeing to receive ${marketingConsent} and/or ${nonMarketingConsent} from ${bn}. Message frequency varies, up to 4 messages per month. Message and data rates may apply. Users may reply STOP to opt out or HELP for assistance. Privacy Policy and Terms of Service are linked above the submit button.`
-  );
+      );
 
-  updateText("optInMessage",
+      updateText("optInMessage",
 `You are opted in to receive SMS messages from ${bn}. Message frequency varies, up to 4 messages per month. Message and data rates may apply. Reply STOP to opt out or HELP for assistance.`
-  );
-}
+      );
+    }
+
     async function init(){
       const params = new URLSearchParams(location.search);
       const slug = params.get("slug");
