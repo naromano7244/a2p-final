@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v1.7.1 – Larger/cleaner copy boxes + top tip banner about special characters -->
+  <!-- A2P Results v1.8.0 – Added rate limit upgrade prompt -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,7 +56,6 @@
       background:var(--primary-light);border:1px solid #e5dcff
     }
 
-    /* NEW: tip banner styling (uses existing callout) */
     .tip-callout{
       border-color:#fde68a;
       background:#fffbeb;
@@ -89,7 +88,6 @@
     .site-link:hover{text-decoration:underline}
     .site-actions{display:flex;align-items:center;gap:10px}
 
-    /* UPDATED: larger/cleaner copy boxes */
     pre{
       background:#f8fafc;
       padding:18px 18px;
@@ -108,7 +106,6 @@
 
     .copy-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 
-    /* UPDATED: slightly larger nicer buttons */
     .copy-btn{
       background:var(--primary);color:#fff;border:0;
       padding:10px 16px;
@@ -119,15 +116,46 @@
     }
     .copy-btn:hover{transform:translateY(-1px);opacity:.95}
     .copied-msg{display:inline-flex;align-items:center;color:var(--success);font-weight:700;font-size:13.5px}
-    .warn{
-      margin-top:10px;
-      border:1px solid #fecaca;
-      background:#fff1f2;
-      color:#9f1239;
-      border-radius:12px;
-      padding:10px 12px;
-      font-size:14px;
+    
+    /* NEW: Upgrade prompt styling */
+    .upgrade-prompt{
+      margin-top:14px;
+      border:2px solid var(--primary);
+      background:linear-gradient(135deg, #f3efff, #ffffff);
+      border-radius:14px;
+      padding:24px;
+      text-align:center;
       display:none;
+    }
+    .upgrade-prompt h4{
+      margin:0 0 10px;
+      color:var(--primary);
+      font-size:19px;
+      font-weight:700;
+    }
+    .upgrade-prompt p{
+      margin:0 0 18px;
+      color:var(--text);
+      font-size:15px;
+      line-height:1.5;
+    }
+    .upgrade-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      background:var(--primary);
+      color:#fff;
+      padding:13px 28px;
+      border-radius:12px;
+      font-weight:700;
+      font-size:15px;
+      text-decoration:none;
+      box-shadow:var(--shadow-md);
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .upgrade-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 40px rgba(92,39,212,.25);
     }
 
     ul{padding-left:20px;margin:12px 0}
@@ -158,7 +186,6 @@
 
     <div class="disclosure">⚠️ If your campaign was previously rejected, <u>recreate and resubmit</u> a new campaign for best results.</div>
 
-    <!-- NEW: Top tip banner -->
     <div class="section" style="padding-top:16px">
       <div class="callout tip-callout">
         <p style="margin:0;font-size:14.5px">
@@ -184,18 +211,28 @@
           Use the <strong>Copy & Paste</strong> sections below to fill out your application exactly.
         </p>
 
-        <!-- Website box moved BACK DOWN (visible) -->
         <div class="site-box" style="margin-top:14px">
           <div class="site-left">
             <div class="site-label">Website (Brand must match this)</div>
             <a id="siteLinkA" class="site-link" href="#" target="_blank" rel="noopener">Loading…</a>
-            <div id="siteWarn" class="warn"></div>
           </div>
           <div class="site-actions">
             <button class="copy-btn" onclick="copyText('siteLinkA', this)" title="Copy website">
               Copy Website
             </button>
           </div>
+        </div>
+
+        <!-- NEW: Upgrade prompt that shows when rate limited -->
+        <div id="upgradePrompt" class="upgrade-prompt">
+          <h4>🚀 Oops! You've Hit Your Rate Limit</h4>
+          <p>You've reached the limit for free website generations. Upgrade now for unlimited submissions and priority support!</p>
+          <a href="https://a2pwizard.com/done-for-you" class="upgrade-btn" target="_blank" rel="noopener">
+            ⚡ Upgrade Now for Unlimited Access
+          </a>
+          <p style="margin:16px 0 0;font-size:13px;color:var(--muted)">
+            Received this message in error? Please contact <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);text-decoration:none">admin@a2pwizard.com</a>
+          </p>
         </div>
       </div>
     </div>
@@ -273,7 +310,6 @@
       </div>
     </div>
 
-    <!-- Final Step kept -->
     <div class="section">
       <h2>✅ Final Step: HighLevel Opt-In Method</h2>
 
@@ -300,7 +336,6 @@
       </p>
     </div>
 
-    <!-- Tips kept -->
     <div class="section">
       <h2>💡 Tips for Approval</h2>
       <ul>
@@ -349,14 +384,13 @@
       el.textContent = text;
     }
 
-    // Sanitize slug more aggressively so website always builds
     function normalizeSlug(slugRaw){
       return String(slugRaw || "")
         .toLowerCase()
         .trim()
-        .replace(/\s+/g, "")         // remove spaces
-        .replace(/[_]/g, "-")        // underscore -> hyphen (optional)
-        .replace(/[^a-z0-9-]/g, ""); // strip anything else
+        .replace(/\s+/g, "")
+        .replace(/[_]/g, "-")
+        .replace(/[^a-z0-9-]/g, "");
     }
 
     function buildWebsiteFromSlug(slugRaw){
@@ -365,34 +399,27 @@
       return { ok:true, website: `https://${s}.${SITE_DOMAIN}` };
     }
 
-    // Accept multiple possible response shapes
     function unwrapRow(resp){
       if(!resp) return null;
-      if(resp.ok === false) return resp; // keep explicit fail
+      if(resp.ok === false) return resp;
       return resp.data || resp.record || resp.row || resp.result || resp;
     }
 
     function setWebsiteUI(website){
       const siteLinkA = $("siteLinkA");
-      const warn = $("siteWarn");
+      const upgradePrompt = $("upgradePrompt");
 
       if(siteLinkA){
         if(website){
           siteLinkA.textContent = website;
           siteLinkA.href = website;
+          // Hide upgrade prompt if website is available
+          if(upgradePrompt) upgradePrompt.style.display = "none";
         }else{
-          siteLinkA.textContent = "Website link will appear here";
+          siteLinkA.textContent = "Website generation unavailable";
           siteLinkA.href = "#";
-        }
-      }
-
-      if(warn){
-        if(!website){
-          warn.style.display = "block";
-          warn.innerHTML = `Website could not be generated. This usually means the <strong>Slug</strong> field is missing or invalid in your sheet.`;
-        }else{
-          warn.style.display = "none";
-          warn.textContent = "";
+          // Show upgrade prompt if no website
+          if(upgradePrompt) upgradePrompt.style.display = "block";
         }
       }
     }
