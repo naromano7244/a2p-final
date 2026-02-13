@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v1.8.0 – Added rate limit upgrade prompt -->
+  <!-- A2P Results v2.0.0 – STOP warning, feature badge, step numbers, random names, print styles -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -174,6 +174,54 @@
       border-radius:12px;font-weight:700;text-decoration:none;box-shadow:var(--shadow-sm)
     }
     .pdf-button:hover{opacity:.95}
+
+    /* Feature badge */
+    .feature-badge{
+      margin-top:14px;
+      background:linear-gradient(135deg,#ecfdf5,#f0fdf4);
+      border:1px solid #86efac;
+      border-radius:12px;
+      padding:14px 18px;
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+    }
+    .feature-badge .badge-icon{
+      font-size:22px;flex-shrink:0;margin-top:1px
+    }
+    .feature-badge .badge-text{font-size:14px;color:#166534;line-height:1.5}
+    .feature-badge .badge-text strong{color:#15803d}
+    .feature-badge .badge-chips{
+      display:flex;flex-wrap:wrap;gap:6px;margin-top:8px
+    }
+    .feature-badge .chip{
+      background:#dcfce7;color:#166534;font-size:12px;font-weight:600;
+      padding:4px 10px;border-radius:20px;border:1px solid #bbf7d0;
+      white-space:nowrap
+    }
+
+    /* Stop warning */
+    .stop-warning{
+      background:#fef2f2;border:2px solid #fca5a5;border-radius:14px;
+      padding:18px;margin-bottom:0
+    }
+    .stop-warning h3{
+      margin:0 0 10px;color:#dc2626;font-size:18px;font-weight:800;
+      display:flex;align-items:center;gap:8px
+    }
+    .stop-warning p{margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55}
+    .stop-warning p:last-child{margin-bottom:0}
+
+    /* Print styles */
+    @media print{
+      body{background:#fff}
+      .container{box-shadow:none;margin:0;border-radius:0}
+      .header{background:var(--primary)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .disclosure,.upgrade-prompt,.pdf-section,.copy-btn,.site-actions{display:none!important}
+      .section{break-inside:avoid}
+      pre{border:1px solid #ccc;font-size:13px}
+      .tips-img{max-height:300px;object-fit:contain}
+    }
   </style>
 </head>
 
@@ -184,16 +232,9 @@
       <p>Thanks for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
 
-    <div class="disclosure">⚠️ If your campaign was previously rejected, <u>recreate and resubmit</u> a new campaign for best results.</div>
-
-    <div class="section" style="padding-top:16px">
-      <div class="callout tip-callout">
-        <p style="margin:0;font-size:14.5px">
-          ⚠️ <strong>Website not generating?</strong>
-          Make sure you did not use special characters in the company name.
-          Special characters do not work for web addresses. 🙂
-        </p>
-      </div>
+    <div class="disclosure" style="background:var(--primary-light);color:var(--primary);border-color:#e5dcff">
+      ⚡ Want unlimited submissions &amp; priority Slack support?
+      <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);font-weight:700;margin-left:4px">Email admin@a2pwizard.com →</a>
     </div>
 
     <!-- Start Here -->
@@ -234,33 +275,55 @@
             Received this message in error? Please contact <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);text-decoration:none">admin@a2pwizard.com</a>
           </p>
         </div>
+
+        <!-- Feature badge -->
+        <div class="feature-badge">
+          <span class="badge-icon">✅</span>
+          <div class="badge-text">
+            <strong>This is a fully functioning website</strong> — complete with Terms of Service, Privacy Policy, and 5 content sections — that passes the AI verification system. You're welcome to use it as a live site for your client if you'd like.
+            <div class="badge-chips">
+              <span class="chip">Terms of Service</span>
+              <span class="chip">Privacy Policy</span>
+              <span class="chip">5 Content Sections</span>
+              <span class="chip">AI Verification Ready</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Instructions -->
     <div class="section">
       <h2>📌 Instructions</h2>
-      <div class="callout">
-        <p style="margin:0 0 10px">
-          Make sure to <strong>register the brand and campaign using the output below</strong>.
+      <div class="stop-warning">
+        <h3>🛑 STOP — Read This First</h3>
+        <p>
+          <strong>Have you already been rejected? Do you already have a brand approval?</strong>
+          If so, you need to open a support ticket with HighLevel (or your CRM's support) and ask them to
+          <strong>wipe the brand registration</strong> and start fresh.
         </p>
-        <div class="big-note">
-          You <strong>must</strong> register the brand with the <strong>website shown in this output</strong>
-          or you will likely face a campaign rejection <strong>~50% of the time</strong>.
-        </div>
+        <p>
+          <strong>Why?</strong> There will be a mismatch between the site you originally used for the brand
+          and the A2P Wizard-generated site in the campaign. It only takes about 5 minutes to wipe the brand
+          and get it re-approved, but skipping this step can cost you <strong>weeks of headaches</strong>.
+        </p>
       </div>
     </div>
 
-    <!-- Pro Tip Section -->
+    <!-- Pro Tips Section -->
     <div class="section">
       <h2>💡 Pro Tip</h2>
-      <div class="callout" style="background:#fff4e6;border-color:#ffd69a">
-        <p style="margin:0 0 14px;font-weight:600;color:#b45309">
-          <strong>Tip!</strong> Generations can vary. Best practice is to match the USE CASE and "How do users opt in to receive messages" box to the actual opt-in form on your website. The templates below work 9/10 times, but if you face a rejection, this is the reason.
+
+      <div class="callout" style="background:#fff4e6;border-color:#ffd69a;margin-bottom:12px">
+        <p style="margin:0;font-weight:600;color:#b45309">
+          <strong>Tip!</strong> Update your business profile in HighLevel (or your CRM) to match the output from A2P Wizard. You can change it back as soon as you get approved. It also helps to set the business email to the email generated on your A2P site.
         </p>
+      </div>
+
+      <div class="callout" style="background:#fff4e6;border-color:#ffd69a">
         <p style="margin:0 0 8px;font-size:14px;color:var(--muted)"><strong>Example:</strong></p>
         <img
-          src="https://storage.googleapis.com/msgsndr/komZ0pRB88cwzgvEo7MW/media/69778ee867c219f71093796e.png"
+          src="https://storage.googleapis.com/msgsndr/FXf64ueUkUQhuZojV04e/media/698e8c23772de9363968fc5e.png"
           class="tips-img"
           alt="Opt-in form example"
           loading="lazy"
@@ -271,7 +334,7 @@
     </div>
 
     <div class="section">
-      <h2>📃 Use Case Description</h2>
+      <h2>📃 Step 1: Use Case Description</h2>
       <pre id="useCase">Loading use case description...</pre>
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('useCase', this)">Copy</button>
@@ -279,7 +342,7 @@
     </div>
 
     <div class="section">
-      <h2>💬 Sample Messages</h2>
+      <h2>💬 Step 2: Sample Messages</h2>
 
       <p style="margin:0 0 6px"><strong>Sample Message One:</strong></p>
       <pre id="msg1">Loading...</pre>
@@ -295,23 +358,7 @@
     </div>
 
     <div class="section">
-      <h2>✅ How do Contacts Opt-in to Messages?</h2>
-      <pre id="consentCopy">Loading...</pre>
-      <div class="copy-row">
-        <button class="copy-btn" onclick="copyText('consentCopy', this)">Copy</button>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>📜 Opt-In Message</h2>
-      <pre id="optInMessage">Loading...</pre>
-      <div class="copy-row">
-        <button class="copy-btn" onclick="copyText('optInMessage', this)">Copy</button>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>✅ Final Step: HighLevel Opt-In Method</h2>
+      <h2>✅ Step 3: HighLevel Opt-In Method</h2>
 
       <p>
         HighLevel now requires an <strong>Opt-In Method</strong> and a
@@ -337,11 +384,27 @@
     </div>
 
     <div class="section">
+      <h2>✅ Step 4: How do Contacts Opt-in to Messages?</h2>
+      <pre id="consentCopy">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('consentCopy', this)">Copy</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📜 Step 5: Opt-In Message</h2>
+      <pre id="optInMessage">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('optInMessage', this)">Copy</button>
+      </div>
+    </div>
+
+    <div class="section">
       <h2>💡 Tips for Approval</h2>
       <ul>
         <li>Submit between 8am–11am on weekdays</li>
         <li>Use a fresh number/campaign if resubmitting</li>
-        <li>Brand approval usually takes ~24 hours</li>
+        <li>Brand approval usually takes ~15 minutes</li>
         <li><strong>Follow all best practices</strong> to avoid delays</li>
       </ul>
       <img
@@ -353,6 +416,13 @@
         width="1200"
         height="675"
       >
+      <div class="callout tip-callout" style="margin-top:16px">
+        <p style="margin:0;font-size:14px">
+          ⚠️ <strong>Website not generating?</strong>
+          Make sure you did not use special characters in the company name.
+          Special characters do not work for web addresses. 🙂
+        </p>
+      </div>
     </div>
 
     <div class="pdf-section">
@@ -367,6 +437,21 @@
 
     const API_BASE = "https://script.google.com/macros/s/AKfycbxc0m07Q1u1c3JyyKAKTdYvmrkj6C9UxdI-wjIZM7b0uidEreM-G31Ub3LQCObmhiIs/exec";
     const SITE_DOMAIN = "nebulabrandgroup.com";
+
+    /* Random name pairs: [customer, rep] */
+    const NAME_PAIRS = [
+      ["Adam","Alex"],["Sarah","Jordan"],["Mike","Taylor"],["Emma","Casey"],
+      ["James","Morgan"],["Lisa","Riley"],["David","Sam"],["Rachel","Jamie"],
+      ["Chris","Drew"],["Nicole","Avery"],["Matt","Quinn"],["Katie","Blake"],
+      ["Ryan","Dana"],["Laura","Reese"],["Josh","Skyler"],["Megan","Pat"],
+      ["Brian","Robin"],["Amy","Cameron"],["Kevin","Jesse"],["Jenna","Bailey"]
+    ];
+    function pickNames(){
+      const a = NAME_PAIRS[Math.floor(Math.random()*NAME_PAIRS.length)];
+      let b = a;
+      while(b===a) b = NAME_PAIRS[Math.floor(Math.random()*NAME_PAIRS.length)];
+      return {c1:a[0], r1:a[1], c2:b[0], r2:b[1]};
+    }
 
     async function fetchJSON(url, timeoutMs=12000){
       const ctrl = new AbortController();
@@ -454,16 +539,18 @@
 
       updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
 
+      const names = pickNames();
+
       updateText("useCase",
 `This campaign sends non-promotional SMS messages about ${nonMarketingConsent}. Customers also have the option to receive promotional notifications about ${marketingConsent}.`
 );
 
 updateText("msg1",
-`Hi Adam, this is Alex from ${bn}. You opted in at ${website || "[WEBSITE LINK PENDING]"} to receive SMS updates. We wanted to follow up regarding your inquiry. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
+`Hi ${names.c1}, this is ${names.r1} from ${bn}. You opted in at ${website || "[WEBSITE LINK PENDING]"} to receive SMS updates. We wanted to follow up regarding your inquiry. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
 );
 
 updateText("msg2",
-`Hi John, this is Jordan from ${bn}. Thanks for opting in to receive SMS updates from us. A team member will reach out within the next 24 hours. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
+`Hi ${names.c2}, this is ${names.r2} from ${bn}. Thanks for opting in to receive SMS updates from us. A team member will reach out within the next 24 hours. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
 );
 
 updateText("consentCopy",
