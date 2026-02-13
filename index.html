@@ -212,6 +212,36 @@
     .stop-warning p{margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55}
     .stop-warning p:last-child{margin-bottom:0}
 
+    /* Collapsible image preview */
+    .img-preview-wrap{
+      position:relative;
+      max-height:180px;
+      min-height:180px;
+      overflow:hidden;
+      border-radius:12px;
+      transition:max-height .4s ease;
+    }
+    .img-preview-wrap .img-preview-fade{
+      position:absolute;
+      left:0;right:0;bottom:0;
+      height:70px;
+      background:linear-gradient(transparent,rgba(255,244,230,.95));
+      display:flex;align-items:flex-end;justify-content:center;
+      padding-bottom:10px;
+      transition:opacity .3s ease;
+    }
+    .img-preview-wrap .img-preview-fade span{
+      font-size:13px;font-weight:600;color:#b45309;
+      background:rgba(255,255,255,.85);padding:5px 14px;border-radius:20px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+    .img-preview-wrap.expanded{
+      max-height:2000px;
+    }
+    .img-preview-wrap.expanded .img-preview-fade{
+      opacity:0;pointer-events:none;
+    }
+
     /* Print styles */
     @media print{
       body{background:#fff}
@@ -321,16 +351,27 @@
       </div>
 
       <div class="callout" style="background:#fff4e6;border-color:#ffd69a">
-        <p style="margin:0 0 8px;font-size:14px;color:var(--muted)"><strong>Example:</strong></p>
-        <img
-          src="https://storage.googleapis.com/msgsndr/FXf64ueUkUQhuZojV04e/media/698e8c23772de9363968fc5e.png"
-          class="tips-img"
-          alt="Opt-in form example"
-          loading="lazy"
-          decoding="async"
-          style="margin-top:0"
-        >
+        <p style="margin:0 0 8px;font-size:14px;color:var(--muted);font-weight:600">📸 Example — Business Profile Setup</p>
+        <div class="img-preview-wrap" onclick="this.classList.toggle('expanded')" style="cursor:pointer">
+          <img
+            src="https://storage.googleapis.com/msgsndr/FXf64ueUkUQhuZojV04e/media/698e8c23772de9363968fc5e.png"
+            class="tips-img"
+            alt="Opt-in form example"
+            loading="lazy"
+            decoding="async"
+            style="margin-top:0"
+          >
+          <div class="img-preview-fade">
+            <span>Click to view full example ▼</span>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <!-- Copy-paste divider -->
+    <div class="section" style="text-align:center;padding:20px 28px;background:linear-gradient(180deg,#f9f9ff,#fff)">
+      <h2 style="justify-content:center;font-size:22px;margin-bottom:4px">📋 Copy These Exactly Into Your Application</h2>
+      <p class="muted" style="margin:0;font-size:14px">Paste each field below into the matching section of your A2P campaign registration.</p>
     </div>
 
     <div class="section">
