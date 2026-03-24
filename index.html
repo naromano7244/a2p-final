@@ -287,6 +287,10 @@
       <a href="https://www.facebook.com/groups/a2pwizard" target="_blank" rel="noopener" style="color:#fff;font-weight:700;margin-left:6px;text-decoration:underline">Join the Facebook Group →</a>
     </div>
 
+    <div class="disclosure" style="background:#fff3cd;color:#7a5a00;border:1px solid #ffe08a;padding:14px 20px;font-size:14.5px">
+      ⚠️ <strong>HighLevel's AI compliance checker is currently experiencing issues</strong> and may display errors during submission. This is a known HighLevel issue — not an A2P Wizard issue. Proceed with your submission as normal.
+    </div>
+
     <!-- Start Over CTA (top) -->
     <div style="text-align:center;padding:18px 28px;border-top:1px solid var(--border)">
       <p style="margin:0 0 12px;font-size:15px;font-weight:600;color:var(--text)">🔁 Ready to submit another?</p>
@@ -723,11 +727,11 @@
 );
 
 updateText("msg1",
-`Hi ${names.c1}, this is ${names.r1} from ${bn}. You opted in at ${website || "[WEBSITE LINK PENDING]"} to receive SMS updates. We wanted to follow up regarding your inquiry. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
+`Hi {first_name}, this is {rep_name} from ${bn}. Thank you for reaching out to us! We received your inquiry and a team member will be in touch within the next 24 hours. Reply STOP to opt out or HELP for assistance. Msg & data rates may apply.`
 );
 
 updateText("msg2",
-`Hi ${names.c2}, this is ${names.r2} from ${bn}. Thanks for opting in to receive SMS updates from us. A team member will reach out within the next 24 hours. Reply STOP to opt out or HELP for help. Msg & data rates may apply.`
+`Hi {first_name}, it's ${bn}! As a valued subscriber, we wanted to let you know about a limited-time offer just for you. Visit {website} to learn more. Reply STOP to opt out or HELP for assistance. Msg & data rates may apply.`
 );
 
 updateText("consentCopy",
