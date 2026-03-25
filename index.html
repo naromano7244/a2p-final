@@ -508,7 +508,7 @@
     </div>
 
     <div class="section">
-      <h2>💬 Step 2: Sample Messages</h2>
+      <h2>💬 Step 2: Sample Messages <span style="font-size:14px;font-weight:500">(paste these exactly as-is)</span></h2>
 
       <p style="margin:0 0 6px"><strong>Sample Message One:</strong></p>
       <pre id="msg1">Loading...</pre>
@@ -718,7 +718,7 @@
       
       setWebsiteUI(website);
 
-      updateText("optInFormUrl", (website ? website + "/contact" : "Website link not available yet"));
+      updateText("optInFormUrl", (website ? website : "Website link not available yet"));
 
       const names = pickNames();
 
@@ -735,7 +735,9 @@ updateText("msg2",
 );
 
 updateText("consentCopy",
-`Users opt in by submitting their mobile phone number and actively selecting one or both consent checkboxes on the contact form at ${website || "[WEBSITE LINK PENDING]"}/contact . The checkboxes describe the categories of messages they will receive, as reflected in the Use Case above.`
+`Users opt in by submitting their mobile phone number and actively selecting one or both consent checkboxes on the contact form at ${website || "[WEBSITE LINK PENDING]"} . The checkboxes describe the categories of messages they will receive, as reflected in the Use Case above.
+
+Please refer to ${website || "[WEBSITE LINK PENDING]"} to view the customer's business, as this is the most up-to-date website for their business.`
 );
 
 updateText("optInMessage",
