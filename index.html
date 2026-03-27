@@ -723,7 +723,7 @@
       const names = pickNames();
 
       updateText("useCase",
-`This campaign, operated by ${bn}, sends non-promotional SMS messages to customers regarding ${nonMarketingConsent}. Customers may also opt in to receive promotional notifications, including ${marketingConsent}. Messages are only sent to users who provide explicit consent via an online form. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Recipients can reply STOP to opt out at any time.`
+`This campaign, operated by ${bn}, sends non-promotional SMS messages to customers regarding ${nonMarketingConsent}. Customers may also optionally opt in to receive promotional notifications, including ${marketingConsent}. Promotional messages are only sent to users who provide separate, explicit consent via an online form. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Recipients can reply STOP to opt out at any time. Users can review our Privacy Policy at ${website || "[WEBSITE LINK PENDING]"}/privacy and Terms of Service at ${website || "[WEBSITE LINK PENDING]"}/terms .`
 );
 
 updateText("msg1",
@@ -735,13 +735,15 @@ updateText("msg2",
 );
 
 updateText("consentCopy",
-`Users opt in by submitting their mobile phone number and actively selecting one or both consent checkboxes on the contact form at ${website || "[WEBSITE LINK PENDING]"} . The checkboxes describe the categories of messages they will receive, as reflected in the Use Case above.
+`Users opt in by submitting their mobile phone number and actively selecting one or both unchecked consent checkboxes on the contact form at ${website || "[WEBSITE LINK PENDING]"} . Each checkbox clearly describes the category of messages the user will receive (non-promotional or promotional), as detailed in the Use Case above.
 
-Please refer to ${website || "[WEBSITE LINK PENDING]"} to view the customer's business, as this is the most up-to-date website for their business.`
+Consent is optional and not required to use the service. After submitting the form and selecting consent, users receive a confirmation SMS message.
+
+Please refer to ${website || "[WEBSITE LINK PENDING]"} for the most up-to-date version of the business website and opt-in form.`
 );
 
 updateText("optInMessage",
-`You are opted in to receive SMS messages from ${bn}. Message frequency varies, up to 4 messages per month. Message and data rates may apply. Reply STOP to opt out or HELP for assistance.`
+`You are now subscribed to receive SMS messages from ${bn}. Up to 4 messages/month. Message & data rates may apply. Reply STOP to unsubscribe, HELP for help. View our Privacy Policy: ${website || "[WEBSITE LINK PENDING]"}/privacy and Terms: ${website || "[WEBSITE LINK PENDING]"}/terms .`
 );
     }
 
