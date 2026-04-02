@@ -360,7 +360,7 @@
             ⚡ Upgrade Now for Unlimited Access
           </a>
           <p style="margin:16px 0 0;font-size:13px;color:var(--muted)">
-            Received this message in error? Please contact <a href="/cdn-cgi/l/email-protection#0e6f6a6367604e6f3c7e7967746f7c6a206d6163" style="color:var(--primary);text-decoration:none"><span class="__cf_email__" data-cfemail="83e2e7eeeaedc3e2b1f3f4eaf9e2f1e7ade0ecee">[email&#160;protected]</span></a>
+            Received this message in error? Please contact <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);text-decoration:none">admin@a2pwizard.com</a>
           </p>
         </div>
 
@@ -529,7 +529,7 @@
           ⚠️ <strong>IMPORTANT:</strong> Make sure to select <strong>"Low Volume Mixed (Recommended)"</strong> as the Campaign Use Case. This option gives you the best deliverability after approval. If you select something else — like "Customer Care" — the application will likely get denied.
         </p>
         <img
-          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69ce9b344cde4bbc2a5a60c5.png"
+          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69ce9e27bbe1310051f59b91.png"
           class="tips-img"
           alt="Campaign Use Case - Low Volume Mixed selection"
           loading="lazy"
@@ -645,7 +645,7 @@
     <div style="text-align:center;padding:18px 28px;border-top:1px solid var(--border)">
       <p style="margin:0;font-size:14px;color:var(--muted)">
         ⚡ Want unlimited submissions &amp; priority Slack support?
-        <a href="/cdn-cgi/l/email-protection#4021242d292e0021723037293a2132246e232f2d" style="color:var(--primary);font-weight:700;text-decoration:none"> Email <span class="__cf_email__" data-cfemail="5e3f3a3337301e3f6c2e2937243f2c3a703d3133">[email&#160;protected]</span> →</a>
+        <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);font-weight:700;text-decoration:none"> Email admin@a2pwizard.com →</a>
       </p>
     </div>
 
@@ -663,7 +663,7 @@
     </div>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     const $ = (id)=>document.getElementById(id);
     function cacheKey(q){ return "a2p_results_" + String(q || "").toLowerCase().trim(); }
 
@@ -910,3 +910,19 @@ updateText("optInMessage",
       const txt = (el.tagName === "A")
         ? (el.href && el.href !== "#" ? el.href : el.textContent.trim())
         : (el.textContent || "").trim();
+
+      if(!txt || txt === "Loading…") return;
+
+      navigator.clipboard.writeText(txt).then(()=>{
+        const msg=document.createElement("span");
+        msg.className="copied-msg";
+        msg.textContent="✓ Copied!";
+        btn.insertAdjacentElement("afterend", msg);
+        setTimeout(()=>msg.remove(), 1400);
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
