@@ -1216,6 +1216,12 @@ updateText("optInMessage",
       });
     }
 
+    function postHeight(){
+      parent.postMessage({type:"resize",height:document.body.scrollHeight},"*");
+    }
+    window.addEventListener("load",postHeight);
+    new ResizeObserver(postHeight).observe(document.body);
+
     init();
   </script>
 </body>
