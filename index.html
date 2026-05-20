@@ -266,7 +266,7 @@
       max-height:0;overflow:hidden;transition:max-height .4s ease;
     }
     .collapsible-body.open{
-      max-height:2000px;
+      max-height:5000px;
     }
     .collapsible-arrow.open{
       transform:rotate(180deg);
@@ -998,9 +998,9 @@
 
       var steps = [
         {msg:"🔄 DNS propagating...", pct:"10%", delay:0},
-        {msg:"⚙️ Building your compliance site...", pct:"30%", delay:6000},
-        {msg:"✨ Putting final touches...", pct:"55%", delay:14000},
-        {msg:"🔍 Verifying site is live...", pct:"80%", delay:22000}
+        {msg:"⚙️ Building your compliance site...", pct:"30%", delay:3000},
+        {msg:"✨ Putting final touches...", pct:"55%", delay:7000},
+        {msg:"🔍 Verifying site is live...", pct:"80%", delay:11000}
       ];
       steps.forEach(function(s){
         setTimeout(function(){
@@ -1029,7 +1029,7 @@
           _dnsRetryActive = false;
           dnsDone(false);
         }).catch(function(){ _dnsRetryActive = false; dnsDone(false); });
-      }, 30000);
+      }, 15000);
     }
 
     function dnsDone(success){
