@@ -308,7 +308,8 @@
 
     <!-- Start Here -->
     <div class="section" id="startHere">
-      <h2>🚀 Start Here</h2>
+      <h2 style="justify-content:center">🚀 Start Here</h2>
+      <p style="text-align:center;margin:-8px 0 14px;font-size:14.5px;color:var(--muted)">This application works for Local, Toll-Free, Twilio Direct, and Sole Prop registrations. Follow the steps below for your specific registration type.</p>
 
       <div class="soft-card">
         <p style="margin:0 0 10px">
@@ -366,7 +367,7 @@
 
     <!-- Toll-Free Jump Link -->
     <div class="section" style="padding:20px 28px">
-      <a href="#toll-free-wizard" style="display:block;padding:16px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:2px solid #a78bfa;border-radius:14px;text-decoration:none">
+      <a href="javascript:void(0)" onclick="document.getElementById('toll-free-wizard').scrollIntoView({behavior:'smooth'})" style="display:block;padding:16px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:2px solid #a78bfa;border-radius:14px;text-decoration:none;cursor:pointer">
         <p style="margin:0;font-weight:700;color:#6d28d9;font-size:16px">📞 Registering a Toll-Free number? Click here to open Toll-Free Wizard →</p>
         <p style="margin:6px 0 0;font-size:13.5px;color:var(--muted)">If you're registering a local number, skip this and continue with the steps below.</p>
       </a>
@@ -650,7 +651,10 @@
     </div>
 
     <!-- Twilio Direct Registration -->
-    <div class="section">
+    <div class="section" style="text-align:center;padding:20px 28px;background:linear-gradient(180deg,#f9f9ff,#fff)">
+      <h2 style="justify-content:center;font-size:18px;margin-bottom:4px;color:var(--muted)">📌 Additional Registration Types</h2>
+    </div>
+    <div class="section" style="padding-top:0">
       <div style="padding:16px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:2px solid #60a5fa;border-radius:14px">
         <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('div').querySelector('.collapsible-body').classList.toggle('open')">
           <h3 style="margin:0;font-weight:700;color:#1d4ed8;font-size:16px">🔧 Registering directly through Twilio? Click here for 3 additional sample messages, website links, and opt-in keywords</h3>
