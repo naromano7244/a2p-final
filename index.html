@@ -288,6 +288,7 @@
 <body>
   <div class="container">
     <div class="header">
+      <div style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:13px;font-weight:700;padding:6px 16px;border-radius:20px;margin-bottom:12px;letter-spacing:0.3px">🆕 v2.5 — Now with Local, Toll-Free, Sole Prop &amp; Twilio Direct Wizards!</div>
       <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready!</h1>
       <p>Thanks for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
@@ -363,6 +364,14 @@
       </div>
     </div>
 
+    <!-- Toll-Free Jump Link -->
+    <div class="section" style="padding:20px 28px">
+      <a href="#toll-free-wizard" style="display:block;padding:16px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:2px solid #a78bfa;border-radius:14px;text-decoration:none">
+        <p style="margin:0;font-weight:700;color:#6d28d9;font-size:16px">📞 Registering a Toll-Free number? Click here to open Toll-Free Wizard →</p>
+        <p style="margin:6px 0 0;font-size:13.5px;color:var(--muted)">If you're registering a local number, skip this and continue with the steps below.</p>
+      </a>
+    </div>
+
     <!-- Instructions -->
     <div class="section">
       <h2>📌 Instructions</h2>
@@ -423,6 +432,89 @@
                 <span style="color:#1d4ed8">Click to view full example ▼</span>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sole Prop Instructions -->
+      <div style="margin-top:14px;padding:16px;background:linear-gradient(135deg,#fefce8,#fef9c3);border:2px solid #facc15;border-radius:14px">
+        <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('div').querySelector('.collapsible-body').classList.toggle('open')">
+          <h3 style="margin:0;font-weight:700;color:#854d0e;font-size:16px">👤 Registering a Sole Proprietor? Click here</h3>
+          <span class="collapsible-arrow" style="color:#854d0e">▼</span>
+        </button>
+        <div class="collapsible-body">
+          <div style="padding-top:14px">
+
+            <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:14px">
+              <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+                🛑 <strong>Sole prop with no EIN will ONLY work if the individual has no active EIN.</strong> If you're getting a brand rejection, they likely have an EIN associated with them somewhere. In that case, follow the same steps below but select that the business HAS a tax ID and enter it in the appropriate fields.
+              </p>
+              <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+                If the EIN is associated with a business name and not just their personal name, you'll need to register the business, not their name. A sole prop EIN registration will only work if they applied for the EIN using their full name.
+              </p>
+            </div>
+
+            <p style="margin:0 0 14px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              This is the same application as the local A2P registration above, with a few key differences. Follow the standard steps above for the campaign details (use case, sample messages, opt-in, etc.).
+            </p>
+
+            <h4 style="margin:0 0 10px;color:#854d0e;font-size:17px">Getting Started</h4>
+            <ul style="margin:0 0 16px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
+              <li>Use the client's <strong>FULL NAME</strong> (no middle initial) as the "Legal Business Name"</li>
+              <li>First step is to purchase a phone number and complete verification</li>
+            </ul>
+
+            <h4 style="margin:0 0 10px;color:#854d0e;font-size:17px">Business Profile Setup</h4>
+            <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              Go to Settings > Business Profile > Business Information. You <strong>must</strong> check "My business is Not registered."
+            </p>
+            <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:12px">
+              <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+                🛑 If you do not check "My business is Not registered," the application will fail.
+              </p>
+            </div>
+            <img
+              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166dd3dfb498edc2e120.png"
+              class="tips-img"
+              alt="Business Information - My business is Not registered checkbox"
+              loading="lazy"
+              decoding="async"
+              style="margin-top:0"
+            >
+
+            <h4 style="margin:20px 0 10px;color:#854d0e;font-size:17px">Business Brand Details</h4>
+            <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              The Brand Name should be the client's <strong>full name</strong>.
+            </p>
+            <img
+              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166de304c4490f495f2a.png"
+              class="tips-img"
+              alt="Business Brand Details - Full name as brand name"
+              loading="lazy"
+              decoding="async"
+              style="margin-top:0"
+            >
+
+            <h4 style="margin:20px 0 10px;color:#854d0e;font-size:17px">Authorized Representative</h4>
+            <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              Use the name of the individual being registered. For Job Position and Business Title, always select <strong>"Other"</strong> for both.
+            </p>
+            <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              For phone verification, The Campaign Registry needs to text a number for OTP. It says there's a limit of 3, but we've seen the same number used 20+ times without issue.
+            </p>
+            <img
+              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166d64c77d1843465af7.png"
+              class="tips-img"
+              alt="Authorized Representative - Job Position and Business Title set to Other"
+              loading="lazy"
+              decoding="async"
+              style="margin-top:0"
+            >
+
+            <p style="margin:16px 0 0;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              <strong>Once the above is configured, continue with the standard A2P steps below</strong> for the campaign details (use case, sample messages, opt-in copy, etc.).
+            </p>
+
           </div>
         </div>
       </div>
@@ -557,6 +649,62 @@
       </div>
     </div>
 
+    <!-- Twilio Direct Registration -->
+    <div class="section">
+      <div style="padding:16px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:2px solid #60a5fa;border-radius:14px">
+        <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('div').querySelector('.collapsible-body').classList.toggle('open')">
+          <h3 style="margin:0;font-weight:700;color:#1d4ed8;font-size:16px">🔧 Registering directly through Twilio? Click here for 3 additional sample messages, website links, and opt-in keywords</h3>
+          <span class="collapsible-arrow" style="color:#1d4ed8">▼</span>
+        </button>
+        <div class="collapsible-body">
+          <div style="padding-top:14px">
+            <p style="margin:0 0 14px;font-size:14.5px;color:#1e3a5f;line-height:1.55">
+              Twilio requires 5 sample messages. Use the 2 messages above as samples #1 and #2, then copy these 3 below. <strong>Paste exactly as-is — do not edit or insert values.</strong>
+            </p>
+
+            <p style="margin:0 0 6px"><strong>Sample Message #3:</strong></p>
+            <pre id="msg3">Loading...</pre>
+            <div class="copy-row">
+              <button class="copy-btn" onclick="copyText('msg3', this)">Copy</button>
+            </div>
+
+            <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #4:</strong></p>
+            <pre id="msg4">Loading...</pre>
+            <div class="copy-row">
+              <button class="copy-btn" onclick="copyText('msg4', this)">Copy</button>
+            </div>
+
+            <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #5:</strong></p>
+            <pre id="msg5">Loading...</pre>
+            <div class="copy-row">
+              <button class="copy-btn" onclick="copyText('msg5', this)">Copy</button>
+            </div>
+
+            <div style="margin-top:20px;padding-top:14px;border-top:1px solid #bfdbfe">
+              <p style="margin:0 0 6px"><strong>Privacy Policy URL:</strong></p>
+              <pre id="privacyUrl">Loading...</pre>
+              <div class="copy-row">
+                <button class="copy-btn" onclick="copyText('privacyUrl', this)">Copy</button>
+              </div>
+
+              <p style="margin-top:16px;margin-bottom:6px"><strong>Terms and Conditions URL:</strong></p>
+              <pre id="termsUrl">Loading...</pre>
+              <div class="copy-row">
+                <button class="copy-btn" onclick="copyText('termsUrl', this)">Copy</button>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;padding-top:14px;border-top:1px solid #bfdbfe">
+              <p style="margin:0 0 6px"><strong>Opt-in Keywords:</strong></p>
+              <p style="margin:0;font-size:14.5px;color:#1e3a5f;line-height:1.55">
+                When asked for opt-in keywords, enter: <strong>START</strong> and <strong>SUBSCRIBE</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="section">
       <h2>✅ Step 3: HighLevel Opt-In Method</h2>
 
@@ -635,6 +783,110 @@
         ⚡ Want unlimited submissions &amp; priority Slack support?
         <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);font-weight:700;text-decoration:none"> Email admin@a2pwizard.com →</a>
       </p>
+    </div>
+
+    <!-- Toll-Free Wizard Section -->
+    <div id="toll-free-wizard" class="section" style="background:linear-gradient(180deg,#f5f3ff,#fff);padding:32px 28px">
+      <h2 style="justify-content:center;font-size:22px;margin-bottom:4px;color:#6d28d9">📞 Toll-Free Wizard</h2>
+      <p class="muted" style="margin:0 0 20px;font-size:14px;text-align:center">Follow each step below to register your toll-free number.</p>
+
+      <div style="padding:12px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #93c5fd;border-radius:10px;margin-bottom:20px">
+        <p style="margin:0;font-size:14px;color:#1e3a5f;line-height:1.55">
+          👤 <strong>Registering as a sole proprietor?</strong> Same setup, just skip the EIN field and make sure your site is <strong>yourname.nebulabrandgroup.com</strong>
+        </p>
+      </div>
+
+      <h4 style="margin:0 0 10px;color:#6d28d9;font-size:17px">TF Step 1: Business &amp; Contact Information</h4>
+      <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
+        <li><strong>Business DBA:</strong> Leave this blank.</li>
+        <li><strong>Legal Entity Type:</strong> Select <strong>Private Profit</strong></li>
+        <li><strong>Email:</strong> Use the email below, or any professional email you have access to.</li>
+      </ul>
+
+      <p style="margin:0 0 6px"><strong>Legal Entity Name:</strong></p>
+      <pre id="tfLegalName">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('tfLegalName', this)">Copy</button>
+      </div>
+
+      <p style="margin:16px 0 6px"><strong>Website URL:</strong></p>
+      <pre id="tfWebsite">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('tfWebsite', this)">Copy</button>
+      </div>
+
+      <p style="margin:16px 0 6px"><strong>Email:</strong></p>
+      <pre id="tfEmail">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('tfEmail', this)">Copy</button>
+      </div>
+
+      <img
+        src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9e1e90e4b60687c87f.png"
+        class="tips-img"
+        alt="Toll-Free Step 1 - Business and Contact Info"
+        loading="lazy"
+        decoding="async"
+        style="margin-top:12px"
+      >
+
+      <h4 style="margin:20px 0 10px;color:#6d28d9;font-size:17px">TF Step 2: Business Location</h4>
+      <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+        Enter your legal business address <strong>exactly</strong> as it appears on your CP575 form. This must match what the IRS has on file.
+      </p>
+      <img
+        src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9e07a34aa07f7e95bc.png"
+        class="tips-img"
+        alt="Toll-Free Step 2 - Business Location"
+        loading="lazy"
+        decoding="async"
+        style="margin-top:0"
+      >
+
+      <h4 style="margin:20px 0 10px;color:#6d28d9;font-size:17px">TF Step 3: Messaging Use Case</h4>
+      <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
+        <li><strong>Estimated Monthly Volume:</strong> Select <strong>1,000</strong></li>
+        <li><strong>Opt-In Type:</strong> Select <strong>Web Form</strong></li>
+        <li><strong>Use Case Categories:</strong> Select <strong>BOTH</strong> Marketing and Account Notifications</li>
+      </ul>
+
+      <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:14px">
+        <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+          🛑 You MUST select "Web Form" as the Opt-In Type. If this is not selected, your campaign will fail.
+        </p>
+      </div>
+
+      <img
+        src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9ee05851175c187c59.png"
+        class="tips-img"
+        alt="Toll-Free Step 3 - Messaging Use Case"
+        loading="lazy"
+        decoding="async"
+        style="margin-top:0;margin-bottom:14px"
+      >
+
+      <p style="margin:0 0 6px"><strong>Opt-In Workflow Image URL:</strong></p>
+      <pre id="tfOptInUrl">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('tfOptInUrl', this)">Copy</button>
+      </div>
+
+      <p style="margin:16px 0 6px"><strong>Use Case Description:</strong></p>
+      <pre id="tfUseCase">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('tfUseCase', this)">Copy</button>
+      </div>
+
+      <p style="margin:16px 0 6px"><strong>Message Content:</strong></p>
+      <div style="padding:10px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;margin-bottom:8px">
+        <p style="margin:0;font-size:13.5px;color:#166534;font-weight:600">
+          ✅ Copy the entire message content below in one shot. Do not edit or insert values.
+        </p>
+      </div>
+      <pre id="tfMessages">Loading...</pre>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyText('tfMessages', this)">Copy All Messages</button>
+      </div>
     </div>
 
     <!-- Start Over CTA (bottom) -->
@@ -794,6 +1046,17 @@
         updateText("useCase", "Lookup failed. This record could not be found from the endpoint.");
         updateText("msg1", "—");
         updateText("msg2", "—");
+        updateText("msg3", "—");
+        updateText("msg4", "—");
+        updateText("msg5", "—");
+        updateText("privacyUrl", "—");
+        updateText("termsUrl", "—");
+        updateText("tfWebsite", "—");
+        updateText("tfLegalName", "—");
+        updateText("tfEmail", "—");
+        updateText("tfOptInUrl", "—");
+        updateText("tfUseCase", "—");
+        updateText("tfMessages", "—");
         updateText("consentCopy", "—");
         updateText("optInMessage", "—");
         updateText("optInFormUrl", "—");
@@ -832,6 +1095,38 @@ updateText("msg2",
 `Hi [first_name], it's ${bn}! As a valued subscriber, we wanted to let you know about a limited-time offer just for you. Visit [website] to learn more. Reply STOP to opt out or HELP for assistance. Msg & data rates may apply.`
 );
 
+updateText("msg3",
+`Hi [first_name], this is [rep_name] from ${bn}. We appreciate your interest and have received your request. Someone from our team will follow up with you within the next 24 hours. Reply STOP to opt out or HELP for assistance. Msg & data rates may apply.`
+);
+
+updateText("msg4",
+`Hi [first_name], ${bn} here! For a limited time, we're offering something special just for our subscribers. Visit [website] for more information. Reply STOP to opt out or HELP for assistance. Msg & data rates may apply.`
+);
+
+updateText("msg5",
+`Hi [first_name], thanks for reaching out to ${bn}! This is [rep_name], and we wanted to confirm that your inquiry was received. A team member will be in touch shortly. Reply STOP to opt out or HELP for assistance. Msg & data rates may apply.`
+);
+
+updateText("privacyUrl", (website ? website + "/privacy" : "[WEBSITE LINK PENDING]/privacy"));
+updateText("termsUrl", (website ? website + "/terms" : "[WEBSITE LINK PENDING]/terms"));
+
+const tfSlug = normalizeSlug(slug);
+const tfEmailAddr = tfSlug ? ("info@" + tfSlug + "." + SITE_DOMAIN) : "[EMAIL PENDING]";
+updateText("tfWebsite", website || "[WEBSITE LINK PENDING]");
+updateText("tfLegalName", bn);
+updateText("tfEmail", tfEmailAddr);
+updateText("tfOptInUrl", website || "[WEBSITE LINK PENDING]");
+
+updateText("tfUseCase",
+`This campaign, operated by ${bn}, sends non-promotional SMS messages to customers regarding ${nonMarketingConsent}. Customers may also optionally opt in to receive promotional notifications, including ${marketingConsent}. Promotional messages are only sent to users who provide separate, explicit consent via an online form. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Recipients can reply STOP to opt out at any time. Users can review our Privacy Policy at ${website || "[WEBSITE LINK PENDING]"}/privacy and Terms of Service at ${website || "[WEBSITE LINK PENDING]"}/terms .`
+);
+
+updateText("tfMessages",
+`1. Hi [first_name], this is [rep_name] from ${bn}. Thank you for reaching out to us! We received your inquiry and a team member will be in touch within the next 24 hours. Reply STOP to opt out or HELP for assistance. Msg & data rates may apply.
+
+2. Hi [first_name], it's ${bn}! As a valued subscriber, we wanted to let you know about a limited-time offer just for you. Visit [website] to learn more. Reply STOP to opt out or HELP for assistance. Msg & data rates may apply.`
+);
+
 updateText("consentCopy",
 `Users opt in by submitting their mobile phone number and actively selecting one or both unchecked consent checkboxes on the contact form at ${website || "[WEBSITE LINK PENDING]"} . Each checkbox clearly describes the category of messages the user will receive (non-promotional or promotional), as detailed in the Use Case above.
 
@@ -856,6 +1151,17 @@ updateText("optInMessage",
         updateText("useCase", "Waiting for data…");
         updateText("msg1", "Waiting for data…");
         updateText("msg2", "Waiting for data…");
+        updateText("msg3", "Waiting for data…");
+        updateText("msg4", "Waiting for data…");
+        updateText("msg5", "Waiting for data…");
+        updateText("privacyUrl", "Waiting for data…");
+        updateText("termsUrl", "Waiting for data…");
+        updateText("tfWebsite", "Waiting for data…");
+        updateText("tfLegalName", "Waiting for data…");
+        updateText("tfEmail", "Waiting for data…");
+        updateText("tfOptInUrl", "Waiting for data…");
+        updateText("tfUseCase", "Waiting for data…");
+        updateText("tfMessages", "Waiting for data…");
         updateText("consentCopy", "Waiting for data…");
         updateText("optInMessage", "Waiting for data…");
         updateText("optInFormUrl", "Waiting for a link…");
