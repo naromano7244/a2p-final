@@ -294,7 +294,7 @@
     </div>
 
     <div class="disclosure" style="background:linear-gradient(135deg,#1877f2,#3b82f6);color:#fff;border:none;padding:14px 20px;font-size:14.5px">
-      🎉 <strong>240+ agencies are already inside.</strong> Join the A2P Wizard Facebook Community for SMS marketing tips, approval strategies, rejection troubleshooting, and priority announcements when carriers change the rules.
+      🎉 <strong>250+ agencies are already inside.</strong> Join the A2P Wizard Facebook Community for SMS marketing tips, approval strategies, rejection troubleshooting, and priority announcements when carriers change the rules.
       <a href="https://www.facebook.com/groups/a2pwizard" target="_blank" rel="noopener" style="color:#fff;font-weight:700;margin-left:6px;text-decoration:underline">Join the Facebook Group →</a>
     </div>
 
@@ -503,6 +503,11 @@
             <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
               For phone verification, The Campaign Registry needs to text a number for OTP. It says there's a limit of 3, but we've seen the same number used 20+ times without issue.
             </p>
+            <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin:12px 0">
+              <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+                🛑 <strong>IMPORTANT!</strong> If registering without an EIN, you must use a personal Gmail for the email field in Authorized Representative. Professional or business emails will cause the application to fail. If registering with an EIN, you can use a professional email, but we recommend trying a personal Gmail first. If you get a brand rejection, try switching to the other.
+              </p>
+            </div>
             <img
               src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166d64c77d1843465af7.png"
               class="tips-img"
@@ -796,7 +801,7 @@
 
       <div style="padding:12px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #93c5fd;border-radius:10px;margin-bottom:20px">
         <p style="margin:0;font-size:14px;color:#1e3a5f;line-height:1.55">
-          👤 <strong>Registering as a sole proprietor?</strong> Same setup, just skip the EIN field and make sure your site is <strong>yourname.nebulabrandgroup.com</strong>
+          👤 <strong>Registering as a sole proprietor?</strong> Same setup, just skip the EIN field, change the entity type to <strong>Sole Proprietor</strong>, and make sure your site is <strong>yourname.nebulabrandgroup.com</strong>
         </p>
       </div>
 
@@ -860,15 +865,6 @@
         </p>
       </div>
 
-      <img
-        src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9ee05851175c187c59.png"
-        class="tips-img"
-        alt="Toll-Free Step 3 - Messaging Use Case"
-        loading="lazy"
-        decoding="async"
-        style="margin-top:0;margin-bottom:14px"
-      >
-
       <p style="margin:0 0 6px"><strong>Opt-In Workflow Image URL:</strong></p>
       <pre id="tfOptInUrl">Loading...</pre>
       <div class="copy-row">
@@ -891,6 +887,15 @@
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('tfMessages', this)">Copy All Messages</button>
       </div>
+
+      <img
+        src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9ee05851175c187c59.png"
+        class="tips-img"
+        alt="Toll-Free Step 3 - Messaging Use Case"
+        loading="lazy"
+        decoding="async"
+        style="margin-top:14px"
+      >
     </div>
 
     <!-- Start Over CTA (bottom) -->
@@ -1122,7 +1127,7 @@ updateText("tfEmail", tfEmailAddr);
 updateText("tfOptInUrl", website || "[WEBSITE LINK PENDING]");
 
 updateText("tfUseCase",
-`This campaign, operated by ${bn}, sends non-promotional SMS messages to customers regarding ${nonMarketingConsent}. Customers may also optionally opt in to receive promotional notifications, including ${marketingConsent}. Promotional messages are only sent to users who provide separate, explicit consent via an online form. Message frequency varies, up to 4 messages per month. Message & data rates may apply. Recipients can reply STOP to opt out at any time. Users can review our Privacy Policy at ${website || "[WEBSITE LINK PENDING]"}/privacy and Terms of Service at ${website || "[WEBSITE LINK PENDING]"}/terms .`
+`This campaign, operated by ${bn}, sends SMS messages to customers regarding ${nonMarketingConsent}. Customers may also opt in to promotional notifications, including ${marketingConsent}. Messages are only sent to users who provide explicit consent via an online form. Up to 4 msgs/month. Msg & data rates may apply. Reply STOP to opt out.`
 );
 
 updateText("tfMessages",
