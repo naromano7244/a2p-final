@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v2.1.0 – Self Serve flow, combined profile image, updated use case -->
+  <!-- A2P Results v2.6.0 – Path-selector restructure (HighLevel templates + Direct to Carrier), shared copy-paste block, general tips lifted to top -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -116,8 +116,8 @@
     }
     .copy-btn:hover{transform:translateY(-1px);opacity:.95}
     .copied-msg{display:inline-flex;align-items:center;color:var(--success);font-weight:700;font-size:13.5px}
-    
-    /* NEW: Upgrade prompt styling */
+
+    /* Upgrade prompt styling */
     .upgrade-prompt{
       margin-top:14px;
       border:2px solid var(--primary);
@@ -272,6 +272,54 @@
       transform:rotate(180deg);
     }
 
+    /* Path selector */
+    .selector-group{margin-bottom:22px}
+    .selector-group:last-child{margin-bottom:0}
+    .selector-heading{
+      text-align:center;font-size:13px;font-weight:700;letter-spacing:.06em;
+      text-transform:uppercase;color:var(--muted);margin:0 0 14px;
+    }
+    .path-grid{
+      display:grid;gap:12px;
+    }
+    .path-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .path-grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    @media (max-width:620px){
+      .path-grid.cols-3,.path-grid.cols-2{grid-template-columns:1fr}
+    }
+    .path-btn{
+      background:#fff;border:1.5px solid #e2d9f7;border-radius:14px;
+      padding:18px 12px;cursor:pointer;text-align:center;
+      font-family:inherit;transition:transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+    }
+    .path-btn:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:var(--shadow-sm)}
+    .path-btn .path-icon{font-size:26px;line-height:1}
+    .path-btn .path-name{font-size:15px;font-weight:700;color:var(--text)}
+    .path-btn.active{
+      border-color:var(--primary);background:var(--primary-light);
+      box-shadow:0 0 0 3px rgba(92,39,212,.12);
+    }
+    .path-btn.active .path-name{color:var(--primary)}
+    .path-btn.disabled{
+      background:#f7f7fa;border-style:dashed;border-color:#d8d8e0;
+      cursor:not-allowed;opacity:.85;
+    }
+    .path-btn.disabled .path-icon,.path-btn.disabled .path-name{color:var(--muted)}
+    .soon-pill{
+      display:inline-block;margin-top:2px;font-size:11px;font-weight:700;
+      background:#eef0f4;color:#6b7280;padding:3px 10px;border-radius:20px;
+      letter-spacing:.02em;
+    }
+    .path-panel{display:none;margin-top:18px}
+    .path-panel.active{display:block;animation:fadeIn .25s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    .panel-head{
+      display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;
+      color:var(--primary);margin:0 0 6px;
+    }
+    .panel-sub{margin:0 0 16px;font-size:14px;color:var(--muted)}
+
     /* Print styles */
     @media print{
       body{background:#fff}
@@ -281,6 +329,8 @@
       .section{break-inside:avoid}
       pre{border:1px solid #ccc;font-size:13px}
       .tips-img{max-height:300px;object-fit:contain}
+      .path-panel{display:block!important}
+      .path-btn{display:none!important}
     }
   </style>
 </head>
@@ -288,7 +338,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <div style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:13px;font-weight:700;padding:6px 16px;border-radius:20px;margin-bottom:12px;letter-spacing:0.3px">🆕 v2.5 — Now with Local, Toll-Free, Sole Prop &amp; Twilio Direct Wizards!</div>
+      <div style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:13px;font-weight:700;padding:6px 16px;border-radius:20px;margin-bottom:12px;letter-spacing:0.3px">🆕 v2.6 — Pick your path: HighLevel templates &amp; direct-to-carrier wizards</div>
       <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready!</h1>
       <p>Thanks for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
@@ -306,10 +356,10 @@
       </a>
     </div>
 
-    <!-- Start Here -->
+    <!-- Start Here: website (universal) -->
     <div class="section" id="startHere">
       <h2 style="justify-content:center">🚀 Start Here</h2>
-      <p style="text-align:center;margin:-8px 0 14px;font-size:14.5px;color:var(--muted)">This application works for Local, Toll-Free, Twilio Direct, and Sole Prop registrations. Follow the steps below for your specific registration type.</p>
+      <p style="text-align:center;margin:-8px 0 14px;font-size:14.5px;color:var(--muted)">Your compliance website is ready below. Scroll down to pick your registration type and follow the exact steps for it.</p>
 
       <div class="soft-card">
         <p style="margin:0 0 10px">
@@ -319,7 +369,7 @@
         </p>
 
         <p class="muted" style="margin:0">
-          Use the <strong>Copy & Paste</strong> sections below to fill out your application exactly.
+          Use the <strong>Copy &amp; Paste</strong> sections further down to fill out your application exactly.
         </p>
 
         <div class="site-box" style="margin-top:14px">
@@ -337,7 +387,7 @@
           </div>
         </div>
 
-        <!-- NEW: Upgrade prompt that shows when rate limited -->
+        <!-- Upgrade prompt that shows when rate limited -->
         <div id="upgradePrompt" class="upgrade-prompt">
           <h4>🚀 Oops! You've Hit Your Rate Limit</h4>
           <p>You've reached the limit for free website generations. Upgrade now for unlimited submissions and priority support!</p>
@@ -353,7 +403,7 @@
         <div class="feature-badge">
           <span class="badge-icon">✅</span>
           <div class="badge-text">
-            <strong>This is a fully functioning website</strong> — complete with Terms of Service, Privacy Policy, and 5 content sections — that passes the AI verification system. You're welcome to use it as a live site for your client if you'd like.
+            <strong>This is a fully functioning website</strong>, complete with Terms of Service, Privacy Policy, and 5 content sections, that passes the AI verification system. You're welcome to use it as a live site for your client if you'd like.
             <div class="badge-chips">
               <span class="chip">Terms of Service</span>
               <span class="chip">Privacy Policy</span>
@@ -365,18 +415,11 @@
       </div>
     </div>
 
-    <!-- Toll-Free Jump Link -->
-    <div class="section" style="padding:20px 28px">
-      <a href="javascript:void(0)" onclick="document.getElementById('toll-free-wizard').scrollIntoView({behavior:'smooth'})" style="display:block;padding:16px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:2px solid #a78bfa;border-radius:14px;text-decoration:none;cursor:pointer">
-        <p style="margin:0;font-weight:700;color:#6d28d9;font-size:16px">📞 Registering a Toll-Free number? Click here to open Toll-Free Wizard →</p>
-        <p style="margin:6px 0 0;font-size:13.5px;color:var(--muted)">If you're registering a local number, skip this and continue with the steps below.</p>
-      </a>
-    </div>
-
-    <!-- Instructions -->
+    <!-- LAYER 1: General tips (always visible, applies to everyone) -->
     <div class="section">
-      <h2>📌 Instructions</h2>
-      <div class="stop-warning">
+      <h2>💡 Read This First (applies to everyone)</h2>
+
+      <div class="stop-warning" style="margin-bottom:12px">
         <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('.stop-warning').querySelector('.collapsible-body').classList.toggle('open')">
           <h3 style="color:#dc2626;font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px">⚠️ First time using A2P Wizard or already encountered a brand rejection?</h3>
           <span class="collapsible-arrow">▼</span>
@@ -397,7 +440,7 @@
             <div style="margin-top:12px;padding:12px;background:#fff5f5;border:1px solid #fca5a5;border-radius:10px">
               <p style="margin:0 0 8px;font-weight:700;color:#dc2626;font-size:14px">⚠️ Note on Brand Clearing</p>
               <p style="margin:0;font-size:13.5px;color:#7f1d1d;line-height:1.55">
-                HighLevel is encountering issues with actually clearing the brand. After submission, verify with support that the brand was truly cleared — not just the GUI. Ask them:
+                HighLevel is encountering issues with actually clearing the brand. After submission, verify with support that the brand was truly cleared, not just the GUI. Ask them:
                 <strong>"What website do you see on the Twilio brand registration backend?"</strong>
                 If they return a different website than the one generated above, or you get rejected for "unverifiable website," it's because they cleared the brand in HighLevel but <em>not</em> the actual Twilio brand application. <strong>We strongly recommend creating a new sub-account or using A2P Wizard on a fresh sub-account.</strong>
               </p>
@@ -405,130 +448,6 @@
           </div>
         </div>
       </div>
-
-      <!-- New flow callout -->
-      <div style="margin-top:14px;padding:16px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:2px solid #60a5fa;border-radius:14px">
-        <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('div').querySelector('.collapsible-body').classList.toggle('open')">
-          <h3 style="margin:0;font-weight:700;color:#1d4ed8;font-size:16px">🆕 Select "Manual Setup" (not Quick Setup)</h3>
-          <span class="collapsible-arrow" style="color:#1d4ed8">▼</span>
-        </button>
-        <div class="collapsible-body">
-          <div style="padding-top:12px">
-            <p style="margin:0 0 12px;font-size:14.5px;color:#1e3a5f;line-height:1.55">
-              When choosing your registration flow, select <strong>"Manual Setup"</strong> — this gives you full control over every field and allows you to use your A2P Wizard-generated website and compliance copy.
-            </p>
-            <p style="margin:0 0 12px;font-size:14.5px;color:#1e3a5f;line-height:1.55">
-              <strong>Don't be misled by the "Quick Setup" option.</strong> While HighLevel labels Manual Setup as having a "higher chance of mistakes," that only applies if you're filling it out yourself without guidance. With A2P Wizard, every field is pre-written and optimized for approval — you're just copying and pasting. Manual Setup is the fastest and most reliable path to A2P compliance without needing to create a domain or get access to your client's actual website.
-            </p>
-            <div class="img-preview-wrap" onclick="event.stopPropagation();this.classList.toggle('expanded')" style="cursor:pointer">
-              <img
-                src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69cbeffe42f8e89549dd0ac9.png"
-                class="tips-img"
-                alt="Manual Setup selection"
-                loading="lazy"
-                decoding="async"
-                style="margin-top:0"
-              >
-              <div class="img-preview-fade" style="background:linear-gradient(transparent,rgba(239,246,255,.95))">
-                <span style="color:#1d4ed8">Click to view full example ▼</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sole Prop Instructions -->
-      <div style="margin-top:14px;padding:16px;background:linear-gradient(135deg,#fefce8,#fef9c3);border:2px solid #facc15;border-radius:14px">
-        <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('div').querySelector('.collapsible-body').classList.toggle('open')">
-          <h3 style="margin:0;font-weight:700;color:#854d0e;font-size:16px">👤 Registering a Sole Proprietor? Click here</h3>
-          <span class="collapsible-arrow" style="color:#854d0e">▼</span>
-        </button>
-        <div class="collapsible-body">
-          <div style="padding-top:14px">
-
-            <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:14px">
-              <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
-                🛑 <strong>Sole prop with no EIN will ONLY work if the individual has no active EIN.</strong> If you're getting a brand rejection, they likely have an EIN associated with them somewhere. In that case, follow the same steps below but select that the business HAS a tax ID and enter it in the appropriate fields.
-              </p>
-              <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
-                If the EIN is associated with a business name and not just their personal name, you'll need to register the business, not their name. A sole prop EIN registration will only work if they applied for the EIN using their full name.
-              </p>
-            </div>
-
-            <p style="margin:0 0 14px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
-              This is the same application as the local A2P registration above, with a few key differences. Follow the standard steps above for the campaign details (use case, sample messages, opt-in, etc.).
-            </p>
-
-            <h4 style="margin:0 0 10px;color:#854d0e;font-size:17px">Getting Started</h4>
-            <ul style="margin:0 0 16px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
-              <li>Use the client's <strong>FULL NAME</strong> (no middle initial) as the "Legal Business Name"</li>
-              <li>First step is to purchase a phone number and complete verification</li>
-            </ul>
-
-            <h4 style="margin:0 0 10px;color:#854d0e;font-size:17px">Business Profile Setup</h4>
-            <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
-              Go to Settings > Business Profile > Business Information. You <strong>must</strong> check "My business is Not registered."
-            </p>
-            <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:12px">
-              <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
-                🛑 If you do not check "My business is Not registered," the application will fail.
-              </p>
-            </div>
-            <img
-              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166dd3dfb498edc2e120.png"
-              class="tips-img"
-              alt="Business Information - My business is Not registered checkbox"
-              loading="lazy"
-              decoding="async"
-              style="margin-top:0"
-            >
-
-            <h4 style="margin:20px 0 10px;color:#854d0e;font-size:17px">Business Brand Details</h4>
-            <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
-              The Brand Name should be the client's <strong>full name</strong>.
-            </p>
-            <img
-              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166de304c4490f495f2a.png"
-              class="tips-img"
-              alt="Business Brand Details - Full name as brand name"
-              loading="lazy"
-              decoding="async"
-              style="margin-top:0"
-            >
-
-            <h4 style="margin:20px 0 10px;color:#854d0e;font-size:17px">Authorized Representative</h4>
-            <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
-              Use the name of the individual being registered. For Job Position and Business Title, always select <strong>"Other"</strong> for both.
-            </p>
-            <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
-              For phone verification, The Campaign Registry needs to text a number for OTP. It says there's a limit of 3, but we've seen the same number used 20+ times without issue.
-            </p>
-            <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin:12px 0">
-              <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
-                🛑 <strong>IMPORTANT!</strong> If registering without an EIN, you must use a personal Gmail for the email field in Authorized Representative. Professional or business emails will cause the application to fail. If registering with an EIN, you can use a professional email, but we recommend trying a personal Gmail first. If you get a brand rejection, try switching to the other.
-              </p>
-            </div>
-            <img
-              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166d64c77d1843465af7.png"
-              class="tips-img"
-              alt="Authorized Representative - Job Position and Business Title set to Other"
-              loading="lazy"
-              decoding="async"
-              style="margin-top:0"
-            >
-
-            <p style="margin:16px 0 0;font-size:14.5px;color:#1e1e2f;line-height:1.55">
-              <strong>Once the above is configured, continue with the standard A2P steps below</strong> for the campaign details (use case, sample messages, opt-in copy, etc.).
-            </p>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pro Tips Section -->
-    <div class="section">
-      <h2>💡 Pro Tips</h2>
 
       <div class="callout" style="background:#fff4e6;border-color:#ffd69a;margin-bottom:12px">
         <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('.callout').querySelector('.collapsible-body').classList.toggle('open')">
@@ -540,7 +459,7 @@
             <p style="margin:0 0 14px;font-weight:600;color:#b45309">
               Update your business profile in HighLevel (or your CRM) to match the output from A2P Wizard. You can change it back as soon as you get approved. It also helps to set the business email to the email generated on your A2P site.
             </p>
-            <p style="margin:0 0 8px;font-size:14px;color:var(--muted);font-weight:600">📸 Example — Business Profile Setup &amp; Details</p>
+            <p style="margin:0 0 8px;font-size:14px;color:var(--muted);font-weight:600">📸 Example, Business Profile Setup &amp; Details</p>
             <div class="img-preview-wrap" onclick="event.stopPropagation();this.classList.toggle('expanded')" style="cursor:pointer">
               <img
                 src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69a874c47bdf38525b402e06.png"
@@ -566,7 +485,7 @@
         <div class="collapsible-body">
           <div style="padding-top:12px">
             <p style="margin:0 0 12px;font-size:14.5px;color:#5c3a0a;line-height:1.55">
-              Registering a client with a DBA? Don't use it. Use <strong>only</strong> what's on their CP575 form. Companies change DBAs all the time, but the legal business name stays the same — use that to register for A2P and you'll see far more approvals.
+              Registering a client with a DBA? Don't use it. Use <strong>only</strong> what's on their CP575 form. Companies change DBAs all the time, but the legal business name stays the same, use that to register for A2P and you'll see far more approvals.
             </p>
             <p style="margin:0;font-size:14.5px;color:#5c3a0a;line-height:1.55">
               Registering the legal name and then using the DBA in marketing has <strong>zero</strong> impact on deliverability. They're the same company. For proof: Subway is legally named Doctor's Associates. We can assure you they aren't sending you texts as "Doctor's Associates."
@@ -583,7 +502,7 @@
         <div class="collapsible-body">
           <div style="padding-top:12px">
             <p style="margin:0 0 12px;font-size:14.5px;color:#5c3a0a;line-height:1.55">
-              <strong>NEW!</strong> This is a frequently asked question. The "Authorized Representative" section is just a point of contact for the application — <strong>do not</strong> put the A2P Wizard-generated email here. Use your agency's email or any professional email you have access to for receiving the OTP. The rest of the information can be your client's. Despite what the GUI says, there is no limit of 5 — you can reuse your agency's email an unlimited number of times until we say otherwise.
+              <strong>NEW!</strong> This is a frequently asked question. The "Authorized Representative" section is just a point of contact for the application, <strong>do not</strong> put the A2P Wizard-generated email here. Use your agency's email or any professional email you have access to for receiving the OTP. The rest of the information can be your client's. Despite what the GUI says, there is no limit of 5, you can reuse your agency's email an unlimited number of times until we say otherwise.
             </p>
             <div class="img-preview-wrap" onclick="event.stopPropagation();this.classList.toggle('expanded')" style="cursor:pointer">
               <img
@@ -603,32 +522,492 @@
       </div>
     </div>
 
-    <!-- Campaign Use Case Selection -->
+    <!-- LAYER 2: Path selector -->
     <div class="section">
-      <div style="padding:16px;background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border:2px solid #86efac;border-radius:14px 14px 0 0">
-        <p style="margin:0 0 12px;font-size:15px;color:#166534;line-height:1.55">
-          ⚠️ <strong>IMPORTANT:</strong> Make sure to select <strong>"Low Volume Mixed (Recommended)"</strong> as the Campaign Use Case. This option gives you the best deliverability after approval. If you select something else — like "Customer Care" — the application will likely get denied.
+      <h2 style="justify-content:center">🧭 Select Your Registration Type</h2>
+      <p style="text-align:center;margin:-8px 0 22px;font-size:14.5px;color:var(--muted)">Pick the option that matches how you're registering. We'll show you the exact steps for that path.</p>
+
+      <div class="selector-group">
+        <p class="selector-heading" style="display:flex;flex-direction:column;align-items:center;gap:8px"><img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22d38de8bb5ac427e62632.png" alt="HighLevel" style="height:48px;width:auto" loading="lazy" decoding="async"><span>Registration Templates</span></p>
+        <div class="path-grid cols-3">
+          <button class="path-btn" data-path="local" onclick="selectPath('local')">
+            <span class="path-icon">📍</span>
+            <span class="path-name">Local</span>
+          </button>
+          <button class="path-btn" data-path="tollfree" onclick="selectPath('tollfree')">
+            <span class="path-icon">📞</span>
+            <span class="path-name">Toll-Free</span>
+          </button>
+          <button class="path-btn" data-path="soleprop" onclick="selectPath('soleprop')">
+            <span class="path-icon">👤</span>
+            <span class="path-name">Sole Prop</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="selector-group">
+        <p class="selector-heading">Direct to Carrier</p>
+        <div class="path-grid cols-2">
+          <button class="path-btn" data-path="twilio" onclick="selectPath('twilio')">
+            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22e31f3c3faf82cada68f3.svg" alt="" aria-hidden="true" style="height:26px;width:auto" loading="lazy" decoding="async">
+            <span class="path-name">Twilio Direct Registration</span>
+          </button>
+          <button class="path-btn disabled" type="button" aria-disabled="true">
+            <span class="path-icon">☁️</span>
+            <span class="path-name">AWS Connect</span>
+            <span class="soon-pill">Coming Soon</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PATH: Local (HighLevel) -->
+      <div class="path-panel" id="panel-local">
+        <p class="panel-head">📍 Local Registration — HighLevel</p>
+        <p class="panel-sub">Standard 10DLC local number registration inside HighLevel.</p>
+
+        <div style="padding:16px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:2px solid #60a5fa;border-radius:14px;margin-bottom:14px">
+          <h3 style="margin:0 0 12px;font-weight:700;color:#1d4ed8;font-size:16px">🆕 Select "Manual Setup" (not Quick Setup)</h3>
+          <p style="margin:0 0 12px;font-size:14.5px;color:#1e3a5f;line-height:1.55">
+            When choosing your registration flow, select <strong>"Manual Setup"</strong>. This gives you full control over every field and lets you use your A2P Wizard-generated website and compliance copy.
+          </p>
+          <p style="margin:0 0 12px;font-size:14.5px;color:#1e3a5f;line-height:1.55">
+            <strong>Don't be misled by the "Quick Setup" option.</strong> While HighLevel labels Manual Setup as having a "higher chance of mistakes," that only applies if you're filling it out yourself without guidance. With A2P Wizard, every field is pre-written and optimized for approval, you're just copying and pasting. Manual Setup is the fastest and most reliable path to A2P compliance without needing to create a domain or get access to your client's actual website.
+          </p>
+          <div class="img-preview-wrap" onclick="event.stopPropagation();this.classList.toggle('expanded')" style="cursor:pointer">
+            <img
+              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69cbeffe42f8e89549dd0ac9.png"
+              class="tips-img"
+              alt="Manual Setup selection"
+              loading="lazy"
+              decoding="async"
+              style="margin-top:0"
+            >
+            <div class="img-preview-fade" style="background:linear-gradient(transparent,rgba(239,246,255,.95))">
+              <span style="color:#1d4ed8">Click to view full example ▼</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:16px;background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border:2px solid #86efac;border-radius:14px 14px 0 0">
+          <p style="margin:0 0 12px;font-size:15px;color:#166534;line-height:1.55">
+            ⚠️ <strong>IMPORTANT:</strong> Make sure to select <strong>"Low Volume Mixed (Recommended)"</strong> as the Campaign Use Case. This option gives you the best deliverability after approval. If you select something else, like "Customer Care," the application will likely get denied.
+          </p>
+          <img
+            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69ce9e27bbe1310051f59b91.png"
+            class="tips-img"
+            alt="Campaign Use Case - Low Volume Mixed selection"
+            loading="lazy"
+            decoding="async"
+            style="margin-top:0"
+          >
+        </div>
+        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-top:0;border-radius:0 0 14px 14px">
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 STOP! This is not optional. If you glaze over this and select anything else, your campaign <strong>will</strong> fail.
+          </p>
+        </div>
+
+        <div style="margin-top:16px;padding:14px 16px;background:var(--primary-light);border:1px solid #e5dcff;border-radius:12px">
+          <p style="margin:0;font-size:14.5px;color:var(--text);line-height:1.55">
+            ✅ <strong>Next:</strong> scroll down to <strong>"Copy These Exactly Into Your Application"</strong> and paste each field into the matching section of your campaign.
+          </p>
+        </div>
+      </div>
+
+      <!-- PATH: Toll-Free (HighLevel) -->
+      <div class="path-panel" id="panel-tollfree">
+        <p class="panel-head">📞 Toll-Free Wizard — HighLevel</p>
+        <p class="panel-sub">Follow each step below to register your toll-free number.</p>
+
+        <div style="padding:12px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #93c5fd;border-radius:10px;margin-bottom:20px">
+          <p style="margin:0;font-size:14px;color:#1e3a5f;line-height:1.55">
+            👤 <strong>Registering as a sole proprietor?</strong> Same setup, just skip the EIN field, change the entity type to <strong>Sole Proprietor</strong>, and make sure your site is <strong>yourname.nebulabrandgroup.com</strong>
+          </p>
+        </div>
+
+        <h4 style="margin:0 0 10px;color:#6d28d9;font-size:17px">TF Step 1: Business &amp; Contact Information</h4>
+        <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
+          <li><strong>Business DBA:</strong> Leave this blank.</li>
+          <li><strong>Legal Entity Type:</strong> Select <strong>Private Profit</strong></li>
+          <li><strong>Email:</strong> Use the email below, or any professional email you have access to.</li>
+        </ul>
+
+        <p style="margin:0 0 6px"><strong>Legal Entity Name:</strong></p>
+        <pre id="tfLegalName">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tfLegalName', this)">Copy</button>
+        </div>
+
+        <p style="margin:16px 0 6px"><strong>Website URL:</strong></p>
+        <pre id="tfWebsite">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tfWebsite', this)">Copy</button>
+        </div>
+
+        <p style="margin:16px 0 6px"><strong>Email:</strong></p>
+        <pre id="tfEmail">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tfEmail', this)">Copy</button>
+        </div>
+
+        <img
+          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9e1e90e4b60687c87f.png"
+          class="tips-img"
+          alt="Toll-Free Step 1 - Business and Contact Info"
+          loading="lazy"
+          decoding="async"
+          style="margin-top:12px"
+        >
+
+        <h4 style="margin:20px 0 10px;color:#6d28d9;font-size:17px">TF Step 2: Business Location</h4>
+        <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+          Enter your legal business address <strong>exactly</strong> as it appears on your CP575 form. This must match what the IRS has on file.
         </p>
         <img
-          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69ce9e27bbe1310051f59b91.png"
+          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9e07a34aa07f7e95bc.png"
           class="tips-img"
-          alt="Campaign Use Case - Low Volume Mixed selection"
+          alt="Toll-Free Step 2 - Business Location"
           loading="lazy"
           decoding="async"
           style="margin-top:0"
         >
+
+        <h4 style="margin:20px 0 10px;color:#6d28d9;font-size:17px">TF Step 3: Messaging Use Case</h4>
+        <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
+          <li><strong>Estimated Monthly Volume:</strong> Select <strong>1,000</strong></li>
+          <li><strong>Opt-In Type:</strong> Select <strong>Web Form</strong></li>
+          <li><strong>Use Case Categories:</strong> Select <strong>BOTH</strong> Marketing and Account Notifications</li>
+        </ul>
+
+        <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:14px">
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 You MUST select "Web Form" as the Opt-In Type. If this is not selected, your campaign will fail.
+          </p>
+        </div>
+
+        <p style="margin:0 0 6px"><strong>Opt-In Workflow Image URL:</strong></p>
+        <pre id="tfOptInUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tfOptInUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:16px 0 6px"><strong>Use Case Description:</strong></p>
+        <pre id="tfUseCase">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tfUseCase', this)">Copy</button>
+        </div>
+
+        <p style="margin:16px 0 6px"><strong>Message Content:</strong></p>
+        <div style="padding:10px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;margin-bottom:8px">
+          <p style="margin:0;font-size:13.5px;color:#166534;font-weight:600">
+            ✅ Copy the entire message content below in one shot. Do not edit or insert values.
+          </p>
+        </div>
+        <pre id="tfMessages">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tfMessages', this)">Copy All Messages</button>
+        </div>
+
+        <img
+          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9ee05851175c187c59.png"
+          class="tips-img"
+          alt="Toll-Free Step 3 - Messaging Use Case"
+          loading="lazy"
+          decoding="async"
+          style="margin-top:14px"
+        >
+
+        <div style="margin-top:16px;padding:14px 16px;background:var(--primary-light);border:1px solid #e5dcff;border-radius:12px">
+          <p style="margin:0;font-size:14.5px;color:var(--text);line-height:1.55">
+            ✅ The use case, sample messages, and opt-in copy for toll-free are all included in this section above. Toll-free is self-contained, you do not need the shared copy-paste block below.
+          </p>
+        </div>
       </div>
-      <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-top:0;border-radius:0 0 14px 14px">
-        <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
-          🛑 STOP! This is not optional. If you glaze over this and select anything else, your campaign <strong>will</strong> fail.
+
+      <!-- PATH: Sole Prop (HighLevel) -->
+      <div class="path-panel" id="panel-soleprop">
+        <p class="panel-head">👤 Sole Proprietor — HighLevel</p>
+        <p class="panel-sub">Same as a local registration, with a few entity-specific differences.</p>
+
+        <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:14px">
+          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            🛑 <strong>Sole prop with no EIN will ONLY work if the individual has no active EIN.</strong> If you're getting a brand rejection, they likely have an EIN associated with them somewhere. In that case, follow the same steps below but select that the business HAS a tax ID and enter it in the appropriate fields.
+          </p>
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            If the EIN is associated with a business name and not just their personal name, you'll need to register the business, not their name. A sole prop EIN registration will only work if they applied for the EIN using their full name.
+          </p>
+        </div>
+
+        <h4 style="margin:0 0 10px;color:#854d0e;font-size:17px">Getting Started</h4>
+        <ul style="margin:0 0 16px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
+          <li>Use the client's <strong>FULL NAME</strong> (no middle initial) as the "Legal Business Name"</li>
+          <li>First step is to purchase a phone number and complete verification</li>
+        </ul>
+
+        <h4 style="margin:0 0 10px;color:#854d0e;font-size:17px">Business Profile Setup</h4>
+        <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+          Go to Settings &gt; Business Profile &gt; Business Information. You <strong>must</strong> check "My business is Not registered."
         </p>
+        <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:12px">
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 If you do not check "My business is Not registered," the application will fail.
+          </p>
+        </div>
+        <img
+          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166dd3dfb498edc2e120.png"
+          class="tips-img"
+          alt="Business Information - My business is Not registered checkbox"
+          loading="lazy"
+          decoding="async"
+          style="margin-top:0"
+        >
+
+        <h4 style="margin:20px 0 10px;color:#854d0e;font-size:17px">Business Brand Details</h4>
+        <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+          The Brand Name should be the client's <strong>full name</strong>.
+        </p>
+        <img
+          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166de304c4490f495f2a.png"
+          class="tips-img"
+          alt="Business Brand Details - Full name as brand name"
+          loading="lazy"
+          decoding="async"
+          style="margin-top:0"
+        >
+
+        <h4 style="margin:20px 0 10px;color:#854d0e;font-size:17px">Authorized Representative</h4>
+        <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+          Use the name of the individual being registered. For Job Position and Business Title, always select <strong>"Other"</strong> for both.
+        </p>
+        <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+          For phone verification, The Campaign Registry needs to text a number for OTP. It says there's a limit of 3, but we've seen the same number used 20+ times without issue.
+        </p>
+        <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin:12px 0">
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            🛑 <strong>IMPORTANT!</strong> If registering without an EIN, you must use a personal Gmail for the email field in Authorized Representative. Professional or business emails will cause the application to fail. If registering with an EIN, you can use a professional email, but we recommend trying a personal Gmail first. If you get a brand rejection, try switching to the other.
+          </p>
+        </div>
+        <img
+          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166d64c77d1843465af7.png"
+          class="tips-img"
+          alt="Authorized Representative - Job Position and Business Title set to Other"
+          loading="lazy"
+          decoding="async"
+          style="margin-top:0"
+        >
+
+        <h4 style="margin:20px 0 10px;color:#854d0e;font-size:17px">Then: Manual Setup &amp; Campaign Use Case</h4>
+        <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+          Choose <strong>"Manual Setup"</strong> (not Quick Setup) for the campaign, and set the Campaign Use Case to <strong>"Low Volume Mixed (Recommended)."</strong>
+        </p>
+        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px">
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 STOP! Low Volume Mixed is not optional. If you select anything else, your campaign <strong>will</strong> fail.
+          </p>
+        </div>
+
+        <div style="margin-top:16px;padding:14px 16px;background:var(--primary-light);border:1px solid #e5dcff;border-radius:12px">
+          <p style="margin:0;font-size:14.5px;color:var(--text);line-height:1.55">
+            ✅ <strong>Next:</strong> scroll down to <strong>"Copy These Exactly Into Your Application"</strong> for the use case, sample messages, and opt-in copy.
+          </p>
+        </div>
+      </div>
+
+      <!-- PATH: Twilio Direct -->
+      <div class="path-panel" id="panel-twilio">
+        <p class="panel-head">🔧 Twilio Direct</p>
+        <p class="panel-sub">Registering A2P/10DLC directly in the Twilio console instead of through a CRM.</p>
+
+        <p style="margin:0 0 16px;font-size:14.5px;color:var(--text);line-height:1.55">
+          Everything you need is in this section, in the order Twilio's console asks for it. Complete the steps top to bottom.
+        </p>
+
+        <div class="callout" style="background:#fff4e6;border-color:#ffd69a;margin-bottom:16px">
+          <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('.callout').querySelector('.collapsible-body').classList.toggle('open');if(typeof postHeight==='function')setTimeout(postHeight,450)">
+            <h3 style="margin:0;font-weight:700;color:#b45309;font-size:15px">⭐ First time registering on Twilio? Read the Golden Rule</h3>
+            <span class="collapsible-arrow" style="color:#b45309">▼</span>
+          </button>
+          <div class="collapsible-body">
+            <div style="padding-top:12px">
+              <p style="margin:0 0 12px;font-size:14.5px;color:#5c3a0a;line-height:1.55">
+                Follow the <strong>GOLDEN RULE</strong> when registering the brand: the A2P Wizard-generated website <strong>MUST</strong> be listed on both the compliance profile and the brand, or your campaign will fail.
+              </p>
+              <div class="img-preview-wrap" onclick="event.stopPropagation();this.classList.toggle('expanded');if(typeof postHeight==='function')setTimeout(postHeight,450)" style="cursor:pointer">
+                <img
+                  src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22e292fc95b245498815c0.png"
+                  class="tips-img"
+                  alt="A2P Wizard website listed on the compliance profile and brand"
+                  loading="lazy"
+                  decoding="async"
+                  style="margin-top:0"
+                >
+                <div class="img-preview-fade">
+                  <span>Click to view full example ▼</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:12px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;margin-bottom:16px">
+          <p style="margin:0;font-size:14px;color:#854d0e;line-height:1.55">
+            👤 <strong>Registering as a sole proprietor / individual?</strong> Same flow, with these differences: set the entity type to <strong>Sole Proprietor</strong>, skip the EIN, use the individual's <strong>full name</strong> as the business name, and use a <strong>personal email</strong> for the contact. (Twilio's exact field names may differ slightly; the full step-by-step is coming here soon.)
+          </p>
+        </div>
+
+        <div style="padding:16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:14px;margin-bottom:14px">
+          <p style="margin:0 0 10px;font-size:15px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 IMPORTANT: When registering the campaign, select the <strong>approved brand</strong>.
+          </p>
+          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            <strong>Make sure your brand has the A2P Wizard website</strong> on it before continuing. Then hit <strong>"Create new Messaging Service."</strong>
+          </p>
+          <img
+            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22df723c3faf82cada22ad.png"
+            class="tips-img"
+            alt="Select approved brand and create new messaging service"
+            loading="lazy"
+            decoding="async"
+            style="margin-top:6px"
+          >
+        </div>
+
+        <div style="padding:16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:14px;margin-bottom:20px">
+          <p style="margin:0 0 10px;font-size:15px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 IMPORTANT: Select <strong>"Low Volume Mixed"</strong> as the campaign type.
+          </p>
+          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            Do not skip this. If you select anything else, your campaign will likely be denied.
+          </p>
+          <img
+            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22e02a5f72b50cf847b0ea.png"
+            class="tips-img"
+            alt="Low Volume Mixed campaign type selection"
+            loading="lazy"
+            decoding="async"
+            style="margin-top:6px"
+          >
+        </div>
+
+        <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 1: Campaign Description</p>
+        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">Paste exactly as-is, do not edit or insert values.</p>
+        <pre id="twUseCase">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('twUseCase', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 2: Sample Messages</p>
+        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">Twilio requires all 5. Paste exactly as-is, do not edit or insert values.</p>
+
+        <p style="margin:14px 0 6px"><strong>Sample Message #1:</strong></p>
+        <pre id="twMsg1">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('twMsg1', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #2:</strong></p>
+        <pre id="twMsg2">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('twMsg2', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #3:</strong></p>
+        <pre id="msg3">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('msg3', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #4:</strong></p>
+        <pre id="msg4">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('msg4', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #5:</strong></p>
+        <pre id="msg5">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('msg5', this)">Copy</button>
+        </div>
+
+        <div style="margin-top:18px;padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px">
+          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 For the opt-in question, select <strong>"Web Form."</strong> If this is not selected, your campaign will fail.
+          </p>
+          <img
+            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22dde6f607d4002b91f940.png"
+            class="tips-img"
+            alt="Select Web Form as the opt-in type"
+            loading="lazy"
+            decoding="async"
+            style="margin-top:6px"
+          >
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 3: How do users consent to receive messages?</p>
+        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">Paste exactly as-is, do not edit or insert values.</p>
+        <pre id="twConsentCopy">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('twConsentCopy', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 4: Message Contents</p>
+        <div style="padding:14px 16px;background:#fffbeb;border:1px solid #fde68a;border-radius:12px">
+          <p style="margin:0 0 10px;font-size:14.5px;color:#854d0e;line-height:1.55">
+            💡 In the message contents selector, check <strong>only</strong> these two boxes: <strong>"Messages will include embedded links"</strong> and <strong>"Messages will include phone numbers."</strong> Leave the others unchecked.
+          </p>
+          <img
+            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22de89e8bb5ac427e7022b.png"
+            class="tips-img"
+            alt="Message contents - select embedded links and phone numbers only"
+            loading="lazy"
+            decoding="async"
+            style="margin-top:6px"
+          >
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 5: Sample of Embedded Links</p>
+        <p style="margin:0 0 10px;font-size:13.5px;color:var(--muted)">Paste these as the sample links Twilio asks for.</p>
+
+        <p style="margin:0 0 6px"><strong>Website Link:</strong></p>
+        <pre id="twOptInFormUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('twOptInFormUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:16px 0 6px"><strong>Privacy Policy Link:</strong></p>
+        <pre id="privacyUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('privacyUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:16px 0 6px"><strong>Terms Link:</strong></p>
+        <pre id="termsUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('termsUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 6: Opt-in Keywords</p>
+        <p style="margin:0;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+          When asked for opt-in keywords, enter: <strong>START</strong> and <strong>SUBSCRIBE</strong>
+        </p>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 7: Opt-In Message</p>
+        <div style="padding:12px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:12px">
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            ⚠️ <strong>Do NOT modify this message.</strong> Paste it exactly as shown, including the brackets. <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[privacy_policy_link]</code> and <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[terms_link]</code> are intentional template placeholders. Do not replace them with actual URLs.
+          </p>
+        </div>
+        <pre id="twOptInMessage">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('twOptInMessage', this)">Copy</button>
+        </div>
       </div>
     </div>
 
-    <!-- Copy-paste divider -->
+    <!-- LAYER 3: Shared copy-paste block -->
     <div class="section" style="text-align:center;padding:20px 28px;background:linear-gradient(180deg,#f9f9ff,#fff)">
       <h2 style="justify-content:center;font-size:22px;margin-bottom:4px">📋 Copy These Exactly Into Your Application</h2>
-      <p class="muted" style="margin:0;font-size:14px">Paste each field below into the matching section of your A2P campaign registration.</p>
+      <p class="muted" style="margin:0;font-size:14px">Used by Local, Sole Prop, and Twilio Direct. Paste each field into the matching section of your A2P campaign registration.</p>
     </div>
 
     <div class="section">
@@ -652,65 +1031,6 @@
       <pre id="msg2">Loading...</pre>
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('msg2', this)">Copy</button>
-      </div>
-    </div>
-
-    <!-- Twilio Direct Registration -->
-    <div class="section" style="text-align:center;padding:20px 28px;background:linear-gradient(180deg,#f9f9ff,#fff)">
-      <h2 style="justify-content:center;font-size:18px;margin-bottom:4px;color:var(--muted)">📌 Additional Registration Types</h2>
-    </div>
-    <div class="section" style="padding-top:0">
-      <div style="padding:16px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:2px solid #60a5fa;border-radius:14px">
-        <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('div').querySelector('.collapsible-body').classList.toggle('open')">
-          <h3 style="margin:0;font-weight:700;color:#1d4ed8;font-size:16px">🔧 Registering directly through Twilio? Click here for 3 additional sample messages, website links, and opt-in keywords</h3>
-          <span class="collapsible-arrow" style="color:#1d4ed8">▼</span>
-        </button>
-        <div class="collapsible-body">
-          <div style="padding-top:14px">
-            <p style="margin:0 0 14px;font-size:14.5px;color:#1e3a5f;line-height:1.55">
-              Twilio requires 5 sample messages. Use the 2 messages above as samples #1 and #2, then copy these 3 below. <strong>Paste exactly as-is — do not edit or insert values.</strong>
-            </p>
-
-            <p style="margin:0 0 6px"><strong>Sample Message #3:</strong></p>
-            <pre id="msg3">Loading...</pre>
-            <div class="copy-row">
-              <button class="copy-btn" onclick="copyText('msg3', this)">Copy</button>
-            </div>
-
-            <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #4:</strong></p>
-            <pre id="msg4">Loading...</pre>
-            <div class="copy-row">
-              <button class="copy-btn" onclick="copyText('msg4', this)">Copy</button>
-            </div>
-
-            <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #5:</strong></p>
-            <pre id="msg5">Loading...</pre>
-            <div class="copy-row">
-              <button class="copy-btn" onclick="copyText('msg5', this)">Copy</button>
-            </div>
-
-            <div style="margin-top:20px;padding-top:14px;border-top:1px solid #bfdbfe">
-              <p style="margin:0 0 6px"><strong>Privacy Policy URL:</strong></p>
-              <pre id="privacyUrl">Loading...</pre>
-              <div class="copy-row">
-                <button class="copy-btn" onclick="copyText('privacyUrl', this)">Copy</button>
-              </div>
-
-              <p style="margin-top:16px;margin-bottom:6px"><strong>Terms and Conditions URL:</strong></p>
-              <pre id="termsUrl">Loading...</pre>
-              <div class="copy-row">
-                <button class="copy-btn" onclick="copyText('termsUrl', this)">Copy</button>
-              </div>
-            </div>
-
-            <div style="margin-top:20px;padding-top:14px;border-top:1px solid #bfdbfe">
-              <p style="margin:0 0 6px"><strong>Opt-in Keywords:</strong></p>
-              <p style="margin:0;font-size:14.5px;color:#1e3a5f;line-height:1.55">
-                When asked for opt-in keywords, enter: <strong>START</strong> and <strong>SUBSCRIBE</strong>
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -752,7 +1072,7 @@
       <h2>📜 Step 5: Opt-In Message <span style="font-size:14px;font-weight:500">(paste exactly as-is, do not edit or insert values)</span></h2>
       <div style="padding:12px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:12px">
         <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
-          ⚠️ <strong>Do NOT modify this message.</strong> Paste it exactly as shown — including the brackets. The brackets <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[privacy_policy_link]</code> and <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[terms_link]</code> are intentional template placeholders. Do not replace them with actual URLs.
+          ⚠️ <strong>Do NOT modify this message.</strong> Paste it exactly as shown, including the brackets. The brackets <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[privacy_policy_link]</code> and <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[terms_link]</code> are intentional template placeholders. Do not replace them with actual URLs.
         </p>
       </div>
       <pre id="optInMessage">Loading...</pre>
@@ -794,110 +1114,6 @@
       </p>
     </div>
 
-    <!-- Toll-Free Wizard Section -->
-    <div id="toll-free-wizard" class="section" style="background:linear-gradient(180deg,#f5f3ff,#fff);padding:32px 28px">
-      <h2 style="justify-content:center;font-size:22px;margin-bottom:4px;color:#6d28d9">📞 Toll-Free Wizard</h2>
-      <p class="muted" style="margin:0 0 20px;font-size:14px;text-align:center">Follow each step below to register your toll-free number.</p>
-
-      <div style="padding:12px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #93c5fd;border-radius:10px;margin-bottom:20px">
-        <p style="margin:0;font-size:14px;color:#1e3a5f;line-height:1.55">
-          👤 <strong>Registering as a sole proprietor?</strong> Same setup, just skip the EIN field, change the entity type to <strong>Sole Proprietor</strong>, and make sure your site is <strong>yourname.nebulabrandgroup.com</strong>
-        </p>
-      </div>
-
-      <h4 style="margin:0 0 10px;color:#6d28d9;font-size:17px">TF Step 1: Business &amp; Contact Information</h4>
-      <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
-        <li><strong>Business DBA:</strong> Leave this blank.</li>
-        <li><strong>Legal Entity Type:</strong> Select <strong>Private Profit</strong></li>
-        <li><strong>Email:</strong> Use the email below, or any professional email you have access to.</li>
-      </ul>
-
-      <p style="margin:0 0 6px"><strong>Legal Entity Name:</strong></p>
-      <pre id="tfLegalName">Loading...</pre>
-      <div class="copy-row">
-        <button class="copy-btn" onclick="copyText('tfLegalName', this)">Copy</button>
-      </div>
-
-      <p style="margin:16px 0 6px"><strong>Website URL:</strong></p>
-      <pre id="tfWebsite">Loading...</pre>
-      <div class="copy-row">
-        <button class="copy-btn" onclick="copyText('tfWebsite', this)">Copy</button>
-      </div>
-
-      <p style="margin:16px 0 6px"><strong>Email:</strong></p>
-      <pre id="tfEmail">Loading...</pre>
-      <div class="copy-row">
-        <button class="copy-btn" onclick="copyText('tfEmail', this)">Copy</button>
-      </div>
-
-      <img
-        src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9e1e90e4b60687c87f.png"
-        class="tips-img"
-        alt="Toll-Free Step 1 - Business and Contact Info"
-        loading="lazy"
-        decoding="async"
-        style="margin-top:12px"
-      >
-
-      <h4 style="margin:20px 0 10px;color:#6d28d9;font-size:17px">TF Step 2: Business Location</h4>
-      <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
-        Enter your legal business address <strong>exactly</strong> as it appears on your CP575 form. This must match what the IRS has on file.
-      </p>
-      <img
-        src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9e07a34aa07f7e95bc.png"
-        class="tips-img"
-        alt="Toll-Free Step 2 - Business Location"
-        loading="lazy"
-        decoding="async"
-        style="margin-top:0"
-      >
-
-      <h4 style="margin:20px 0 10px;color:#6d28d9;font-size:17px">TF Step 3: Messaging Use Case</h4>
-      <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
-        <li><strong>Estimated Monthly Volume:</strong> Select <strong>1,000</strong></li>
-        <li><strong>Opt-In Type:</strong> Select <strong>Web Form</strong></li>
-        <li><strong>Use Case Categories:</strong> Select <strong>BOTH</strong> Marketing and Account Notifications</li>
-      </ul>
-
-      <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:14px">
-        <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
-          🛑 You MUST select "Web Form" as the Opt-In Type. If this is not selected, your campaign will fail.
-        </p>
-      </div>
-
-      <p style="margin:0 0 6px"><strong>Opt-In Workflow Image URL:</strong></p>
-      <pre id="tfOptInUrl">Loading...</pre>
-      <div class="copy-row">
-        <button class="copy-btn" onclick="copyText('tfOptInUrl', this)">Copy</button>
-      </div>
-
-      <p style="margin:16px 0 6px"><strong>Use Case Description:</strong></p>
-      <pre id="tfUseCase">Loading...</pre>
-      <div class="copy-row">
-        <button class="copy-btn" onclick="copyText('tfUseCase', this)">Copy</button>
-      </div>
-
-      <p style="margin:16px 0 6px"><strong>Message Content:</strong></p>
-      <div style="padding:10px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;margin-bottom:8px">
-        <p style="margin:0;font-size:13.5px;color:#166534;font-weight:600">
-          ✅ Copy the entire message content below in one shot. Do not edit or insert values.
-        </p>
-      </div>
-      <pre id="tfMessages">Loading...</pre>
-      <div class="copy-row">
-        <button class="copy-btn" onclick="copyText('tfMessages', this)">Copy All Messages</button>
-      </div>
-
-      <img
-        src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9ee05851175c187c59.png"
-        class="tips-img"
-        alt="Toll-Free Step 3 - Messaging Use Case"
-        loading="lazy"
-        decoding="async"
-        style="margin-top:14px"
-      >
-    </div>
-
     <!-- Start Over CTA (bottom) -->
     <div style="text-align:center;padding:18px 28px;border-top:1px solid var(--border)">
       <p style="margin:0 0 12px;font-size:15px;font-weight:600;color:var(--text)">🔁 Ready to submit another?</p>
@@ -911,6 +1127,48 @@
       <a href="#" onclick="window.print()" class="pdf-button">Download PDF</a>
     </div>
   </div>
+
+  <!-- Selector logic (separate from the data script; calls the global postHeight) -->
+  <script>
+    function selectPath(key){
+      var panels = document.querySelectorAll(".path-panel");
+      for(var i=0;i<panels.length;i++){ panels[i].classList.remove("active"); }
+      var btns = document.querySelectorAll(".path-btn[data-path]");
+      for(var j=0;j<btns.length;j++){ btns[j].classList.remove("active"); }
+
+      var panel = document.getElementById("panel-" + key);
+      if(panel) panel.classList.add("active");
+      var btn = document.querySelector('.path-btn[data-path="' + key + '"]');
+      if(btn) btn.classList.add("active");
+
+      if(panel && panel.scrollIntoView){
+        panel.scrollIntoView({behavior:"smooth", block:"nearest"});
+      }
+      if(typeof postHeight === "function") setTimeout(postHeight, 350);
+    }
+
+    /* Mirror shared hydrated fields into the self-contained Twilio panel.
+       Reads finished text from the data script's fields; never touches that script. */
+    function syncTwilioPanel(){
+      var map = {
+        useCase:"twUseCase", msg1:"twMsg1", msg2:"twMsg2",
+        optInFormUrl:"twOptInFormUrl", consentCopy:"twConsentCopy", optInMessage:"twOptInMessage"
+      };
+      for(var src in map){
+        var s = document.getElementById(src);
+        var d = document.getElementById(map[src]);
+        if(s && d) d.textContent = s.textContent;
+      }
+    }
+    /* Re-sync on a short interval after load to catch cache-then-network hydration */
+    window.addEventListener("load", function(){
+      var n = 0;
+      var iv = setInterval(function(){
+        syncTwilioPanel();
+        if(++n >= 12) clearInterval(iv);
+      }, 1000);
+    });
+  </script>
 
   <script>
     const $ = (id)=>document.getElementById(id);
@@ -1187,18 +1445,26 @@ updateText("optInMessage",
         const cached = localStorage.getItem(key);
         if(cached){
           const cachedObj = JSON.parse(cached);
-          hydrate(unwrapRow(cachedObj));
-          fetchJSON(apiUrl)
-            .then(d=>{ localStorage.setItem(key, JSON.stringify(d)); hydrate(unwrapRow(d)); })
-            .catch(()=>{});
-          return;
+          const cachedRow = unwrapRow(cachedObj);
+          const cachedSlug = String((cachedRow && (cachedRow["Slug"]||cachedRow["slug"]||cachedRow["SLUG"]))||"").trim();
+          if(cachedSlug){
+            hydrate(cachedRow);
+            fetchJSON(apiUrl)
+              .then(d=>{ const r=unwrapRow(d); const s=String((r&&(r["Slug"]||r["slug"]||r["SLUG"]))||"").trim(); if(s){localStorage.setItem(key,JSON.stringify(d));hydrate(r);} })
+              .catch(()=>{});
+            return;
+          }else{
+            localStorage.removeItem(key);
+          }
         }
       }catch(e){}
 
       try{
         const data = await fetchJSON(apiUrl, 12000);
-        localStorage.setItem(key, JSON.stringify(data));
-        hydrate(unwrapRow(data));
+        const row = unwrapRow(data);
+        const dataSlug = String((row && (row["Slug"]||row["slug"]||row["SLUG"]))||"").trim();
+        if(dataSlug) localStorage.setItem(key, JSON.stringify(data));
+        hydrate(row);
       }catch(err){
         console.error("Error fetching data", err);
         setWebsiteUI("");
