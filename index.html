@@ -331,6 +331,7 @@
       .tips-img{max-height:300px;object-fit:contain}
       .path-panel{display:block!important}
       .path-btn{display:none!important}
+      #sharedBlock{display:block!important}
     }
   </style>
 </head>
@@ -1004,10 +1005,11 @@
       </div>
     </div>
 
-    <!-- LAYER 3: Shared copy-paste block -->
+    <!-- LAYER 3: Shared copy-paste block (Local + Sole Prop only; shown via selectPath) -->
+    <div id="sharedBlock" style="display:none">
     <div class="section" style="text-align:center;padding:20px 28px;background:linear-gradient(180deg,#f9f9ff,#fff)">
       <h2 style="justify-content:center;font-size:22px;margin-bottom:4px">📋 Copy These Exactly Into Your Application</h2>
-      <p class="muted" style="margin:0;font-size:14px">Used by Local, Sole Prop, and Twilio Direct. Paste each field into the matching section of your A2P campaign registration.</p>
+      <p class="muted" style="margin:0;font-size:14px">Paste each field into the matching section of your A2P campaign registration.</p>
     </div>
 
     <div class="section">
@@ -1079,7 +1081,22 @@
       <div class="copy-row">
         <button class="copy-btn" onclick="copyText('optInMessage', this)">Copy</button>
       </div>
+
+      <div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--border)">
+        <p style="margin:0 0 6px"><strong>Privacy Policy URL:</strong></p>
+        <pre id="shPrivacyUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('shPrivacyUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:16px 0 6px"><strong>Terms and Conditions URL:</strong></p>
+        <pre id="shTermsUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('shTermsUrl', this)">Copy</button>
+        </div>
+      </div>
     </div>
+    </div><!-- /#sharedBlock -->
 
     <div class="section">
       <h2>💡 Tips for Approval</h2>
@@ -1141,6 +1158,11 @@
       var btn = document.querySelector('.path-btn[data-path="' + key + '"]');
       if(btn) btn.classList.add("active");
 
+      var shared = document.getElementById("sharedBlock");
+      if(shared){
+        shared.style.display = (key === "local" || key === "soleprop") ? "block" : "none";
+      }
+
       if(panel && panel.scrollIntoView){
         panel.scrollIntoView({behavior:"smooth", block:"nearest"});
       }
@@ -1152,7 +1174,8 @@
     function syncTwilioPanel(){
       var map = {
         useCase:"twUseCase", msg1:"twMsg1", msg2:"twMsg2",
-        optInFormUrl:"twOptInFormUrl", consentCopy:"twConsentCopy", optInMessage:"twOptInMessage"
+        optInFormUrl:"twOptInFormUrl", consentCopy:"twConsentCopy", optInMessage:"twOptInMessage",
+        privacyUrl:"shPrivacyUrl", termsUrl:"shTermsUrl"
       };
       for(var src in map){
         var s = document.getElementById(src);
