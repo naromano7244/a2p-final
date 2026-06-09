@@ -288,12 +288,19 @@
       .path-grid.cols-3,.path-grid.cols-2{grid-template-columns:1fr}
     }
     .path-btn{
-      background:#fff;border:1.5px solid #e2d9f7;border-radius:14px;
-      padding:18px 12px;cursor:pointer;text-align:center;
+      background:#fff;border:1.5px solid #d9ccf5;border-radius:14px;
+      padding:18px 12px 14px;cursor:pointer;text-align:center;
       font-family:inherit;transition:transform .12s ease, border-color .12s ease, box-shadow .12s ease;
       display:flex;flex-direction:column;align-items:center;gap:8px;
+      box-shadow:var(--shadow-sm);
     }
-    .path-btn:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:var(--shadow-sm)}
+    .path-btn:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:var(--shadow-md)}
+    .path-cta{
+      font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+      color:var(--primary);background:var(--primary-light);
+      padding:3px 10px;border-radius:20px;margin-top:2px;
+    }
+    .path-btn.active .path-cta{background:var(--primary);color:#fff}
     .path-btn .path-icon{font-size:26px;line-height:1}
     .path-btn .path-name{font-size:15px;font-weight:700;color:var(--text)}
     .path-btn.active{
@@ -332,6 +339,7 @@
       .path-panel{display:block!important}
       .path-btn{display:none!important}
       #sharedBlock{display:block!important}
+      #pathEmptyState{display:none!important}
     }
   </style>
 </head>
@@ -525,8 +533,14 @@
 
     <!-- LAYER 2: Path selector -->
     <div class="section">
-      <h2 style="justify-content:center">🧭 Select Your Registration Type</h2>
-      <p style="text-align:center;margin:-8px 0 22px;font-size:14.5px;color:var(--muted)">Pick the option that matches how you're registering. We'll show you the exact steps for that path.</p>
+      <h2 style="justify-content:center">🧭 Start Here: Select Your Registration Type</h2>
+      <p style="text-align:center;margin:-8px 0 16px;font-size:14.5px;color:var(--muted)">👇 <strong>Tap one of the options below</strong> and your exact step-by-step instructions will appear. Nothing below applies until you pick your type.</p>
+
+      <div style="max-width:640px;margin:0 auto 22px;padding:12px 18px;background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border:1px solid #86efac;border-radius:12px;text-align:center">
+        <p style="margin:0;font-size:14px;color:#166534;line-height:1.5">
+          ✅ <strong>Good news:</strong> the details you already submitted work for <strong>every</strong> registration type. Just pick how you're registering below and follow those exact steps.
+        </p>
+      </div>
 
       <div class="selector-group">
         <p class="selector-heading" style="display:flex;flex-direction:column;align-items:center;gap:8px"><img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22d38de8bb5ac427e62632.png" alt="HighLevel" style="height:48px;width:auto" loading="lazy" decoding="async"><span>Registration Templates</span></p>
@@ -534,14 +548,17 @@
           <button class="path-btn" data-path="local" onclick="selectPath('local')">
             <span class="path-icon">📍</span>
             <span class="path-name">Local</span>
+            <span class="path-cta">Tap to select</span>
           </button>
           <button class="path-btn" data-path="tollfree" onclick="selectPath('tollfree')">
             <span class="path-icon">📞</span>
             <span class="path-name">Toll-Free</span>
+            <span class="path-cta">Tap to select</span>
           </button>
           <button class="path-btn" data-path="soleprop" onclick="selectPath('soleprop')">
             <span class="path-icon">👤</span>
             <span class="path-name">Sole Prop</span>
+            <span class="path-cta">Tap to select</span>
           </button>
         </div>
       </div>
@@ -552,6 +569,7 @@
           <button class="path-btn" data-path="twilio" onclick="selectPath('twilio')">
             <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22e31f3c3faf82cada68f3.svg" alt="" aria-hidden="true" style="height:26px;width:auto" loading="lazy" decoding="async">
             <span class="path-name">Twilio Direct Registration</span>
+            <span class="path-cta">Tap to select</span>
           </button>
           <button class="path-btn disabled" type="button" aria-disabled="true">
             <span class="path-icon">☁️</span>
@@ -559,6 +577,13 @@
             <span class="soon-pill">Coming Soon</span>
           </button>
         </div>
+      </div>
+
+      <!-- Empty state: visible until a path is chosen -->
+      <div id="pathEmptyState" style="margin-top:18px;padding:28px 20px;border:2px dashed #c7b9f0;border-radius:14px;text-align:center;background:linear-gradient(180deg,#faf8ff,#fff)">
+        <p style="margin:0;font-size:30px;line-height:1">👆</p>
+        <p style="margin:8px 0 0;font-size:16px;font-weight:700;color:var(--primary)">Select your registration type above</p>
+        <p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Your exact, copy-and-paste step-by-step will appear right here.</p>
       </div>
 
       <!-- PATH: Local (HighLevel) -->
@@ -1162,6 +1187,9 @@
       if(shared){
         shared.style.display = (key === "local" || key === "soleprop") ? "block" : "none";
       }
+
+      var empty = document.getElementById("pathEmptyState");
+      if(empty) empty.style.display = "none";
 
       if(panel && panel.scrollIntoView){
         panel.scrollIntoView({behavior:"smooth", block:"nearest"});
