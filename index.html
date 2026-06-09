@@ -272,8 +272,17 @@
       transform:rotate(180deg);
     }
 
-    /* Path selector */
-    .selector-group{margin-bottom:22px}
+    /* Email right/wrong examples */
+    .email-ex{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+    @media (max-width:560px){.email-ex{grid-template-columns:1fr}}
+    .email-ex .ex{border-radius:12px;padding:12px 14px;border:2px solid}
+    .email-ex .ex.good{background:#f0fdf4;border-color:#86efac}
+    .email-ex .ex.bad{background:#fef2f2;border-color:#fca5a5}
+    .email-ex .ex-label{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin:0 0 8px;display:flex;align-items:center;gap:6px}
+    .email-ex .ex.good .ex-label{color:#15803d}
+    .email-ex .ex.bad .ex-label{color:#dc2626}
+    .email-ex .ex-mail{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;color:#1f2937;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 10px;word-break:break-all}
+    .email-ex .ex-mail + .ex-mail{margin-top:6px}
     .selector-group:last-child{margin-bottom:0}
     .selector-heading{
       text-align:center;font-size:13px;font-weight:700;letter-spacing:.06em;
@@ -655,7 +664,7 @@
         <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
           <li><strong>Business DBA:</strong> Leave this blank.</li>
           <li><strong>Legal Entity Type:</strong> Select <strong>Private Profit</strong></li>
-          <li><strong>Email:</strong> Use the email below, or any professional email you have access to.</li>
+          <li><strong>Email:</strong> If you have an EIN, use the email below or any professional email. <strong>No EIN? See the rule below.</strong></li>
         </ul>
 
         <p style="margin:0 0 6px"><strong>Legal Entity Name:</strong></p>
@@ -674,6 +683,28 @@
         <pre id="tfEmail">Loading...</pre>
         <div class="copy-row">
           <button class="copy-btn" onclick="copyText('tfEmail', this)">Copy</button>
+        </div>
+
+        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px;margin:14px 0">
+          <p style="margin:0 0 6px;font-size:16px;color:#dc2626;font-weight:800;line-height:1.4">🛑 IMPORTANT: No EIN? The email type decides pass or fail.</p>
+          <p style="margin:0 0 4px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            <strong>No EIN (sole proprietor)?</strong> You MUST use a personal Gmail here. A professional or business email <strong>will</strong> cause the registration to fail.
+          </p>
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            <strong>Have an EIN?</strong> Use the A2P Wizard email above (or any professional email you have access to). It works fine for toll-free.
+          </p>
+          <div class="email-ex">
+            <div class="ex good">
+              <p class="ex-label">✅ No EIN, use this</p>
+              <div class="ex-mail">johnsmith@gmail.com</div>
+              <div class="ex-mail">jsmith2024@gmail.com</div>
+            </div>
+            <div class="ex bad">
+              <p class="ex-label">❌ No EIN, not this</p>
+              <div class="ex-mail">john@acmeplumbing.com</div>
+              <div class="ex-mail">info@acmeplumbing.com</div>
+            </div>
+          </div>
         </div>
 
         <img
@@ -808,10 +839,26 @@
         <p style="margin:0 0 10px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
           For phone verification, The Campaign Registry needs to text a number for OTP. It says there's a limit of 3, but we've seen the same number used 20+ times without issue.
         </p>
-        <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin:12px 0">
-          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
-            🛑 <strong>IMPORTANT!</strong> If registering without an EIN, you must use a personal Gmail for the email field in Authorized Representative. Professional or business emails will cause the application to fail. If registering with an EIN, you can use a professional email, but we recommend trying a personal Gmail first. If you get a brand rejection, try switching to the other.
+        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px;margin:12px 0">
+          <p style="margin:0 0 6px;font-size:16px;color:#dc2626;font-weight:800;line-height:1.4">🛑 IMPORTANT: The email type decides whether you pass or fail.</p>
+          <p style="margin:0 0 4px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            <strong>No EIN?</strong> You MUST use a personal Gmail in the Authorized Representative email field. A professional or business email <strong>will</strong> cause the application to fail.
           </p>
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            <strong>Have an EIN?</strong> A professional email can work, but we recommend trying a personal Gmail first. If you get a brand rejection, switch to the other.
+          </p>
+          <div class="email-ex">
+            <div class="ex good">
+              <p class="ex-label">✅ Use this</p>
+              <div class="ex-mail">johnsmith@gmail.com</div>
+              <div class="ex-mail">jsmith2024@gmail.com</div>
+            </div>
+            <div class="ex bad">
+              <p class="ex-label">❌ Not this (no EIN)</p>
+              <div class="ex-mail">john@acmeplumbing.com</div>
+              <div class="ex-mail">info@acmeplumbing.com</div>
+            </div>
+          </div>
         </div>
         <img
           src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0e166d64c77d1843465af7.png"
