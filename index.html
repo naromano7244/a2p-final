@@ -283,6 +283,19 @@
     .email-ex .ex.bad .ex-label{color:#dc2626}
     .email-ex .ex-mail{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;color:#1f2937;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 10px;word-break:break-all}
     .email-ex .ex-mail + .ex-mail{margin-top:6px}
+
+    /* Low Volume Mixed gate - loudest block on the page */
+    .lvm-gate{border:3px solid #dc2626;border-radius:16px;overflow:hidden;margin:18px 0;box-shadow:0 8px 30px rgba(220,38,38,.18)}
+    .lvm-gate .lvm-head{background:#dc2626;color:#fff;padding:16px 18px}
+    .lvm-gate .lvm-kicker{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.9;margin:0 0 4px}
+    .lvm-gate .lvm-head h3{margin:0;font-size:21px;font-weight:800;line-height:1.25;color:#fff}
+    .lvm-gate .lvm-body{background:#fff;padding:18px}
+    .lvm-gate .lvm-chip-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px}
+    .lvm-gate .lvm-chip-label{font-size:13px;font-weight:700;color:#7f1d1d}
+    .lvm-gate .lvm-chip{display:inline-flex;align-items:center;gap:8px;background:#fef2f2;border:2px solid #dc2626;border-radius:10px;padding:10px 16px;font-size:16px;font-weight:800;color:#dc2626;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .lvm-gate .lvm-warn{margin:14px 0 0;padding:12px 14px;background:#450a0a;border-radius:10px;font-size:14.5px;font-weight:700;color:#fecaca;line-height:1.5}
+    .lvm-gate .lvm-ok{margin:14px 0 0;padding:12px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;font-size:14px;color:#166534;line-height:1.5}
+
     .selector-group:last-child{margin-bottom:0}
     .selector-heading{
       text-align:center;font-size:13px;font-weight:700;letter-spacing:.06em;
@@ -623,23 +636,29 @@
           </div>
         </div>
 
-        <div style="padding:16px;background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border:2px solid #86efac;border-radius:14px 14px 0 0">
-          <p style="margin:0 0 12px;font-size:15px;color:#166534;line-height:1.55">
-            ⚠️ <strong>IMPORTANT:</strong> Make sure to select <strong>"Low Volume Mixed (Recommended)"</strong> as the Campaign Use Case. This option gives you the best deliverability after approval. If you select something else, like "Customer Care," the application will likely get denied.
-          </p>
-          <img
-            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69ce9e27bbe1310051f59b91.png"
-            class="tips-img"
-            alt="Campaign Use Case - Low Volume Mixed selection"
-            loading="lazy"
-            decoding="async"
-            style="margin-top:0"
-          >
-        </div>
-        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-top:0;border-radius:0 0 14px 14px">
-          <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
-            🛑 STOP! This is not optional. If you glaze over this and select anything else, your campaign <strong>will</strong> fail.
-          </p>
+        <div class="lvm-gate">
+          <div class="lvm-head">
+            <p class="lvm-kicker">Do not skip - #1 cause of rejection</p>
+            <h3>⛔ Select "Low Volume Mixed" or your campaign WILL be rejected</h3>
+          </div>
+          <div class="lvm-body">
+            <div class="lvm-chip-row">
+              <span class="lvm-chip-label">Campaign Use Case must be set to:</span>
+              <span class="lvm-chip">Low Volume Mixed (Recommended)</span>
+            </div>
+            <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              This is the single most common reason campaigns get denied. Picking anything else (Customer Care, Marketing, 2FA, etc.) gets you rejected. It must say <strong>Low Volume Mixed</strong>, exactly as shown above.
+            </p>
+            <img
+              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69ce9e27bbe1310051f59b91.png"
+              class="tips-img"
+              alt="Campaign Use Case set to Low Volume Mixed (Recommended)"
+              loading="lazy"
+              decoding="async"
+              style="margin-top:0"
+            >
+            <p class="lvm-warn">🛑 If you glaze over this and select anything else, your campaign will fail. No exceptions.</p>
+          </div>
         </div>
 
         <div style="margin-top:16px;padding:14px 16px;background:var(--primary-light);border:1px solid #e5dcff;border-radius:12px">
@@ -871,12 +890,36 @@
 
         <h4 style="margin:20px 0 10px;color:#854d0e;font-size:17px">Then: Manual Setup &amp; Campaign Use Case</h4>
         <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
-          Choose <strong>"Manual Setup"</strong> (not Quick Setup) for the campaign, and set the Campaign Use Case to <strong>"Low Volume Mixed (Recommended)."</strong>
+          Choose <strong>"Manual Setup"</strong> (not Quick Setup) for the campaign.
         </p>
-        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px">
-          <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
-            🛑 STOP! Low Volume Mixed is not optional. If you select anything else, your campaign <strong>will</strong> fail.
-          </p>
+        <div class="lvm-gate">
+          <div class="lvm-head">
+            <p class="lvm-kicker">Read carefully - depends on EIN</p>
+            <h3>⛔ Campaign Use Case: get this right or you'll be rejected</h3>
+          </div>
+          <div class="lvm-body">
+            <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              What you do here depends on whether the Use Case field is <strong>locked</strong> or <strong>selectable</strong>:
+            </p>
+
+            <div style="padding:12px 14px;background:#f0fdf4;border:2px solid #86efac;border-radius:10px;margin-bottom:10px">
+              <p style="margin:0 0 4px;font-size:14.5px;font-weight:800;color:#15803d">✅ If it shows "Sole Proprietor" and is locked</p>
+              <p style="margin:0;font-size:14px;color:#166534;line-height:1.55">
+                That's a true sole prop (no EIN). <strong>Leave it as "Sole Proprietor."</strong> You can't change it and you don't need to. This is correct, don't panic.
+              </p>
+            </div>
+
+            <div style="padding:12px 14px;background:#fef2f2;border:2px solid #dc2626;border-radius:10px">
+              <p style="margin:0 0 8px;font-size:14.5px;font-weight:800;color:#dc2626">🛑 If you CAN select a Use Case (has EIN)</p>
+              <div class="lvm-chip-row" style="margin:0 0 8px">
+                <span class="lvm-chip-label">It must be set to:</span>
+                <span class="lvm-chip">Low Volume Mixed (Recommended)</span>
+              </div>
+              <p style="margin:0;font-size:14px;color:#7f1d1d;line-height:1.55">
+                If the field lets you pick, selecting anything else (Customer Care, Marketing, 2FA, etc.) gets you rejected. It must say <strong>Low Volume Mixed</strong>.
+              </p>
+            </div>
+          </div>
         </div>
 
         <div style="margin-top:16px;padding:14px 16px;background:var(--primary-light);border:1px solid #e5dcff;border-radius:12px">
@@ -945,21 +988,29 @@
           >
         </div>
 
-        <div style="padding:16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:14px;margin-bottom:20px">
-          <p style="margin:0 0 10px;font-size:15px;color:#7f1d1d;font-weight:700;line-height:1.55">
-            🛑 IMPORTANT: Select <strong>"Low Volume Mixed"</strong> as the campaign type.
-          </p>
-          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
-            Do not skip this. If you select anything else, your campaign will likely be denied.
-          </p>
-          <img
-            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22e02a5f72b50cf847b0ea.png"
-            class="tips-img"
-            alt="Low Volume Mixed campaign type selection"
-            loading="lazy"
-            decoding="async"
-            style="margin-top:6px"
-          >
+        <div class="lvm-gate">
+          <div class="lvm-head">
+            <p class="lvm-kicker">Do not skip - #1 cause of rejection</p>
+            <h3>⛔ Select "Low Volume Mixed" or your campaign WILL be rejected</h3>
+          </div>
+          <div class="lvm-body">
+            <div class="lvm-chip-row">
+              <span class="lvm-chip-label">Campaign type must be set to:</span>
+              <span class="lvm-chip">Low Volume Mixed</span>
+            </div>
+            <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              This is the single most common reason campaigns get denied. Picking anything else gets you rejected. It must say <strong>Low Volume Mixed</strong>, exactly as shown above.
+            </p>
+            <img
+              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22e02a5f72b50cf847b0ea.png"
+              class="tips-img"
+              alt="Low Volume Mixed campaign type selection"
+              loading="lazy"
+              decoding="async"
+              style="margin-top:0"
+            >
+            <p class="lvm-warn">🛑 If you glaze over this and select anything else, your campaign will fail. No exceptions.</p>
+          </div>
         </div>
 
         <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 1: Campaign Description</p>
