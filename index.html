@@ -587,10 +587,15 @@
 
       <div class="selector-group">
         <p class="selector-heading">Direct to Carrier</p>
-        <div class="path-grid cols-2">
+        <div class="path-grid cols-3">
           <button class="path-btn" data-path="twilio" onclick="selectPath('twilio')">
             <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22e31f3c3faf82cada68f3.svg" alt="" aria-hidden="true" style="height:26px;width:auto" loading="lazy" decoding="async">
             <span class="path-name">Twilio Direct Registration</span>
+            <span class="path-cta">Tap to select</span>
+          </button>
+          <button class="path-btn" data-path="textgrid" onclick="selectPath('textgrid')">
+            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a3a898c2ed3b9e323a56d1b.png" alt="" aria-hidden="true" style="height:26px;width:auto" loading="lazy" decoding="async">
+            <span class="path-name">TextGrid Registration</span>
             <span class="path-cta">Tap to select</span>
           </button>
           <button class="path-btn disabled" type="button" aria-disabled="true">
@@ -1126,6 +1131,131 @@
           <button class="copy-btn" onclick="copyText('twOptInMessage', this)">Copy</button>
         </div>
       </div>
+
+      <!-- PATH: TextGrid -->
+      <div class="path-panel" id="panel-textgrid">
+        <p class="panel-head">
+          <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a3a898c2ed3b9e323a56d1b.png" alt="TextGrid" style="height:24px;width:auto;vertical-align:middle;margin-right:6px" loading="lazy" decoding="async">TextGrid Registration
+        </p>
+        <p class="panel-sub">Registering A2P/10DLC directly through TextGrid. Complete the steps top to bottom.</p>
+
+        <div style="padding:12px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;margin-bottom:16px">
+          <p style="margin:0;font-size:14px;color:#854d0e;line-height:1.55">
+            👤 <strong>Registering as a sole proprietor / individual?</strong> Same flow, with these differences: set the entity type to <strong>Sole Proprietor</strong>, skip the EIN, use the individual's <strong>full name</strong> as the business name, and use a <strong>personal email</strong> for the contact. (TextGrid's exact field names may differ slightly; the full step-by-step is coming here soon.)
+          </p>
+        </div>
+
+        <!-- Use Case gate -->
+        <div class="lvm-gate">
+          <div class="lvm-head">
+            <p class="lvm-kicker">Do not skip - #1 cause of rejection</p>
+            <h3>⛔ Use Case: pick Low Volume Mixed, then both sub-use cases</h3>
+          </div>
+          <div class="lvm-body">
+            <div class="lvm-chip-row">
+              <span class="lvm-chip-label">Primary use case must be:</span>
+              <span class="lvm-chip">Low Volume Mixed</span>
+            </div>
+            <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              Select <strong>Low Volume Mixed</strong> as the main use case first. Then, underneath it, pick <strong>both</strong> sub-use cases:
+            </p>
+            <div class="lvm-chip-row" style="margin:0 0 12px">
+              <span class="lvm-chip" style="font-size:14px">Customer Care</span>
+              <span class="lvm-chip" style="font-size:14px">Marketing</span>
+            </div>
+            <p class="lvm-warn">🛑 Both sub-use cases (Customer Care AND Marketing) must be selected under Low Volume Mixed. Picking the wrong use case is the #1 reason campaigns get rejected.</p>
+          </div>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 1: Campaign Description</p>
+        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">Paste exactly as-is, do not edit or insert values.</p>
+        <pre id="tgUseCase">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tgUseCase', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 2: Call to Action / Message Flow</p>
+        <div style="padding:10px 14px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;margin-bottom:8px">
+          <p style="margin:0;font-size:13.5px;color:#854d0e;line-height:1.55">
+            ⚠️ This is the field TCR vetting partners enforce most heavily. Paste the copy below exactly, it describes how users give explicit consent.
+          </p>
+        </div>
+        <pre id="tgConsentCopy">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tgConsentCopy', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 3: Privacy Policy Link</p>
+        <pre id="tgPrivacyUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tgPrivacyUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 4: Terms &amp; Conditions Link</p>
+        <pre id="tgTermsUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tgTermsUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 5: Sample Messages</p>
+        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">TextGrid requires all 5. Paste exactly as-is, do not edit or insert values.</p>
+
+        <p style="margin:14px 0 6px"><strong>Sample Message #1:</strong></p>
+        <pre id="tgMsg1">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tgMsg1', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #2:</strong></p>
+        <pre id="tgMsg2">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tgMsg2', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #3:</strong></p>
+        <pre id="tgMsg3">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tgMsg3', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #4:</strong></p>
+        <pre id="tgMsg4">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tgMsg4', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #5:</strong></p>
+        <pre id="tgMsg5">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('tgMsg5', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 6: Campaign &amp; Content Attributes</p>
+        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px">
+          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 Select <strong>EXACTLY</strong> these. Getting any of them wrong can cause a rejection.
+          </p>
+          <ul style="margin:0 0 12px;font-size:14px;color:#1e1e2f;line-height:1.7">
+            <li>Subscriber Opt-in: <strong>Yes</strong></li>
+            <li>Subscriber Opt-Out: <strong>Yes</strong></li>
+            <li>Subscriber Help: <strong>Yes</strong></li>
+            <li>Number Pooling: <strong>No</strong></li>
+            <li>Direct Lending or Loan Arrangement: <strong>No</strong></li>
+            <li>Embedded Link: <strong>Yes</strong></li>
+            <li>Embedded Phone Number: <strong>Yes</strong></li>
+            <li>Affiliate Marketing: <strong>No</strong></li>
+            <li>Age Gated Content: <strong>No</strong></li>
+          </ul>
+          <img
+            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a3a8894967e20d627a4df5d.png"
+            class="tips-img"
+            alt="TextGrid Campaign and Content Attributes - exact selections"
+            loading="lazy"
+            decoding="async"
+            style="margin-top:0"
+          >
+        </div>
+      </div>
     </div>
 
     <!-- LAYER 3: Shared copy-paste block (Local + Sole Prop only; shown via selectPath) -->
@@ -1299,14 +1429,26 @@
        Reads finished text from the data script's fields; never touches that script. */
     function syncTwilioPanel(){
       var map = {
-        useCase:"twUseCase", msg1:"twMsg1", msg2:"twMsg2",
-        optInFormUrl:"twOptInFormUrl", consentCopy:"twConsentCopy", optInMessage:"twOptInMessage",
-        privacyUrl:"shPrivacyUrl", termsUrl:"shTermsUrl"
+        useCase:["twUseCase","tgUseCase"],
+        msg1:["twMsg1","tgMsg1"],
+        msg2:["twMsg2","tgMsg2"],
+        msg3:["tgMsg3"],
+        msg4:["tgMsg4"],
+        msg5:["tgMsg5"],
+        optInFormUrl:["twOptInFormUrl"],
+        consentCopy:["twConsentCopy","tgConsentCopy"],
+        optInMessage:["twOptInMessage"],
+        privacyUrl:["shPrivacyUrl","tgPrivacyUrl"],
+        termsUrl:["shTermsUrl","tgTermsUrl"]
       };
       for(var src in map){
         var s = document.getElementById(src);
-        var d = document.getElementById(map[src]);
-        if(s && d) d.textContent = s.textContent;
+        if(!s) continue;
+        var targets = map[src];
+        for(var i=0;i<targets.length;i++){
+          var d = document.getElementById(targets[i]);
+          if(d) d.textContent = s.textContent;
+        }
       }
     }
     /* Re-sync on a short interval after load to catch cache-then-network hydration */
