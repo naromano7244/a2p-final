@@ -1437,9 +1437,7 @@
         msg5:["tgMsg5"],
         optInFormUrl:["twOptInFormUrl"],
         consentCopy:["twConsentCopy","tgConsentCopy"],
-        optInMessage:["twOptInMessage"],
-        privacyUrl:["shPrivacyUrl","tgPrivacyUrl"],
-        termsUrl:["shTermsUrl","tgTermsUrl"]
+        optInMessage:["twOptInMessage"]
       };
       for(var src in map){
         var s = document.getElementById(src);
@@ -1451,12 +1449,31 @@
         }
       }
     }
-    /* Re-sync on a short interval after load to catch cache-then-network hydration */
+    /* Re-sync after load. Keep going until the source fields hold real data
+       (not "Loading..."/"Waiting"), since slow Make/image generation can push
+       hydration well past a short window. Hard cap as a safety stop. */
     window.addEventListener("load", function(){
-      var n = 0;
+      var ticks = 0;
+      var MAX_TICKS = 90; // ~90s safety cap
+      function looksReal(t){
+        if(!t) return false;
+        t = t.trim();
+        if(!t) return false;
+        if(t.indexOf("Loading") === 0) return false;
+        if(t.indexOf("Waiting") === 0) return false;
+        return true;
+      }
       var iv = setInterval(function(){
         syncTwilioPanel();
-        if(++n >= 12) clearInterval(iv);
+        ticks++;
+        var uc = document.getElementById("useCase");
+        var pv = document.getElementById("privacyUrl");
+        // Stop once core fields are populated with real values, or after the cap.
+        if((uc && pv && looksReal(uc.textContent) && looksReal(pv.textContent)) || ticks >= MAX_TICKS){
+          // one final sync to capture the just-landed values, then stop
+          syncTwilioPanel();
+          clearInterval(iv);
+        }
       }, 1000);
     });
   </script>
@@ -1609,6 +1626,10 @@
         updateText("msg5", "—");
         updateText("privacyUrl", "—");
         updateText("termsUrl", "—");
+        updateText("shPrivacyUrl", "—");
+        updateText("shTermsUrl", "—");
+        updateText("tgPrivacyUrl", "—");
+        updateText("tgTermsUrl", "—");
         updateText("tfWebsite", "—");
         updateText("tfLegalName", "—");
         updateText("tfEmail", "—");
@@ -1667,6 +1688,10 @@ updateText("msg5",
 
 updateText("privacyUrl", (website ? website + "/privacy" : "[WEBSITE LINK PENDING]/privacy"));
 updateText("termsUrl", (website ? website + "/terms" : "[WEBSITE LINK PENDING]/terms"));
+updateText("shPrivacyUrl", (website ? website + "/privacy" : "[WEBSITE LINK PENDING]/privacy"));
+updateText("shTermsUrl", (website ? website + "/terms" : "[WEBSITE LINK PENDING]/terms"));
+updateText("tgPrivacyUrl", (website ? website + "/privacy" : "[WEBSITE LINK PENDING]/privacy"));
+updateText("tgTermsUrl", (website ? website + "/terms" : "[WEBSITE LINK PENDING]/terms"));
 
 const tfSlug = normalizeSlug(slug);
 const tfEmailAddr = tfSlug ? ("info@" + tfSlug + "." + SITE_DOMAIN) : "[EMAIL PENDING]";
@@ -1714,6 +1739,10 @@ updateText("optInMessage",
         updateText("msg5", "Waiting for data…");
         updateText("privacyUrl", "Waiting for data…");
         updateText("termsUrl", "Waiting for data…");
+        updateText("shPrivacyUrl", "Waiting for data…");
+        updateText("shTermsUrl", "Waiting for data…");
+        updateText("tgPrivacyUrl", "Waiting for data…");
+        updateText("tgTermsUrl", "Waiting for data…");
         updateText("tfWebsite", "Waiting for data…");
         updateText("tfLegalName", "Waiting for data…");
         updateText("tfEmail", "Waiting for data…");
