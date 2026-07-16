@@ -284,6 +284,10 @@
     .email-ex .ex-mail{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;color:#1f2937;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 10px;word-break:break-all}
     .email-ex .ex-mail + .ex-mail{margin-top:6px}
 
+    @media (max-width:620px){
+      .hl-two-screens{grid-template-columns:1fr !important}
+    }
+
     /* Low Volume Mixed gate - loudest block on the page */
     .lvm-gate{border:3px solid #dc2626;border-radius:16px;overflow:hidden;margin:18px 0;box-shadow:0 8px 30px rgba(220,38,38,.18)}
     .lvm-gate .lvm-head{background:#dc2626;color:#fff;padding:16px 18px}
@@ -555,6 +559,45 @@
 
     <!-- LAYER 2: Path selector -->
     <div class="section">
+
+      <!-- NEW: HighLevel two-screens / chat widget warning -->
+      <div style="background:#fff4e6;border:2px solid #f59e0b;border-radius:14px;padding:18px;margin-bottom:24px">
+        <p style="margin:0 0 10px;font-size:17px;font-weight:800;color:#b45309;line-height:1.35">
+          <span style="display:inline-block;background:#f59e0b;color:#fff;font-size:11px;font-weight:800;letter-spacing:.06em;padding:3px 10px;border-radius:20px;vertical-align:2px;margin-right:8px">NEW</span>HighLevel users: seeing a "chat widget setup" screen? Read this first
+        </p>
+        <p style="margin:0 0 14px;font-size:14.5px;color:#5c3a0a;line-height:1.55">
+          HighLevel is rolling out a new registration flow, so you'll see <strong>one of two screens</strong> when you start. Either way, the rule is the same: <strong>A2P Wizard uses Manual Setup. You do NOT need the chat widget, don't install it anywhere.</strong>
+        </p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="hl-two-screens">
+          <div>
+            <p style="margin:0 0 6px;font-size:13px;font-weight:800;color:#b45309;text-transform:uppercase;letter-spacing:.04em">If you see this (older screen)</p>
+            <img
+              src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69cbeffe42f8e89549dd0ac9.png"
+              class="tips-img"
+              alt="Older HighLevel screen: Quick Setup vs Manual Setup choice"
+              loading="lazy"
+              decoding="async"
+              style="margin-top:0"
+            >
+            <p style="margin:8px 0 0;font-size:14px;color:#5c3a0a;line-height:1.5">Choose <strong>Manual Setup</strong>.</p>
+          </div>
+          <div>
+            <p style="margin:0 0 6px;font-size:13px;font-weight:800;color:#b45309;text-transform:uppercase;letter-spacing:.04em">If you see this (newer screen)</p>
+            <video
+              class="tips-img"
+              style="margin-top:0"
+              autoplay muted loop playsinline
+              preload="metadata"
+              poster="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a4be83c1209780f80d3a74e.png"
+            >
+              <source src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a5917871097b8119578e90f.mp4" type="video/mp4">
+            </video>
+            <p style="margin:8px 0 0;font-size:14px;color:#5c3a0a;line-height:1.5">HighLevel pushes the chat widget as "recommended." Ignore it, <strong>scroll to the very bottom of the page</strong> and click the small <strong>"Switch to manual setup"</strong> link (that's what the video shows).</p>
+          </div>
+        </div>
+      </div>
+
       <h2 style="justify-content:center">🧭 Start Here: Select Your Registration Type</h2>
       <p style="text-align:center;margin:-8px 0 16px;font-size:14.5px;color:var(--muted)">👇 <strong>Tap one of the options below</strong> and your exact step-by-step instructions will appear. Nothing below applies until you pick your type.</p>
 
@@ -1653,8 +1696,11 @@
       const websiteRes = buildWebsiteFromSlug(slug);
       const website = websiteRes.ok ? websiteRes.website : "";
       const phone = String((row && (row["Support Phone"] || row["support_phone"])) || "").trim() || "[BUSINESS PHONE]";
-      const marketingConsent = String((row && (row["Marketing Consent"] || row["marketing_consent"])) || "").trim() || "promotional offers, discounts, and updates";
-      const nonMarketingConsent = String((row && (row["Non-Marketing Consent"] || row["non_marketing_consent"])) || "").trim() || "service updates and inquiries";
+      const stripConsentPrefix = (v) => String(v || "")
+        .replace(/^\s*(?:non[- ]?marketing|promotional|marketing)?\s*(?:messages?|notifications?)\s+(?:about|regarding|including)\s+/i, "")
+        .trim();
+      const marketingConsent = stripConsentPrefix(String((row && (row["Marketing Consent"] || row["marketing_consent"])) || "").trim()) || "promotional offers, discounts, and updates";
+      const nonMarketingConsent = stripConsentPrefix(String((row && (row["Non-Marketing Consent"] || row["non_marketing_consent"])) || "").trim()) || "service updates and inquiries";
       
       setWebsiteUI(website);
 
