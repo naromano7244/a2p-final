@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v2.6.0 – Path-selector restructure (HighLevel templates + Direct to Carrier), shared copy-paste block, general tips lifted to top -->
+  <!-- A2P Results v2.8.0 – Animated real polling (shimmer bar + wizard messages), Step One/Step Two restructure with jump button, website link at top of every registration panel, Business Profile Tip removed. Built from v2.7.0. -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -242,15 +242,48 @@
       opacity:0;pointer-events:none;
     }
 
-    /* DNS loading animation */
+    /* Polling loading animation */
     .dns-bar-track{
-      height:6px;border-radius:6px;background:#e9e3ff;overflow:hidden;
+      height:8px;border-radius:8px;background:#e9e3ff;overflow:hidden;
     }
     .dns-bar-fill{
-      height:100%;border-radius:6px;width:0%;
+      height:100%;border-radius:8px;width:0%;
       background:linear-gradient(90deg,var(--primary),var(--primary-2));
       transition:width 1s ease;
+      position:relative;overflow:hidden;
     }
+    .dns-bar-fill::after{
+      content:"";position:absolute;top:0;left:0;right:0;bottom:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+      animation:shimmer 1.4s infinite;
+    }
+    @keyframes shimmer{
+      from{transform:translateX(-100%)}
+      to{transform:translateX(100%)}
+    }
+    .poll-pulse{
+      animation:pollPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pollPulse{
+      0%,100%{opacity:1}
+      50%{opacity:.55}
+    }
+
+    /* Per-panel website box (top of each registration wizard) */
+    .panel-site-box{
+      background:linear-gradient(135deg,#f3efff,#ffffff);
+      border:2px solid var(--primary);
+      border-radius:14px;
+      padding:14px 16px;
+      margin:0 0 18px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      box-shadow:var(--shadow-sm);
+    }
+    .panel-site-box .psb-left{min-width:220px;flex:1}
 
     /* Collapsible accordions */
     .collapsible-toggle{
@@ -373,7 +406,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <div style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:13px;font-weight:700;padding:6px 16px;border-radius:20px;margin-bottom:12px;letter-spacing:0.3px">🆕 v2.6 — Pick your path: HighLevel templates &amp; direct-to-carrier wizards</div>
+      <div style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:13px;font-weight:700;padding:6px 16px;border-radius:20px;margin-bottom:12px;letter-spacing:0.3px">🆕 v2.8 — Step-by-step flow, live status magic &amp; your website in every wizard</div>
       <h1>🧙‍♂️ Just like magic!<br>Your A2P Compliance Kit is Ready!</h1>
       <p>Thanks for using A2P Wizard. Below is everything you need to get your campaign approved.</p>
     </div>
@@ -391,10 +424,10 @@
       </a>
     </div>
 
-    <!-- Start Here: website (universal) -->
+    <!-- Step One: website (universal) -->
     <div class="section" id="startHere">
-      <h2 style="justify-content:center">🚀 Start Here</h2>
-      <p style="text-align:center;margin:-8px 0 14px;font-size:14.5px;color:var(--muted)">Your compliance website is ready below. Scroll down to pick your registration type and follow the exact steps for it.</p>
+      <h2 style="justify-content:center">1️⃣ Step One</h2>
+      <p style="text-align:center;margin:-8px 0 14px;font-size:14.5px;color:var(--muted)">Your compliance website is ready below. Then jump down, pick your registration type, and follow the exact steps for it.</p>
 
       <div class="soft-card">
         <p style="margin:0 0 10px">
@@ -422,7 +455,7 @@
           </div>
         </div>
 
-        <!-- Upgrade prompt that shows when rate limited -->
+        <!-- Upgrade prompt: shown ONLY when the row carries the RATE LIMIT flag -->
         <div id="upgradePrompt" class="upgrade-prompt">
           <h4>🚀 Oops! You've Hit Your Rate Limit</h4>
           <p>You've reached the limit for free website generations. Upgrade now for unlimited submissions and priority support!</p>
@@ -431,6 +464,16 @@
           </a>
           <p style="margin:16px 0 0;font-size:13px;color:var(--muted)">
             Received this message in error? Please contact <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);text-decoration:none">admin@a2pwizard.com</a>
+          </p>
+        </div>
+
+        <!-- Stuck state: shown ONLY after polling exhausts with no row found. Never shows a paywall. -->
+        <div id="stuckPrompt" class="upgrade-prompt" style="border-color:#f59e0b;background:linear-gradient(135deg,#fffbeb,#ffffff)">
+          <h4 style="color:#b45309">🧙‍♂️ The Wizard Is Still Working His Magic</h4>
+          <p>We're under heavy volume right now, but your submission was received and is safe. Tap below and we'll check again.</p>
+          <button class="upgrade-btn" style="border:0;cursor:pointer;background:#b45309" onclick="stuckRetry()">🔄 Check Again</button>
+          <p style="margin:16px 0 0;font-size:13px;color:var(--muted)">
+            Been waiting more than a few minutes? Email <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);text-decoration:none">admin@a2pwizard.com</a> and we'll pull it up manually.
           </p>
         </div>
 
@@ -447,6 +490,12 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div style="text-align:center;margin-top:18px">
+        <a href="#registrationTypes" class="upgrade-btn" style="text-decoration:none" onclick="var t=document.getElementById('registrationTypes');if(t){t.scrollIntoView({behavior:'smooth'});}return false;">
+          ⬇️ Jump to Registration Templates
+        </a>
       </div>
     </div>
 
@@ -479,34 +528,6 @@
                 <strong>"What website do you see on the Twilio brand registration backend?"</strong>
                 If they return a different website than the one generated above, or you get rejected for "unverifiable website," it's because they cleared the brand in HighLevel but <em>not</em> the actual Twilio brand application. <strong>We strongly recommend creating a new sub-account or using A2P Wizard on a fresh sub-account.</strong>
               </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="callout" style="background:#fff4e6;border-color:#ffd69a;margin-bottom:12px">
-        <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('.callout').querySelector('.collapsible-body').classList.toggle('open')">
-          <h3 style="margin:0;font-weight:700;color:#b45309;font-size:15px">💡 Business Profile Tip</h3>
-          <span class="collapsible-arrow" style="color:#b45309">▼</span>
-        </button>
-        <div class="collapsible-body">
-          <div style="padding-top:12px">
-            <p style="margin:0 0 14px;font-weight:600;color:#b45309">
-              Update your business profile in HighLevel (or your CRM) to match the output from A2P Wizard. You can change it back as soon as you get approved. It also helps to set the business email to the email generated on your A2P site.
-            </p>
-            <p style="margin:0 0 8px;font-size:14px;color:var(--muted);font-weight:600">📸 Example, Business Profile Setup &amp; Details</p>
-            <div class="img-preview-wrap" onclick="event.stopPropagation();this.classList.toggle('expanded')" style="cursor:pointer">
-              <img
-                src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/69a874c47bdf38525b402e06.png"
-                class="tips-img"
-                alt="Business profile setup and details example"
-                loading="lazy"
-                decoding="async"
-                style="margin-top:0"
-              >
-              <div class="img-preview-fade">
-                <span>Click to view full example ▼</span>
-              </div>
             </div>
           </div>
         </div>
@@ -598,7 +619,7 @@
         </div>
       </div>
 
-      <h2 style="justify-content:center">🧭 Start Here: Select Your Registration Type</h2>
+      <h2 style="justify-content:center" id="registrationTypes">2️⃣ Step Two: Select Your Registration Type</h2>
       <p style="text-align:center;margin:-8px 0 16px;font-size:14.5px;color:var(--muted)">👇 <strong>Tap one of the options below</strong> and your exact step-by-step instructions will appear. Nothing below applies until you pick your type.</p>
 
       <div style="max-width:640px;margin:0 auto 22px;padding:12px 18px;background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border:1px solid #86efac;border-radius:12px;text-align:center">
@@ -661,6 +682,14 @@
         <p class="panel-head">📍 Local Registration — HighLevel</p>
         <p class="panel-sub">Standard 10DLC local number registration inside HighLevel.</p>
 
+        <div class="panel-site-box">
+          <div class="psb-left">
+            <div class="site-label">Your Compliance Website (Brand must match this)</div>
+            <a id="siteLocal" class="site-link panel-site-link" href="#" target="_blank" rel="noopener">Loading…</a>
+          </div>
+          <button class="copy-btn" onclick="copyText('siteLocal', this)">Copy Website</button>
+        </div>
+
         <div style="padding:16px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:2px solid #60a5fa;border-radius:14px;margin-bottom:14px">
           <h3 style="margin:0 0 12px;font-weight:700;color:#1d4ed8;font-size:16px">🆕 Find the "Switch to manual setup" link (do NOT use the chat widget setup)</h3>
           <p style="margin:0 0 12px;font-size:14.5px;color:#1e3a5f;line-height:1.55">
@@ -720,6 +749,14 @@
       <div class="path-panel" id="panel-tollfree">
         <p class="panel-head">📞 Toll-Free Wizard — HighLevel</p>
         <p class="panel-sub">Follow each step below to register your toll-free number.</p>
+
+        <div class="panel-site-box">
+          <div class="psb-left">
+            <div class="site-label">Your Compliance Website (Brand must match this)</div>
+            <a id="siteTollfree" class="site-link panel-site-link" href="#" target="_blank" rel="noopener">Loading…</a>
+          </div>
+          <button class="copy-btn" onclick="copyText('siteTollfree', this)">Copy Website</button>
+        </div>
 
         <div style="padding:12px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #93c5fd;border-radius:10px;margin-bottom:20px">
           <p style="margin:0;font-size:14px;color:#1e3a5f;line-height:1.55">
@@ -853,6 +890,14 @@
         <p class="panel-head">👤 Sole Proprietor — HighLevel</p>
         <p class="panel-sub">Same as a local registration, with a few entity-specific differences.</p>
 
+        <div class="panel-site-box">
+          <div class="psb-left">
+            <div class="site-label">Your Compliance Website (Brand must match this)</div>
+            <a id="siteSoleprop" class="site-link panel-site-link" href="#" target="_blank" rel="noopener">Loading…</a>
+          </div>
+          <button class="copy-btn" onclick="copyText('siteSoleprop', this)">Copy Website</button>
+        </div>
+
         <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:14px">
           <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
             🛑 <strong>Sole prop with no EIN will ONLY work if the individual has no active EIN.</strong> If you're getting a brand rejection, they likely have an EIN associated with them somewhere. In that case, follow the same steps below but select that the business HAS a tax ID and enter it in the appropriate fields.
@@ -981,6 +1026,14 @@
       <div class="path-panel" id="panel-twilio">
         <p class="panel-head">🔧 Twilio Direct</p>
         <p class="panel-sub">Registering A2P/10DLC directly in the Twilio console instead of through a CRM.</p>
+
+        <div class="panel-site-box">
+          <div class="psb-left">
+            <div class="site-label">Your Compliance Website (Brand must match this)</div>
+            <a id="siteTwilio" class="site-link panel-site-link" href="#" target="_blank" rel="noopener">Loading…</a>
+          </div>
+          <button class="copy-btn" onclick="copyText('siteTwilio', this)">Copy Website</button>
+        </div>
 
         <p style="margin:0 0 16px;font-size:14.5px;color:var(--text);line-height:1.55">
           Everything you need is in this section, in the order Twilio's console asks for it. Complete the steps top to bottom.
@@ -1181,6 +1234,14 @@
           <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a3a898c2ed3b9e323a56d1b.png" alt="TextGrid" style="height:24px;width:auto;vertical-align:middle;margin-right:6px" loading="lazy" decoding="async">TextGrid Registration
         </p>
         <p class="panel-sub">Registering A2P/10DLC directly through TextGrid. Complete the steps top to bottom.</p>
+
+        <div class="panel-site-box">
+          <div class="psb-left">
+            <div class="site-label">Your Compliance Website (Brand must match this)</div>
+            <a id="siteTextgrid" class="site-link panel-site-link" href="#" target="_blank" rel="noopener">Loading…</a>
+          </div>
+          <button class="copy-btn" onclick="copyText('siteTextgrid', this)">Copy Website</button>
+        </div>
 
         <div style="padding:12px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;margin-bottom:16px">
           <p style="margin:0;font-size:14px;color:#854d0e;line-height:1.55">
@@ -1491,19 +1552,31 @@
           if(d) d.textContent = s.textContent;
         }
       }
+
+      /* Mirror the master website link into every registration panel's site box.
+         Only copies once the master link holds a real URL (not a status message). */
+      var master = document.getElementById("siteLinkA");
+      if(master && String(master.textContent || "").indexOf("https://") === 0){
+        var panelLinks = document.querySelectorAll(".panel-site-link");
+        for(var p=0;p<panelLinks.length;p++){
+          panelLinks[p].textContent = master.textContent;
+          panelLinks[p].href = master.textContent;
+        }
+      }
     }
     /* Re-sync after load. Keep going until the source fields hold real data
        (not "Loading..."/"Waiting"), since slow Make/image generation can push
        hydration well past a short window. Hard cap as a safety stop. */
     window.addEventListener("load", function(){
       var ticks = 0;
-      var MAX_TICKS = 90; // ~90s safety cap
+      var MAX_TICKS = 150; // ~150s safety cap (covers the full 120s polling window plus margin)
       function looksReal(t){
         if(!t) return false;
         t = t.trim();
         if(!t) return false;
         if(t.indexOf("Loading") === 0) return false;
         if(t.indexOf("Waiting") === 0) return false;
+        if(t.indexOf("Still finalizing") === 0) return false;
         return true;
       }
       var iv = setInterval(function(){
@@ -1581,87 +1654,213 @@
     }
 
     let _lastApiUrl = "";
-    let _dnsRetryActive = false;
+    let _pollActive = false;
+
+    /* v2.7.0: explicit rate-limit signal.
+       Make writes a stub row (ID + contact info, Slug blank) with any non-empty
+       value in the "RATE LIMIT" column when a user is rate limited.
+       Any non-empty value in that column triggers the upgrade prompt instantly. */
+    function isRateLimited(row){
+      if(!row) return false;
+      const v = row["RATE LIMIT"] || row["Rate Limit"] || row["rate limit"] || row["RATE_LIMIT"];
+      return String(v || "").trim() !== "";
+    }
+
+    function hidePrompts(){
+      const up = $("upgradePrompt"); if(up) up.style.display = "none";
+      const sp = $("stuckPrompt"); if(sp) sp.style.display = "none";
+    }
+
+    /* Confirmed rate limit (RATE LIMIT flag on the row). The only path to the paywall. */
+    function showUpgradePrompt(){
+      _pollActive = false;
+      pollDone();
+      const linkEl = $("siteLinkA");
+      if(linkEl){
+        linkEl.textContent = "Website generation unavailable";
+        linkEl.href = "#";
+        linkEl.style.color = "";
+        linkEl.style.fontWeight = "";
+      }
+      const sp = $("stuckPrompt"); if(sp) sp.style.display = "none";
+      const up = $("upgradePrompt"); if(up) up.style.display = "block";
+    }
+
+    /* Polling exhausted with no row found. Never shows a paywall. */
+    function showStuckState(){
+      _pollActive = false;
+      pollDone();
+      const linkEl = $("siteLinkA");
+      if(linkEl){
+        linkEl.textContent = "🧙‍♂️ Still working our magic, see below";
+        linkEl.href = "#";
+        linkEl.style.color = "";
+        linkEl.style.fontWeight = "";
+      }
+      const up = $("upgradePrompt"); if(up) up.style.display = "none";
+      const sp = $("stuckPrompt"); if(sp) sp.style.display = "block";
+    }
+
+    /* "Check Again" button on the stuck state restarts polling. */
+    function stuckRetry(){
+      const sp = $("stuckPrompt"); if(sp) sp.style.display = "none";
+      startPolling();
+    }
 
     function setWebsiteUI(website, skipRetry){
       const siteLinkA = $("siteLinkA");
-      const upgradePrompt = $("upgradePrompt");
 
       if(siteLinkA){
         if(website){
           siteLinkA.textContent = website;
           siteLinkA.href = website;
           siteLinkA.style.color = "";
-          if(upgradePrompt) upgradePrompt.style.display = "none";
-          _dnsRetryActive = false;
+          siteLinkA.style.fontWeight = "";
+          hidePrompts();
+          _pollActive = false;
+          pollDone();
         }else if(skipRetry){
-          siteLinkA.textContent = "Website generation unavailable";
-          siteLinkA.href = "#";
-          siteLinkA.style.color = "";
-          if(upgradePrompt) upgradePrompt.style.display = "block";
-        }else if(!_dnsRetryActive){
-          _dnsRetryActive = true;
-          if(upgradePrompt) upgradePrompt.style.display = "none";
-          dnsRetry();
+          showStuckState();
+        }else if(!_pollActive){
+          hidePrompts();
+          startPolling();
         }
       }
     }
 
-    function dnsRetry(){
+    function pollDone(){
+      var linkEl = $("siteLinkA");
+      var barTrack = $("dnsBarTrack");
+      var bar = $("dnsBar");
+      if(barTrack) barTrack.style.display = "none";
+      if(bar) bar.style.width = "0%";
+      if(linkEl){ linkEl.style.color = ""; linkEl.style.fontWeight = ""; linkEl.classList.remove("poll-pulse"); }
+    }
+
+    /* v2.7.0: REAL polling loop. Replaces the old fake DNS animation, which only
+       fetched twice (t=0 and t=15s) and gave up. This re-queries the endpoint
+       every 4 seconds for up to 2 minutes, which covers HighLevel workflow queue
+       lag (measured at 39s+ before the webhook even fires) plus Make execution
+       and the sheet write. The moment a real row lands, the page populates.
+       If a RATE LIMIT flagged row lands, the upgrade prompt shows instantly.
+       If nothing lands by the deadline, the stuck state shows (never a paywall). */
+    function startPolling(){
+      if(_pollActive) return;
+      _pollActive = true;
+
       var linkEl = $("siteLinkA");
       var barTrack = $("dnsBarTrack");
       var bar = $("dnsBar");
       if(linkEl){ linkEl.href = "#"; linkEl.style.color = "var(--muted)"; linkEl.style.fontWeight = "600"; }
       if(barTrack) barTrack.style.display = "block";
 
-      var steps = [
-        {msg:"🔄 DNS propagating...", pct:"10%", delay:0},
-        {msg:"⚙️ Building your compliance site...", pct:"30%", delay:3000},
-        {msg:"✨ Putting final touches...", pct:"55%", delay:7000},
-        {msg:"🔍 Verifying site is live...", pct:"80%", delay:11000}
-      ];
-      steps.forEach(function(s){
-        setTimeout(function(){
-          if(!_dnsRetryActive) return;
-          if(linkEl) linkEl.textContent = s.msg;
-          if(bar) bar.style.width = s.pct;
-        }, s.delay);
-      });
-      setTimeout(function(){
-        if(!_dnsRetryActive) return;
-        if(bar) bar.style.width = "95%";
-        if(!_lastApiUrl){ _dnsRetryActive = false; dnsDone(false); return; }
-        fetchJSON(_lastApiUrl, 12000).then(function(d){
-          var row = unwrapRow(d);
-          if(row && row.ok !== false){
-            var slug = String((row["Slug"]||row["slug"]||row["SLUG"])||"").trim();
-            var res = buildWebsiteFromSlug(slug);
-            if(res.ok){
-              _dnsRetryActive = false;
-              if(linkEl) linkEl.textContent = "✅ Ready!";
-              if(bar) bar.style.width = "100%";
-              setTimeout(function(){ dnsDone(true); hydrate(row); }, 800);
-              return;
-            }
-          }
-          _dnsRetryActive = false;
-          dnsDone(false);
-        }).catch(function(){ _dnsRetryActive = false; dnsDone(false); });
-      }, 15000);
-    }
+      var start = Date.now();
+      var PHASE1_MS = 60000;    // reassurance phase
+      var DEADLINE_MS = 120000; // hard stop
+      var INTERVAL_MS = 4000;   // poll every 4 seconds
+      var UI_TICK_MS = 3000;    // rotate messages every 3 seconds
 
-    function dnsDone(success){
-      var linkEl = $("siteLinkA");
-      var barTrack = $("dnsBarTrack");
-      if(barTrack) barTrack.style.display = "none";
-      if(linkEl){ linkEl.style.color = ""; linkEl.style.fontWeight = ""; }
-      if(!success) setWebsiteUI("", true);
+      if(linkEl) linkEl.classList.add("poll-pulse");
+
+      var phase1Msgs = [
+        "🧙‍♂️ Summoning your compliance kit...",
+        "🔄 Confirming your submission...",
+        "⚙️ Spinning up your compliance site...",
+        "🎨 Generating your branding...",
+        "📡 Registering your subdomain...",
+        "✨ Putting on the final touches...",
+        "🔍 Checking if everything's live..."
+      ];
+      var phase2Msgs = [
+        "⏳ Taking a bit longer than usual. Your submission is safe...",
+        "🧙‍♂️ Heavy volume right now, still working the magic...",
+        "🔁 Still checking automatically, no need to refresh..."
+      ];
+      var mi = 0;
+
+      function tickUI(){
+        if(!_pollActive) return;
+        var elapsed = Date.now() - start;
+        var pct = Math.min(92, Math.round((elapsed / DEADLINE_MS) * 100));
+        if(bar) bar.style.width = pct + "%";
+        if(linkEl){
+          if(elapsed < PHASE1_MS){
+            linkEl.textContent = phase1Msgs[mi % phase1Msgs.length];
+          }else{
+            linkEl.textContent = phase2Msgs[mi % phase2Msgs.length];
+          }
+          mi++;
+        }
+      }
+      tickUI();
+      var _uiIv = setInterval(function(){
+        if(!_pollActive){ clearInterval(_uiIv); return; }
+        tickUI();
+      }, UI_TICK_MS);
+
+      (async function loop(){
+        while(_pollActive && (Date.now() - start) < DEADLINE_MS){
+          await new Promise(function(r){ setTimeout(r, INTERVAL_MS); });
+          if(!_pollActive) return;
+          if(!_lastApiUrl) continue;
+          try{
+            var d = await fetchJSON(_lastApiUrl, 15000);
+            var row = unwrapRow(d);
+            if(row && row.ok !== false){
+              if(isRateLimited(row)){
+                showUpgradePrompt();
+                return;
+              }
+              var slug = String((row["Slug"]||row["slug"]||row["SLUG"])||"").trim();
+              var res = buildWebsiteFromSlug(slug);
+              if(res.ok){
+                _pollActive = false;
+                if(linkEl) linkEl.textContent = "✅ Ready!";
+                if(bar) bar.style.width = "100%";
+                setTimeout(function(){ pollDone(); hydrate(row); }, 600);
+                return;
+              }
+            }
+          }catch(e){ /* transient failure, keep polling */ }
+        }
+        if(_pollActive){
+          showStuckState();
+        }
+      })();
     }
 
     function hydrate(row){
+      /* v2.7.0: explicit rate-limit check. A flagged row means Make confirmed
+         the rate limit, so the upgrade prompt shows immediately and confidently. */
+      if(row && row.ok !== false && isRateLimited(row)){
+        showUpgradePrompt();
+        updateText("useCase", "—");
+        updateText("msg1", "—");
+        updateText("msg2", "—");
+        updateText("msg3", "—");
+        updateText("msg4", "—");
+        updateText("msg5", "—");
+        updateText("privacyUrl", "—");
+        updateText("termsUrl", "—");
+        updateText("shPrivacyUrl", "—");
+        updateText("shTermsUrl", "—");
+        updateText("tgPrivacyUrl", "—");
+        updateText("tgTermsUrl", "—");
+        updateText("tfWebsite", "—");
+        updateText("tfLegalName", "—");
+        updateText("tfEmail", "—");
+        updateText("tfOptInUrl", "—");
+        updateText("tfUseCase", "—");
+        updateText("tfMessages", "—");
+        updateText("consentCopy", "—");
+        updateText("optInMessage", "—");
+        updateText("optInFormUrl", "—");
+        return;
+      }
+
       if(row && row.ok === false){
         setWebsiteUI("");
-        updateText("useCase", "Lookup failed. This record could not be found from the endpoint.");
+        updateText("useCase", "Still finalizing your submission. This page will update automatically.");
         updateText("msg1", "—");
         updateText("msg2", "—");
         updateText("msg3", "—");
@@ -1776,7 +1975,7 @@ updateText("optInMessage",
       const queryVal = (slug || id || "").trim();
 
       if(!queryVal){
-        setWebsiteUI("");
+        setWebsiteUI("", true);
         updateText("useCase", "Waiting for data…");
         updateText("msg1", "Waiting for data…");
         updateText("msg2", "Waiting for data…");
@@ -1813,10 +2012,10 @@ updateText("optInMessage",
           const cachedObj = JSON.parse(cached);
           const cachedRow = unwrapRow(cachedObj);
           const cachedSlug = String((cachedRow && (cachedRow["Slug"]||cachedRow["slug"]||cachedRow["SLUG"]))||"").trim();
-          if(cachedSlug){
+          if(cachedSlug && !isRateLimited(cachedRow)){
             hydrate(cachedRow);
             fetchJSON(apiUrl)
-              .then(d=>{ const r=unwrapRow(d); const s=String((r&&(r["Slug"]||r["slug"]||r["SLUG"]))||"").trim(); if(s){localStorage.setItem(key,JSON.stringify(d));hydrate(r);} })
+              .then(d=>{ const r=unwrapRow(d); const s=String((r&&(r["Slug"]||r["slug"]||r["SLUG"]))||"").trim(); if(s && !isRateLimited(r)){localStorage.setItem(key,JSON.stringify(d));hydrate(r);} })
               .catch(()=>{});
             return;
           }else{
@@ -1826,15 +2025,15 @@ updateText("optInMessage",
       }catch(e){}
 
       try{
-        const data = await fetchJSON(apiUrl, 12000);
+        const data = await fetchJSON(apiUrl, 15000);
         const row = unwrapRow(data);
         const dataSlug = String((row && (row["Slug"]||row["slug"]||row["SLUG"]))||"").trim();
-        if(dataSlug) localStorage.setItem(key, JSON.stringify(data));
+        if(dataSlug && !isRateLimited(row)) localStorage.setItem(key, JSON.stringify(data));
         hydrate(row);
       }catch(err){
         console.error("Error fetching data", err);
         setWebsiteUI("");
-        updateText("useCase", "We're having trouble loading live data. Try refreshing, or check back in a minute.");
+        updateText("useCase", "Still finalizing your submission. This page will update automatically.");
       }
     }
 
