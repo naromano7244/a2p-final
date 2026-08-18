@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v2.8.0 – Animated real polling (shimmer bar + wizard messages), Step One/Step Two restructure with jump button, website link at top of every registration panel, Business Profile Tip removed. Built from v2.7.0. -->
+  <!-- A2P Results v2.8.3 – Facebook community count updated to 350+. Built from v2.8.2. -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -412,7 +412,7 @@
     </div>
 
     <div class="disclosure" style="background:linear-gradient(135deg,#1877f2,#3b82f6);color:#fff;border:none;padding:14px 20px;font-size:14.5px">
-      🎉 <strong>300+ agencies are already inside.</strong> Join the A2P Wizard Facebook Community for SMS marketing tips, approval strategies, rejection troubleshooting, and priority announcements when carriers change the rules.
+      🎉 <strong>350+ agencies are already inside.</strong> Join the A2P Wizard Facebook Community for SMS marketing tips, approval strategies, rejection troubleshooting, and priority announcements when carriers change the rules.
       <a href="https://www.facebook.com/groups/a2pwizard" target="_blank" rel="noopener" style="color:#fff;font-weight:700;margin-left:6px;text-decoration:underline">Join the Facebook Group →</a>
     </div>
 
@@ -442,13 +442,16 @@
 
         <div class="site-box" style="margin-top:14px">
           <div class="site-left">
-            <div class="site-label">Website (Brand must match this)</div>
+            <div class="site-label" id="siteBoxLabel">Website (Brand must match this)</div>
             <a id="siteLinkA" class="site-link" href="#" target="_blank" rel="noopener">Loading…</a>
             <div id="dnsBarTrack" class="dns-bar-track" style="display:none;margin-top:8px">
               <div id="dnsBar" class="dns-bar-fill"></div>
             </div>
+            <p id="pollExplainer" style="display:none;margin:8px 0 0;font-size:13px;color:var(--muted);line-height:1.5">
+              Just a moment, your site is still being built. This can take a minute during heavy volume or DNS propagation. This page updates automatically.
+            </p>
           </div>
-          <div class="site-actions">
+          <div class="site-actions" id="siteActions">
             <button class="copy-btn" onclick="copyText('siteLinkA', this)" title="Copy website">
               Copy Website
             </button>
@@ -478,7 +481,7 @@
         </div>
 
         <!-- Feature badge -->
-        <div class="feature-badge">
+        <div class="feature-badge" id="featureBadge" style="transition:opacity .4s ease">
           <span class="badge-icon">✅</span>
           <div class="badge-text">
             <strong>This is a fully functioning website</strong>, complete with Terms of Service, Privacy Policy, and 5 content sections, that passes the AI verification system. You're welcome to use it as a live site for your client if you'd like.
@@ -1666,6 +1669,27 @@
       return String(v || "").trim() !== "";
     }
 
+    /* v2.8.1: visual "building" state for the site box while polling.
+       Hides the Copy Website button (so status text can't be copied), swaps the
+       label, and dims the feature badge until the site is actually ready. */
+    function setSiteBoxBuilding(building){
+      var label = $("siteBoxLabel");
+      var actions = $("siteActions");
+      var badge = $("featureBadge");
+      var explainer = $("pollExplainer");
+      if(building){
+        if(label) label.textContent = "🛠️ Building your website...";
+        if(actions) actions.style.display = "none";
+        if(badge) badge.style.opacity = ".4";
+        if(explainer) explainer.style.display = "block";
+      }else{
+        if(label) label.textContent = "Website (Brand must match this)";
+        if(actions) actions.style.display = "";
+        if(badge) badge.style.opacity = "";
+        if(explainer) explainer.style.display = "none";
+      }
+    }
+
     function hidePrompts(){
       const up = $("upgradePrompt"); if(up) up.style.display = "none";
       const sp = $("stuckPrompt"); if(sp) sp.style.display = "none";
@@ -1675,6 +1699,11 @@
     function showUpgradePrompt(){
       _pollActive = false;
       pollDone();
+      setSiteBoxBuilding(true);
+      var lbl = $("siteBoxLabel");
+      if(lbl) lbl.textContent = "Website (Brand must match this)";
+      var exp = $("pollExplainer");
+      if(exp) exp.style.display = "none";
       const linkEl = $("siteLinkA");
       if(linkEl){
         linkEl.textContent = "Website generation unavailable";
@@ -1690,6 +1719,11 @@
     function showStuckState(){
       _pollActive = false;
       pollDone();
+      setSiteBoxBuilding(true);
+      var lbl = $("siteBoxLabel");
+      if(lbl) lbl.textContent = "🛠️ Still building your website...";
+      var exp = $("pollExplainer");
+      if(exp) exp.style.display = "none";
       const linkEl = $("siteLinkA");
       if(linkEl){
         linkEl.textContent = "🧙‍♂️ Still working our magic, see below";
@@ -1717,6 +1751,7 @@
           siteLinkA.style.color = "";
           siteLinkA.style.fontWeight = "";
           hidePrompts();
+          setSiteBoxBuilding(false);
           _pollActive = false;
           pollDone();
         }else if(skipRetry){
@@ -1747,6 +1782,8 @@
     function startPolling(){
       if(_pollActive) return;
       _pollActive = true;
+
+      setSiteBoxBuilding(true);
 
       var linkEl = $("siteLinkA");
       var barTrack = $("dnsBarTrack");
@@ -2046,6 +2083,9 @@ updateText("optInMessage",
         : (el.textContent || "").trim();
 
       if(!txt || txt === "Loading…") return;
+      /* v2.8.1: never copy status text. Anchor elements (the website links) must
+         hold a real URL before copy is allowed. */
+      if(el.tagName === "A" && txt.indexOf("https://") !== 0) return;
 
       navigator.clipboard.writeText(txt).then(()=>{
         const msg=document.createElement("span");
