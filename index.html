@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v2.8.3 – Facebook community count updated to 350+. Built from v2.8.2. -->
+  <!-- A2P Results v2.8.7 – Update Payment button now opens the Stripe customer portal. Built from v2.8.6. -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -477,6 +477,18 @@
           <button class="upgrade-btn" style="border:0;cursor:pointer;background:#b45309" onclick="stuckRetry()">🔄 Check Again</button>
           <p style="margin:16px 0 0;font-size:13px;color:var(--muted)">
             Been waiting more than a few minutes? Email <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);text-decoration:none">admin@a2pwizard.com</a> and we'll pull it up manually.
+          </p>
+        </div>
+
+        <!-- Payment failed prompt: shown ONLY when the row carries the PAYMENT FAILED flag -->
+        <div id="paymentPrompt" class="upgrade-prompt" style="border-color:#dc2626;background:linear-gradient(135deg,#fef2f2,#ffffff)">
+          <h4 style="color:#dc2626">💳 Whoops, Your Payment Didn't Go Through</h4>
+          <p>Your last payment for A2P Wizard failed, so this submission is on hold. Your details are saved. Update your payment method and we'll get you moving again.</p>
+          <a href="https://billing.stripe.com/p/login/6oUaEY9UafZI5Ef5je6oo00" class="upgrade-btn" style="background:#dc2626" target="_blank" rel="noopener">
+            💳 Update Payment Method
+          </a>
+          <p style="margin:16px 0 0;font-size:13px;color:var(--muted)">
+            Already fixed it? Email <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);text-decoration:none">admin@a2pwizard.com</a> and we'll push this one through.
           </p>
         </div>
 
@@ -1669,6 +1681,15 @@
       return String(v || "").trim() !== "";
     }
 
+    /* v2.8.5: explicit payment-lapsed signal.
+       Make writes a stub row (ID + contact info, Slug blank) with any non-empty
+       value in the "PAYMENT FAILED" column when a paying user's payment lapsed. */
+    function isPaymentFailed(row){
+      if(!row) return false;
+      const v = row["PAYMENT FAILED"] || row["Payment Failed"] || row["payment failed"] || row["PAYMENT_FAILED"];
+      return String(v || "").trim() !== "";
+    }
+
     /* v2.8.1: visual "building" state for the site box while polling.
        Hides the Copy Website button (so status text can't be copied), swaps the
        label, and dims the feature badge until the site is actually ready. */
@@ -1693,6 +1714,28 @@
     function hidePrompts(){
       const up = $("upgradePrompt"); if(up) up.style.display = "none";
       const sp = $("stuckPrompt"); if(sp) sp.style.display = "none";
+      const pp = $("paymentPrompt"); if(pp) pp.style.display = "none";
+    }
+
+    /* Confirmed payment lapse (PAYMENT FAILED flag on the row). */
+    function showPaymentPrompt(){
+      _pollActive = false;
+      pollDone();
+      setSiteBoxBuilding(true);
+      var lbl = $("siteBoxLabel");
+      if(lbl) lbl.textContent = "Website (Brand must match this)";
+      var exp = $("pollExplainer");
+      if(exp) exp.style.display = "none";
+      const linkEl = $("siteLinkA");
+      if(linkEl){
+        linkEl.textContent = "Submission on hold";
+        linkEl.href = "#";
+        linkEl.style.color = "";
+        linkEl.style.fontWeight = "";
+      }
+      const up = $("upgradePrompt"); if(up) up.style.display = "none";
+      const sp = $("stuckPrompt"); if(sp) sp.style.display = "none";
+      const pp = $("paymentPrompt"); if(pp) pp.style.display = "block";
     }
 
     /* Confirmed rate limit (RATE LIMIT flag on the row). The only path to the paywall. */
@@ -1844,6 +1887,10 @@
             var d = await fetchJSON(_lastApiUrl, 15000);
             var row = unwrapRow(d);
             if(row && row.ok !== false){
+              if(isPaymentFailed(row)){
+                showPaymentPrompt();
+                return;
+              }
               if(isRateLimited(row)){
                 showUpgradePrompt();
                 return;
@@ -1867,6 +1914,34 @@
     }
 
     function hydrate(row){
+      /* v2.8.5: payment lapse check first. A flagged row means the account's
+         payment failed, so the submission is on hold, not rate limited. */
+      if(row && row.ok !== false && isPaymentFailed(row)){
+        showPaymentPrompt();
+        updateText("useCase", "—");
+        updateText("msg1", "—");
+        updateText("msg2", "—");
+        updateText("msg3", "—");
+        updateText("msg4", "—");
+        updateText("msg5", "—");
+        updateText("privacyUrl", "—");
+        updateText("termsUrl", "—");
+        updateText("shPrivacyUrl", "—");
+        updateText("shTermsUrl", "—");
+        updateText("tgPrivacyUrl", "—");
+        updateText("tgTermsUrl", "—");
+        updateText("tfWebsite", "—");
+        updateText("tfLegalName", "—");
+        updateText("tfEmail", "—");
+        updateText("tfOptInUrl", "—");
+        updateText("tfUseCase", "—");
+        updateText("tfMessages", "—");
+        updateText("consentCopy", "—");
+        updateText("optInMessage", "—");
+        updateText("optInFormUrl", "—");
+        return;
+      }
+
       /* v2.7.0: explicit rate-limit check. A flagged row means Make confirmed
          the rate limit, so the upgrade prompt shows immediately and confidently. */
       if(row && row.ok !== false && isRateLimited(row)){
@@ -2049,10 +2124,22 @@ updateText("optInMessage",
           const cachedObj = JSON.parse(cached);
           const cachedRow = unwrapRow(cachedObj);
           const cachedSlug = String((cachedRow && (cachedRow["Slug"]||cachedRow["slug"]||cachedRow["SLUG"]))||"").trim();
-          if(cachedSlug && !isRateLimited(cachedRow)){
+          if(cachedSlug && !isRateLimited(cachedRow) && !isPaymentFailed(cachedRow)){
             hydrate(cachedRow);
             fetchJSON(apiUrl)
-              .then(d=>{ const r=unwrapRow(d); const s=String((r&&(r["Slug"]||r["slug"]||r["SLUG"]))||"").trim(); if(s && !isRateLimited(r)){localStorage.setItem(key,JSON.stringify(d));hydrate(r);} })
+              .then(d=>{
+                const r=unwrapRow(d);
+                if(!r || r.ok === false) return;
+                if(isRateLimited(r) || isPaymentFailed(r)){
+                  /* v2.8.6: fresh fetch says this account is now flagged.
+                     Bust the cache and show the prompt, even on old pages. */
+                  try{ localStorage.removeItem(key); }catch(e){}
+                  hydrate(r);
+                  return;
+                }
+                const s=String((r["Slug"]||r["slug"]||r["SLUG"])||"").trim();
+                if(s){ localStorage.setItem(key,JSON.stringify(d)); hydrate(r); }
+              })
               .catch(()=>{});
             return;
           }else{
@@ -2065,7 +2152,7 @@ updateText("optInMessage",
         const data = await fetchJSON(apiUrl, 15000);
         const row = unwrapRow(data);
         const dataSlug = String((row && (row["Slug"]||row["slug"]||row["SLUG"]))||"").trim();
-        if(dataSlug && !isRateLimited(row)) localStorage.setItem(key, JSON.stringify(data));
+        if(dataSlug && !isRateLimited(row) && !isPaymentFailed(row)) localStorage.setItem(key, JSON.stringify(data));
         hydrate(row);
       }catch(err){
         console.error("Error fetching data", err);
