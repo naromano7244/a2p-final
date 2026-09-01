@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v2.8.8 – Payment prompt: added "refresh this page and your results will populate" line under the Update Payment button. Built from v2.8.7. -->
+  <!-- A2P Results v2.9.1 – Rate-limit delay ACTIVE: 60s build-style hold before the upgrade prompt (RATE_LIMIT_DELAY_MS = 60000, STYLE = "build"). Set RATE_LIMIT_DELAY_MS to 0 to go back to instant. Applies only to rate-limited users. Built from v2.9.0. -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1742,8 +1742,94 @@
     }
 
     /* Confirmed rate limit (RATE LIMIT flag on the row). The only path to the paywall. */
+    /* ===============================================================
+       RATE LIMIT DELAY (configurable)
+
+       RATE_LIMIT_DELAY_MS
+         0      = show the upgrade prompt immediately (honest, current behavior)
+         45000  = hold the prompt for 45 seconds behind a loading sequence
+         60000  = hold for 60 seconds
+
+       RATE_LIMIT_DELAY_STYLE
+         "honest" = "Checking your account..." (does not claim to build a site)
+         "build"  = full build animation ("Spinning up your compliance site...")
+
+       Applies ONLY to rate-limited users. Normal users and payment-hold
+       users are never delayed.
+       =============================================================== */
+    const RATE_LIMIT_DELAY_MS = 60000;
+    const RATE_LIMIT_DELAY_STYLE = "build";
+
+    var _rlDelayIv = null;
+
+    /* Entry point for a rate-limited row. Honors the delay config above. */
     function showUpgradePrompt(){
       _pollActive = false;
+      pollDone();
+      if(_rlDelayIv){ clearInterval(_rlDelayIv); _rlDelayIv = null; }
+
+      if(!RATE_LIMIT_DELAY_MS || RATE_LIMIT_DELAY_MS <= 0){
+        renderUpgradePrompt();
+        return;
+      }
+
+      /* Hold the prompt behind a loading sequence. */
+      setSiteBoxBuilding(true);
+      var linkEl = $("siteLinkA");
+      var barTrack = $("dnsBarTrack");
+      var bar = $("dnsBar");
+      var lbl = $("siteBoxLabel");
+      var exp = $("pollExplainer");
+
+      var honest = (RATE_LIMIT_DELAY_STYLE !== "build");
+
+      if(lbl) lbl.textContent = honest ? "🔎 Checking your account..." : "🛠️ Building your website...";
+      if(exp) exp.style.display = honest ? "none" : "block";
+      if(barTrack) barTrack.style.display = "block";
+      if(linkEl){
+        linkEl.href = "#";
+        linkEl.style.color = "var(--muted)";
+        linkEl.style.fontWeight = "600";
+        linkEl.classList.add("poll-pulse");
+      }
+
+      var msgs = honest
+        ? ["🔎 Checking your account...",
+           "📋 Reviewing your submission history...",
+           "⏳ Almost done..."]
+        : ["🧙‍♂️ Summoning your compliance kit...",
+           "⚙️ Spinning up your compliance site...",
+           "🎨 Generating your branding...",
+           "✨ Putting on the final touches..."];
+
+      var start = Date.now();
+      var mi = 0;
+      if(linkEl) linkEl.textContent = msgs[0];
+
+      _rlDelayIv = setInterval(function(){
+        var elapsed = Date.now() - start;
+        var pct = Math.min(95, Math.round((elapsed / RATE_LIMIT_DELAY_MS) * 100));
+        var b = $("dnsBar");
+        if(b) b.style.width = pct + "%";
+        var l = $("siteLinkA");
+        if(l) { mi++; l.textContent = msgs[mi % msgs.length]; }
+      }, 3000);
+
+      var b0 = $("dnsBar");
+      if(b0) b0.style.width = "8%";
+
+      setTimeout(function(){
+        if(_rlDelayIv){ clearInterval(_rlDelayIv); _rlDelayIv = null; }
+        var b = $("dnsBar");
+        if(b) b.style.width = "100%";
+        setTimeout(renderUpgradePrompt, 400);
+      }, RATE_LIMIT_DELAY_MS);
+    }
+
+    /* Actually paints the upgrade prompt. */
+    function renderUpgradePrompt(){
+      _pollActive = false;
+      if(_rlDelayIv){ clearInterval(_rlDelayIv); _rlDelayIv = null; }
       pollDone();
       setSiteBoxBuilding(true);
       var lbl = $("siteBoxLabel");
@@ -1756,8 +1842,10 @@
         linkEl.href = "#";
         linkEl.style.color = "";
         linkEl.style.fontWeight = "";
+        linkEl.classList.remove("poll-pulse");
       }
       const sp = $("stuckPrompt"); if(sp) sp.style.display = "none";
+      const pp = $("paymentPrompt"); if(pp) pp.style.display = "none";
       const up = $("upgradePrompt"); if(up) up.style.display = "block";
     }
 
