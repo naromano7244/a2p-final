@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v2.10.0 – Twilio Direct panel: added video guide, reordered steps to match the live Twilio console flow (description > web form radio > consent > privacy/terms > 5 samples > keywords > opt-in msg > message contents > sample link), keywords now copy-paste, expanded message-contents do-not-check warnings. Rate-limit delay remains ACTIVE at 60s. Built from v2.9.1. -->
+  <!-- A2P Results v2.10.0 – Twilio Direct panel: video guide (click-to-play facade, starts at 0:06) + steps reordered to match the live Twilio console flow; toll-free use case corrected to Marketing + Customer Support with new screenshot; AWS Connect tile replaced with Close.com (coming soon); perf: CDN preconnect + eager selector logos. Rate-limit delay remains ACTIVE at 60s. Built from v2.9.1. -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://assets.cdn.filesafe.space" crossorigin>
+  <link rel="dns-prefetch" href="https://assets.cdn.filesafe.space">
   <link rel="preconnect" href="https://i.ibb.co" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -647,7 +649,7 @@
       </div>
 
       <div class="selector-group">
-        <p class="selector-heading" style="display:flex;flex-direction:column;align-items:center;gap:8px"><img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22d38de8bb5ac427e62632.png" alt="HighLevel" style="height:48px;width:auto" loading="lazy" decoding="async"><span>Registration Templates</span></p>
+        <p class="selector-heading" style="display:flex;flex-direction:column;align-items:center;gap:8px"><img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22d38de8bb5ac427e62632.png" alt="HighLevel" style="height:48px;width:auto" fetchpriority="high" decoding="async"><span>Registration Templates</span></p>
         <div class="path-grid cols-3">
           <button class="path-btn" data-path="local" onclick="selectPath('local')">
             <span class="path-icon">📍</span>
@@ -671,17 +673,17 @@
         <p class="selector-heading">Direct to Carrier</p>
         <div class="path-grid cols-3">
           <button class="path-btn" data-path="twilio" onclick="selectPath('twilio')">
-            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22e31f3c3faf82cada68f3.svg" alt="" aria-hidden="true" style="height:26px;width:auto" loading="lazy" decoding="async">
+            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22e31f3c3faf82cada68f3.svg" alt="" aria-hidden="true" style="height:26px;width:auto" fetchpriority="high" decoding="async">
             <span class="path-name">Twilio Direct Registration</span>
             <span class="path-cta">Tap to select</span>
           </button>
           <button class="path-btn" data-path="textgrid" onclick="selectPath('textgrid')">
-            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a3a898c2ed3b9e323a56d1b.png" alt="" aria-hidden="true" style="height:26px;width:auto" loading="lazy" decoding="async">
+            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a3a898c2ed3b9e323a56d1b.png" alt="" aria-hidden="true" style="height:26px;width:auto" fetchpriority="high" decoding="async">
             <span class="path-name">TextGrid Registration</span>
             <span class="path-cta">Tap to select</span>
           </button>
           <button class="path-btn disabled" type="button" aria-disabled="true">
-            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6aa195a79416bfd5312eb442.svg" alt="" aria-hidden="true" style="height:26px;width:auto;opacity:.65" loading="lazy" decoding="async">
+            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6aa195a79416bfd5312eb442.svg" alt="" aria-hidden="true" style="height:26px;width:auto;opacity:.65" fetchpriority="high" decoding="async">
             <span class="path-name">Close.com Registration</span>
             <span class="soon-pill">Coming Soon</span>
           </button>
@@ -1067,18 +1069,26 @@
           <p style="margin:0 0 12px;font-size:14px;color:var(--text);line-height:1.55">
             Follow along start to finish. Every field below is covered in the walkthrough.
           </p>
-          <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;border:1px solid var(--border);background:#000">
-            <iframe
-              src="https://www.youtube.com/embed/1HmGf_XdxT0?start=2"
-              title="A2P Wizard - Twilio Direct Registration Guide"
-              style="position:absolute;top:0;left:0;width:100%;height:100%;border:0"
+          <div id="twVideoWrap" onclick="playTwilioVideo()" style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;border:1px solid var(--border);background:#000;cursor:pointer">
+            <img
+              src="https://img.youtube.com/vi/1HmGf_XdxT0/maxresdefault.jpg"
+              alt="Twilio Direct Registration video guide"
               loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
+              decoding="async"
+              onerror="this.src='https://img.youtube.com/vi/1HmGf_XdxT0/hqdefault.jpg'"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover"
+            >
+            <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.28)">
+              <div style="width:74px;height:52px;border-radius:14px;background:rgba(92,39,212,.92);box-shadow:0 6px 24px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;transition:transform .15s ease">
+                <span style="display:block;width:0;height:0;border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px"></span>
+              </div>
+            </div>
+            <div style="position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;font-weight:700;padding:5px 10px;border-radius:20px">
+              ▶ Watch the walkthrough
+            </div>
           </div>
           <p style="margin:10px 0 0;font-size:13px;color:var(--muted)">
-            Video not loading? <a href="https://www.youtube.com/watch?v=1HmGf_XdxT0&t=2s" target="_blank" rel="noopener" style="color:var(--primary);font-weight:700;text-decoration:none">Open it on YouTube →</a>
+            Video not loading? <a href="https://www.youtube.com/watch?v=1HmGf_XdxT0&t=6s" target="_blank" rel="noopener" style="color:var(--primary);font-weight:700;text-decoration:none">Open it on YouTube →</a>
           </p>
         </div>
 
@@ -1563,6 +1573,24 @@
 
   <!-- Selector logic (separate from the data script; calls the global postHeight) -->
   <script>
+    /* Click-to-play video facade: the iframe is only injected on click, so the
+       thumbnail renders instantly and YouTube never loads unless asked for.
+       Starts at 6s to skip the intro sound. */
+    function playTwilioVideo(){
+      var wrap = document.getElementById("twVideoWrap");
+      if(!wrap || wrap.getAttribute("data-playing") === "1") return;
+      wrap.setAttribute("data-playing", "1");
+      wrap.onclick = null;
+      wrap.style.cursor = "default";
+      wrap.innerHTML =
+        '<iframe src="https://www.youtube.com/embed/1HmGf_XdxT0?start=6&autoplay=1" ' +
+        'title="A2P Wizard - Twilio Direct Registration Guide" ' +
+        'style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" ' +
+        'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+        'allowfullscreen></iframe>';
+      if(typeof postHeight === "function") setTimeout(postHeight, 300);
+    }
+
     function selectPath(key){
       var panels = document.querySelectorAll(".path-panel");
       for(var i=0;i<panels.length;i++){ panels[i].classList.remove("active"); }
