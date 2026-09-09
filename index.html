@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v2.9.1 – Rate-limit delay ACTIVE: 60s build-style hold before the upgrade prompt (RATE_LIMIT_DELAY_MS = 60000, STYLE = "build"). Set RATE_LIMIT_DELAY_MS to 0 to go back to instant. Applies only to rate-limited users. Built from v2.9.0. -->
+  <!-- A2P Results v2.10.0 – Twilio Direct panel: added video guide, reordered steps to match the live Twilio console flow (description > web form radio > consent > privacy/terms > 5 samples > keywords > opt-in msg > message contents > sample link), keywords now copy-paste, expanded message-contents do-not-check warnings. Rate-limit delay remains ACTIVE at 60s. Built from v2.9.1. -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -681,8 +681,8 @@
             <span class="path-cta">Tap to select</span>
           </button>
           <button class="path-btn disabled" type="button" aria-disabled="true">
-            <span class="path-icon">☁️</span>
-            <span class="path-name">AWS Connect</span>
+            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6aa195a79416bfd5312eb442.svg" alt="" aria-hidden="true" style="height:26px;width:auto;opacity:.65" loading="lazy" decoding="async">
+            <span class="path-name">Close.com Registration</span>
             <span class="soon-pill">Coming Soon</span>
           </button>
         </div>
@@ -855,12 +855,15 @@
         <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
           <li><strong>Estimated Monthly Volume:</strong> Select <strong>1,000</strong></li>
           <li><strong>Opt-In Type:</strong> Select <strong>Web Form</strong></li>
-          <li><strong>Use Case Categories:</strong> Select <strong>BOTH</strong> Marketing and Account Notifications</li>
+          <li><strong>Use Case Categories:</strong> Select <strong>BOTH</strong> Marketing and Customer Support</li>
         </ul>
 
         <div style="padding:12px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:14px">
-          <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+          <p style="margin:0 0 8px;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
             🛑 You MUST select "Web Form" as the Opt-In Type. If this is not selected, your campaign will fail.
+          </p>
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 You MUST check <strong>BOTH</strong> Marketing <strong>and</strong> Customer Support under Use Case Categories. Selecting only one, or picking a different category, gets you rejected.
           </p>
         </div>
 
@@ -888,9 +891,9 @@
         </div>
 
         <img
-          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a0ddb9ee05851175c187c59.png"
+          src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6aa19f3e81f0105816ccb32f.png"
           class="tips-img"
-          alt="Toll-Free Step 3 - Messaging Use Case"
+          alt="Toll-Free Step 3 - Messaging Use Case with Marketing and Customer Support selected"
           loading="lazy"
           decoding="async"
           style="margin-top:14px"
@@ -1057,6 +1060,28 @@
           Everything you need is in this section, in the order Twilio's console asks for it. Complete the steps top to bottom.
         </p>
 
+        <div style="padding:16px;background:linear-gradient(135deg,#f3efff,#ffffff);border:2px solid var(--primary);border-radius:14px;margin-bottom:16px">
+          <p style="margin:0 0 10px;font-size:16px;font-weight:800;color:var(--primary);line-height:1.35">
+            🎥 Watch the Twilio Direct video guide
+          </p>
+          <p style="margin:0 0 12px;font-size:14px;color:var(--text);line-height:1.55">
+            Follow along start to finish. Every field below is covered in the walkthrough.
+          </p>
+          <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;border:1px solid var(--border);background:#000">
+            <iframe
+              src="https://www.youtube.com/embed/1HmGf_XdxT0?start=2"
+              title="A2P Wizard - Twilio Direct Registration Guide"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;border:0"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <p style="margin:10px 0 0;font-size:13px;color:var(--muted)">
+            Video not loading? <a href="https://www.youtube.com/watch?v=1HmGf_XdxT0&t=2s" target="_blank" rel="noopener" style="color:var(--primary);font-weight:700;text-decoration:none">Open it on YouTube →</a>
+          </p>
+        </div>
+
         <div class="callout" style="background:#fff4e6;border-color:#ffd69a;margin-bottom:16px">
           <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('.callout').querySelector('.collapsible-body').classList.toggle('open');if(typeof postHeight==='function')setTimeout(postHeight,450)">
             <h3 style="margin:0;font-weight:700;color:#b45309;font-size:15px">⭐ First time registering on Twilio? Read the Golden Rule</h3>
@@ -1139,7 +1164,42 @@
           <button class="copy-btn" onclick="copyText('twUseCase', this)">Copy</button>
         </div>
 
-        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 2: Sample Messages</p>
+        <div style="margin-top:18px;padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px">
+          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 Next, Twilio asks <strong>"How do recipients consent to receive messages?"</strong> with a few radio buttons. Select <strong>"Web Form."</strong> If this is not selected, your campaign will fail.
+          </p>
+          <img
+            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22dde6f607d4002b91f940.png"
+            class="tips-img"
+            alt="Select Web Form as the opt-in type"
+            loading="lazy"
+            decoding="async"
+            style="margin-top:6px"
+          >
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 2: How do users consent to receive messages?</p>
+        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">Paste exactly as-is, do not edit or insert values.</p>
+        <pre id="twConsentCopy">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('twConsentCopy', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 3: Privacy Policy &amp; Terms Links</p>
+
+        <p style="margin:0 0 6px"><strong>Privacy Policy Link:</strong></p>
+        <pre id="privacyUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('privacyUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:16px 0 6px"><strong>Terms Link:</strong></p>
+        <pre id="termsUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('termsUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 4: Sample Messages</p>
         <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">Twilio requires all 5. Paste exactly as-is, do not edit or insert values.</p>
 
         <p style="margin:14px 0 6px"><strong>Sample Message #1:</strong></p>
@@ -1172,31 +1232,42 @@
           <button class="copy-btn" onclick="copyText('msg5', this)">Copy</button>
         </div>
 
-        <div style="margin-top:18px;padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px">
-          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
-            🛑 For the opt-in question, select <strong>"Web Form."</strong> If this is not selected, your campaign will fail.
-          </p>
-          <img
-            src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22dde6f607d4002b91f940.png"
-            class="tips-img"
-            alt="Select Web Form as the opt-in type"
-            loading="lazy"
-            decoding="async"
-            style="margin-top:6px"
-          >
-        </div>
-
-        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 3: How do users consent to receive messages?</p>
-        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">Paste exactly as-is, do not edit or insert values.</p>
-        <pre id="twConsentCopy">Loading...</pre>
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 5: Opt-in Keywords</p>
+        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">When asked for opt-in keywords, enter both:</p>
+        <pre id="twKeywords">START, SUBSCRIBE</pre>
         <div class="copy-row">
-          <button class="copy-btn" onclick="copyText('twConsentCopy', this)">Copy</button>
+          <button class="copy-btn" onclick="copyText('twKeywords', this)">Copy</button>
         </div>
 
-        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 4: Message Contents</p>
-        <div style="padding:14px 16px;background:#fffbeb;border:1px solid #fde68a;border-radius:12px">
-          <p style="margin:0 0 10px;font-size:14.5px;color:#854d0e;line-height:1.55">
-            💡 In the message contents selector, check <strong>only</strong> these two boxes: <strong>"Messages will include embedded links"</strong> and <strong>"Messages will include phone numbers."</strong> Leave the others unchecked.
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 6: Opt-In Message</p>
+        <div style="padding:12px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:12px">
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            ⚠️ <strong>Do NOT modify this message.</strong> Paste it exactly as shown, including the brackets. <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[privacy_policy_link]</code> and <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[terms_link]</code> are intentional template placeholders. Do not replace them with actual URLs.
+          </p>
+        </div>
+        <pre id="twOptInMessage">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('twOptInMessage', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 7: Message Contents</p>
+        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px">
+          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            ✅ Check <strong>ONLY</strong> these two boxes:
+          </p>
+          <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
+            <li>Messages will include <strong>embedded links</strong></li>
+            <li>Messages will include <strong>phone numbers</strong></li>
+          </ul>
+          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;font-weight:700;line-height:1.55">
+            🛑 Do <strong>NOT</strong> check either of these:
+          </p>
+          <ul style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.7">
+            <li>Content related to <strong>direct lending</strong> or loan arrangement</li>
+            <li><strong>Age-gated</strong> content</li>
+          </ul>
+          <p style="margin:0 0 10px;font-size:14px;color:#7f1d1d;line-height:1.55">
+            Checking either of those two triggers extra vetting and is a common cause of rejection. Leave every other box unchecked as well.
           </p>
           <img
             src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6a22de89e8bb5ac427e7022b.png"
@@ -1208,41 +1279,11 @@
           >
         </div>
 
-        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 5: Sample of Embedded Links</p>
-        <p style="margin:0 0 10px;font-size:13.5px;color:var(--muted)">Paste these as the sample links Twilio asks for.</p>
-
-        <p style="margin:0 0 6px"><strong>Website Link:</strong></p>
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 8: Sample of Embedded Link</p>
+        <p style="margin:0 0 10px;font-size:13.5px;color:var(--muted)">When Twilio asks for a sample link, use your website link.</p>
         <pre id="twOptInFormUrl">Loading...</pre>
         <div class="copy-row">
           <button class="copy-btn" onclick="copyText('twOptInFormUrl', this)">Copy</button>
-        </div>
-
-        <p style="margin:16px 0 6px"><strong>Privacy Policy Link:</strong></p>
-        <pre id="privacyUrl">Loading...</pre>
-        <div class="copy-row">
-          <button class="copy-btn" onclick="copyText('privacyUrl', this)">Copy</button>
-        </div>
-
-        <p style="margin:16px 0 6px"><strong>Terms Link:</strong></p>
-        <pre id="termsUrl">Loading...</pre>
-        <div class="copy-row">
-          <button class="copy-btn" onclick="copyText('termsUrl', this)">Copy</button>
-        </div>
-
-        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 6: Opt-in Keywords</p>
-        <p style="margin:0;font-size:14.5px;color:#1e1e2f;line-height:1.55">
-          When asked for opt-in keywords, enter: <strong>START</strong> and <strong>SUBSCRIBE</strong>
-        </p>
-
-        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 7: Opt-In Message</p>
-        <div style="padding:12px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;margin-bottom:12px">
-          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
-            ⚠️ <strong>Do NOT modify this message.</strong> Paste it exactly as shown, including the brackets. <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[privacy_policy_link]</code> and <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-size:13px">[terms_link]</code> are intentional template placeholders. Do not replace them with actual URLs.
-          </p>
-        </div>
-        <pre id="twOptInMessage">Loading...</pre>
-        <div class="copy-row">
-          <button class="copy-btn" onclick="copyText('twOptInMessage', this)">Copy</button>
         </div>
       </div>
 
