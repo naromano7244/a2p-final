@@ -682,10 +682,10 @@
             <span class="path-name">TextGrid Registration</span>
             <span class="path-cta">Tap to select</span>
           </button>
-          <button class="path-btn disabled" type="button" aria-disabled="true">
-            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6aa195a79416bfd5312eb442.svg" alt="" aria-hidden="true" style="height:26px;width:auto;opacity:.65" fetchpriority="high" decoding="async">
+          <button class="path-btn" data-path="close" onclick="selectPath('close')">
+            <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6aa195a79416bfd5312eb442.svg" alt="" aria-hidden="true" style="height:26px;width:auto" fetchpriority="high" decoding="async">
             <span class="path-name">Close.com Registration</span>
-            <span class="soon-pill">Coming Soon</span>
+            <span class="path-cta">Tap to select</span>
           </button>
         </div>
       </div>
@@ -1297,6 +1297,161 @@
         </div>
       </div>
 
+      <!-- PATH: Close.com -->
+      <div class="path-panel" id="panel-close">
+        <p class="panel-head">
+          <img src="https://assets.cdn.filesafe.space/komZ0pRB88cwzgvEo7MW/media/6aa195a79416bfd5312eb442.svg" alt="Close.com" style="height:24px;width:auto;vertical-align:middle;margin-right:6px" loading="lazy" decoding="async">Close.com Registration
+        </p>
+        <p class="panel-sub">Registering A2P/10DLC inside Close. There are two applications to complete, in order.</p>
+
+        <div class="panel-site-box">
+          <div class="psb-left">
+            <div class="site-label">Your Compliance Website (Brand must match this)</div>
+            <a id="siteClose" class="site-link panel-site-link" href="#" target="_blank" rel="noopener">Loading…</a>
+          </div>
+          <button class="copy-btn" onclick="copyText('siteClose', this)">Copy Website</button>
+        </div>
+
+        <div style="padding:14px 16px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #93c5fd;border-radius:12px;margin-bottom:18px">
+          <p style="margin:0 0 8px;font-size:14.5px;font-weight:800;color:#1d4ed8">📍 Where to find it in Close</p>
+          <p style="margin:0;font-size:14.5px;color:#1e3a5f;line-height:1.6">
+            <strong>Communication</strong> → <strong>Phone and Voicemail</strong> → <strong>US Compliance</strong>
+          </p>
+          <p style="margin:10px 0 0;font-size:14px;color:#1e3a5f;line-height:1.55">
+            You'll see two applications there: <strong>Trusted Calling</strong> (step 1) and <strong>TrustedSMS</strong> (step 2). Complete them in that order.
+          </p>
+        </div>
+
+        <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 1: Trusted Calling</p>
+        <p style="margin:0 0 14px;font-size:14.5px;color:var(--text);line-height:1.55">
+          Most of this form is self-explanatory, just your business details. Two fields matter for approval:
+        </p>
+
+        <div class="lvm-gate">
+          <div class="lvm-head">
+            <p class="lvm-kicker">The field that decides approval</p>
+            <h3>⛔ Business Website must be your A2P Wizard site</h3>
+          </div>
+          <div class="lvm-body">
+            <p style="margin:0 0 12px;font-size:14.5px;color:#1e1e2f;line-height:1.55">
+              In the <strong>Business Website</strong> field, enter the A2P Wizard-generated website below. Do not use the client's real website, it must match what gets registered on the brand.
+            </p>
+            <pre id="closeWebsite">Loading...</pre>
+            <div class="copy-row">
+              <button class="copy-btn" onclick="copyText('closeWebsite', this)">Copy Website</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout" style="background:#fff4e6;border-color:#ffd69a;margin:16px 0">
+          <button class="collapsible-toggle" onclick="this.querySelector('.collapsible-arrow').classList.toggle('open');this.closest('.callout').querySelector('.collapsible-body').classList.toggle('open');if(typeof postHeight==='function')setTimeout(postHeight,450)">
+            <h3 style="margin:0;font-weight:700;color:#b45309;font-size:15px">⚠️ Already submitted Trusted Calling with a different website?</h3>
+            <span class="collapsible-arrow" style="color:#b45309">▼</span>
+          </button>
+          <div class="collapsible-body">
+            <div style="padding-top:12px">
+              <p style="margin:0 0 12px;font-size:14.5px;color:#5c3a0a;line-height:1.55">
+                You'll need Close to purge the application so you can start fresh. Email <strong>support@close.com</strong> with the message below.
+              </p>
+              <pre id="closeSupportEmail">Hi there, we have an incorrect website on our trusted calling application and would like to start over, please purge our a2p application as if we were starting fresh. Thank you</pre>
+              <div class="copy-row">
+                <button class="copy-btn" onclick="copyText('closeSupportEmail', this)">Copy Message</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px;margin-bottom:16px">
+          <p style="margin:0 0 8px;font-size:15px;color:#dc2626;font-weight:800;line-height:1.4">🛑 Business Address: use the REGISTERED address</p>
+          <p style="margin:0 0 10px;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            Enter the company's <strong>registered</strong> address, which is often different from where they actually operate day to day. A mismatch here is a common rejection cause.
+          </p>
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            Not sure what's on file? Look the company up on <a href="https://opencorporates.com" target="_blank" rel="noopener" style="color:#dc2626;font-weight:700;text-decoration:underline">OpenCorporates</a> and use the address listed there.
+          </p>
+        </div>
+
+        <div style="margin:22px 0 0;padding-top:20px;border-top:2px solid var(--border)"></div>
+
+        <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Step 2: TrustedSMS</p>
+        <p style="margin:0 0 16px;font-size:14.5px;color:var(--text);line-height:1.55">
+          Once Trusted Calling is submitted, complete TrustedSMS. Work top to bottom, the fields below are in the same order Close asks for them.
+        </p>
+
+        <div style="padding:14px 16px;background:#fef2f2;border:2px solid #fca5a5;border-radius:12px;margin-bottom:18px">
+          <p style="margin:0 0 8px;font-size:15px;color:#dc2626;font-weight:800;line-height:1.4">🛑 Opt-in / Consent Method</p>
+          <p style="margin:0;font-size:14.5px;color:#7f1d1d;line-height:1.55">
+            For <strong>"How do end-users consent to receive messages?"</strong> select <strong>"Through a webform, booking link, sign-up page, or similar (Recommended)"</strong>. Do <strong>not</strong> select Verbally.
+          </p>
+        </div>
+
+        <p style="margin:0 0 6px"><strong>Share a direct link to your privacy policy:</strong></p>
+        <pre id="clPrivacyUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('clPrivacyUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:16px 0 6px"><strong>Share a direct link to your terms of service:</strong></p>
+        <pre id="clTermsUrl">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('clTermsUrl', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Campaign Description</p>
+        <p style="margin:0 0 4px;font-size:13.5px;color:var(--muted)">Paste exactly as-is, do not edit or insert values. (Close auto-rejects anything under 40 characters, this is well over.)</p>
+        <pre id="clUseCase">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('clUseCase', this)">Copy</button>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Campaign Attributes</p>
+        <div style="padding:14px 16px;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;margin-bottom:8px">
+          <p style="margin:0 0 10px;font-size:14.5px;color:#854d0e;line-height:1.55">
+            Close asks whether your messages include <strong>age-gated content</strong> or relate to <strong>direct lending or loan arrangements</strong>. Answer both honestly based on what your business actually does.
+          </p>
+          <p style="margin:0;font-size:14.5px;color:#854d0e;line-height:1.55">
+            Carriers review these selections and misreporting can get your campaign suspended, so don't guess. If either applies to you, check it and expect additional vetting. If neither applies, leave them unchecked and continue.
+          </p>
+        </div>
+
+        <p style="margin:22px 0 6px;font-size:13px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.05em">Sample SMS Messages</p>
+        <div style="padding:10px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;margin-bottom:12px">
+          <p style="margin:0;font-size:13.5px;color:#166534;font-weight:600">
+            ✅ Close accepts 2 to 5 sample messages. Submit all 5 below, more samples give the carriers a fuller picture and approve more reliably.
+          </p>
+        </div>
+
+        <p style="margin:14px 0 6px"><strong>Sample Message #1:</strong></p>
+        <pre id="clMsg1">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('clMsg1', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #2:</strong></p>
+        <pre id="clMsg2">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('clMsg2', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #3:</strong></p>
+        <pre id="clMsg3">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('clMsg3', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #4:</strong></p>
+        <pre id="clMsg4">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('clMsg4', this)">Copy</button>
+        </div>
+
+        <p style="margin-top:16px;margin-bottom:6px"><strong>Sample Message #5:</strong></p>
+        <pre id="clMsg5">Loading...</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyText('clMsg5', this)">Copy</button>
+        </div>
+      </div>
+
       <!-- PATH: TextGrid -->
       <div class="path-panel" id="panel-textgrid">
         <p class="panel-head">
@@ -1620,13 +1775,15 @@
        Reads finished text from the data script's fields; never touches that script. */
     function syncTwilioPanel(){
       var map = {
-        useCase:["twUseCase","tgUseCase"],
-        msg1:["twMsg1","tgMsg1"],
-        msg2:["twMsg2","tgMsg2"],
-        msg3:["tgMsg3"],
-        msg4:["tgMsg4"],
-        msg5:["tgMsg5"],
-        optInFormUrl:["twOptInFormUrl"],
+        useCase:["twUseCase","tgUseCase","clUseCase"],
+        msg1:["twMsg1","tgMsg1","clMsg1"],
+        msg2:["twMsg2","tgMsg2","clMsg2"],
+        msg3:["tgMsg3","clMsg3"],
+        msg4:["tgMsg4","clMsg4"],
+        msg5:["tgMsg5","clMsg5"],
+        privacyUrl:["clPrivacyUrl"],
+        termsUrl:["clTermsUrl"],
+        optInFormUrl:["twOptInFormUrl","closeWebsite"],
         consentCopy:["twConsentCopy","tgConsentCopy"],
         optInMessage:["twOptInMessage"]
       };
