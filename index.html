@@ -1304,6 +1304,36 @@
         </p>
         <p class="panel-sub">Registering A2P/10DLC inside Close. There are two applications to complete, in order.</p>
 
+        <div style="padding:16px;background:linear-gradient(135deg,#f3efff,#ffffff);border:2px solid var(--primary);border-radius:14px;margin-bottom:16px">
+          <p style="margin:0 0 10px;font-size:16px;font-weight:800;color:var(--primary);line-height:1.35">
+            🎥 Watch the Close.com video guide
+          </p>
+          <p style="margin:0 0 12px;font-size:14px;color:var(--text);line-height:1.55">
+            Follow along start to finish. Every field below is covered in the walkthrough.
+          </p>
+          <div id="clVideoWrap" onclick="playCloseVideo()" style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;border:1px solid var(--border);background:#000;cursor:pointer">
+            <img
+              src="https://img.youtube.com/vi/SkOAJbMkC0Q/maxresdefault.jpg"
+              alt="Close.com A2P registration video guide"
+              loading="lazy"
+              decoding="async"
+              onerror="this.src='https://img.youtube.com/vi/SkOAJbMkC0Q/hqdefault.jpg'"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover"
+            >
+            <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.28)">
+              <div style="width:74px;height:52px;border-radius:14px;background:rgba(92,39,212,.92);box-shadow:0 6px 24px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center">
+                <span style="display:block;width:0;height:0;border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px"></span>
+              </div>
+            </div>
+            <div style="position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;font-weight:700;padding:5px 10px;border-radius:20px">
+              ▶ Watch the walkthrough
+            </div>
+          </div>
+          <p style="margin:10px 0 0;font-size:13px;color:var(--muted)">
+            Video not loading? <a href="https://www.youtube.com/watch?v=SkOAJbMkC0Q&t=6s" target="_blank" rel="noopener" style="color:var(--primary);font-weight:700;text-decoration:none">Open it on YouTube →</a>
+          </p>
+        </div>
+
         <div class="panel-site-box">
           <div class="psb-left">
             <div class="site-label">Your Compliance Website (Brand must match this)</div>
@@ -1731,19 +1761,27 @@
     /* Click-to-play video facade: the iframe is only injected on click, so the
        thumbnail renders instantly and YouTube never loads unless asked for.
        Starts at 6s to skip the intro sound. */
-    function playTwilioVideo(){
-      var wrap = document.getElementById("twVideoWrap");
+    function playVideoFacade(wrapId, videoId, title){
+      var wrap = document.getElementById(wrapId);
       if(!wrap || wrap.getAttribute("data-playing") === "1") return;
       wrap.setAttribute("data-playing", "1");
       wrap.onclick = null;
       wrap.style.cursor = "default";
       wrap.innerHTML =
-        '<iframe src="https://www.youtube.com/embed/1HmGf_XdxT0?start=6&autoplay=1" ' +
-        'title="A2P Wizard - Twilio Direct Registration Guide" ' +
+        '<iframe src="https://www.youtube.com/embed/' + videoId + '?start=6&autoplay=1" ' +
+        'title="' + title + '" ' +
         'style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" ' +
         'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
         'allowfullscreen></iframe>';
       if(typeof postHeight === "function") setTimeout(postHeight, 300);
+    }
+
+    function playTwilioVideo(){
+      playVideoFacade("twVideoWrap", "1HmGf_XdxT0", "A2P Wizard - Twilio Direct Registration Guide");
+    }
+
+    function playCloseVideo(){
+      playVideoFacade("clVideoWrap", "SkOAJbMkC0Q", "A2P Wizard - Close.com Registration Guide");
     }
 
     function selectPath(key){
