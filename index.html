@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A2P Compliance Guide</title>
-  <!-- A2P Results v2.10.0 – Twilio Direct panel: video guide (click-to-play facade, starts at 0:06) + steps reordered to match the live Twilio console flow; toll-free use case corrected to Marketing + Customer Support with new screenshot; AWS Connect tile replaced with Close.com (coming soon); perf: CDN preconnect + eager selector logos. Rate-limit delay remains ACTIVE at 60s. Built from v2.9.1. -->
+  <!-- A2P Results v2.10.1 – Dedicated no-ID state: links with no submission ID show a "something went wrong with your submission" prompt (resubmit / email us) instead of the stuck state, and never poll. Built from v2.10.0. -->
 
   <!-- Perf hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -479,6 +479,21 @@
           <button class="upgrade-btn" style="border:0;cursor:pointer;background:#b45309" onclick="stuckRetry()">🔄 Check Again</button>
           <p style="margin:16px 0 0;font-size:13px;color:var(--muted)">
             Been waiting more than a few minutes? Email <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);text-decoration:none">admin@a2pwizard.com</a> and we'll pull it up manually.
+          </p>
+        </div>
+
+        <!-- No-ID state: the link has no submission ID, so there is nothing to look up. -->
+        <div id="noIdPrompt" class="upgrade-prompt" style="border-color:#f59e0b;background:linear-gradient(135deg,#fffbeb,#ffffff)">
+          <h4 style="color:#b45309">⚠️ Something Went Wrong With Your Submission</h4>
+          <p>Your results didn't come through on our end. This is usually a hiccup during the redirect, not anything you did. The quickest fix is to submit again.</p>
+          <p style="margin:-6px 0 18px;font-size:14px;color:#854d0e;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 14px">
+            💡 <strong>Tip:</strong> Some browsers, ad blockers or privacy extensions can block our form from passing your submission through. If it happens again, try a different browser (Chrome works best) or pause your ad blocker for this page.
+          </p>
+          <a href="https://a2pwizard.com/automated-setup-trial" class="upgrade-btn" style="background:#b45309" target="_blank" rel="noopener">
+            🔄 Resubmit Now
+          </a>
+          <p style="margin:16px 0 0;font-size:13px;color:var(--muted)">
+            Hit a limit when resubmitting, or want us to track down the original? Email <a href="mailto:admin@a2pwizard.com" style="color:var(--primary);text-decoration:none">admin@a2pwizard.com</a> with the business name and we'll sort it out.
           </p>
         </div>
 
@@ -1982,6 +1997,29 @@
       const up = $("upgradePrompt"); if(up) up.style.display = "none";
       const sp = $("stuckPrompt"); if(sp) sp.style.display = "none";
       const pp = $("paymentPrompt"); if(pp) pp.style.display = "none";
+      const np = $("noIdPrompt"); if(np) np.style.display = "none";
+    }
+
+    /* No submission ID in the URL: nothing to look up, so never poll. */
+    function showNoIdState(){
+      _pollActive = false;
+      pollDone();
+      setSiteBoxBuilding(true);
+      var lbl = $("siteBoxLabel");
+      if(lbl) lbl.textContent = "Website (Brand must match this)";
+      var exp = $("pollExplainer");
+      if(exp) exp.style.display = "none";
+      const linkEl = $("siteLinkA");
+      if(linkEl){
+        linkEl.textContent = "Your submission didn't come through";
+        linkEl.href = "#";
+        linkEl.style.color = "";
+        linkEl.style.fontWeight = "";
+      }
+      const up = $("upgradePrompt"); if(up) up.style.display = "none";
+      const sp = $("stuckPrompt"); if(sp) sp.style.display = "none";
+      const pp = $("paymentPrompt"); if(pp) pp.style.display = "none";
+      const np = $("noIdPrompt"); if(np) np.style.display = "block";
     }
 
     /* Confirmed payment lapse (PAYMENT FAILED flag on the row). */
@@ -2442,7 +2480,7 @@ updateText("optInMessage",
       const queryVal = (slug || id || "").trim();
 
       if(!queryVal){
-        setWebsiteUI("", true);
+        showNoIdState();
         updateText("useCase", "Waiting for data…");
         updateText("msg1", "Waiting for data…");
         updateText("msg2", "Waiting for data…");
